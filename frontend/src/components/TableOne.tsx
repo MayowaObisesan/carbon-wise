@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useAccount, useBalance, useContractRead } from "wagmi";
 import {
-  WASTEWISE_ADDRESS,
-  WASTEWISE_TOKEN_ADDRESS,
-  WasteWiseABI,
+  CARBONWISE_ADDRESS, CARBONWISEABI,
+  USD_TOKEN_ADDRESS,
 } from "../../constants";
 import BrandOne from "../assets/images/brand/brand-01.svg";
 import BrandTwo from "../assets/images/brand/brand-02.svg";
@@ -21,8 +20,8 @@ const TableOne = () => {
   const leaderboardArray: any[] = [];
 
   const { data } = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getAllUsers",
     account: address,
     onSuccess(data) {
@@ -50,7 +49,7 @@ const TableOne = () => {
   const tokenBalance = (addr: any) => {
     const { data: tokenData, isSuccess } = useBalance({
       address: addr,
-      token: WASTEWISE_TOKEN_ADDRESS,
+      token: USD_TOKEN_ADDRESS,
       onSuccess(td) {
         // tokenArray[addr] = tokenData;
         setLeaderboard(true);
@@ -67,7 +66,7 @@ const TableOne = () => {
       <div className="w-full p-8 rounded-xl border border-base-300 my-2 dark:bg-base-300">
         <h4 className="mb-8 text-xl font-semibold text-base-content">
           {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
+            currentUser?.role === 2
             ? "All Recyclers"
             : "Leaderboard"}
         </h4>
