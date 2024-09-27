@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
+import {
+  useAccount,
+  useContractWrite,
+  useSimulateContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
+import {
+  EVENT_MARKETPLACE_ADDRESS,
+  EVENTMARKETPLACEABI,
+} from "../../../constants";
 import { pinFileToIPFS } from "../../utils";
 import { toast } from "sonner";
 import { parseEther } from "viem";
@@ -41,31 +50,44 @@ const CreateEvent = (props: Props) => {
     }
   };
 
-  const { write, isLoading, data } = useContractWrite({
+  const { data, isError } = useSimulateContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "createListing",
     args: [name, description, image, parseEther(`${price}`), deadline],
-    onError() {
-      toast.error("!Failed to create an event.");
-      setLoading(false);
-    },
-  });
-
-  useWaitForTransaction({
-    hash: data?.hash,
-    onSettled(data, error) {
-      if (data?.blockHash) {
-        toast.success("Event successfully created");
-        setLoading(false);
-        navigate("/dashboard/marketplace");
-      }
-    },
+    // onError() {
+    //   toast.error("!Failed to create an event.");
+    //   setLoading(false);
+    // },
   });
 
   useEffect(() => {
+    toast.error("!Failed to create an event.");
+    setLoading(false);
+  }, [isError]);
+
+  const { writeContract, data: createEventData } = useWriteContract();
+
+  const { isSuccess } = useWaitForTransactionReceipt({
+    hash: createEventData,
+    // onSettled(data, error) {
+    //   if (data?.blockHash) {
+    //     toast.success("Event successfully created");
+    //     setLoading(false);
+    //     navigate("/dashboard/marketplace");
+    //   }
+    // },
+  });
+
+  useEffect(() => {
+    toast.success("Event successfully created");
+    setLoading(false);
+    navigate("/dashboard/marketplace");
+  }, [isSuccess]);
+
+  useEffect(() => {
     if (image != "") {
-      write?.();
+      writeContract?.(data!.request);
     }
   }, [image, name, description, deadline, price]);
 

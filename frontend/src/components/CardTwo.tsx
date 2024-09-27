@@ -1,13 +1,16 @@
 import { useAccount, useContractRead } from "wagmi";
-import { MARKETPLACE_ADDRESS, MarketPlaceABI } from "../../constants";
+import {
+  EVENT_MARKETPLACE_ADDRESS,
+  EVENTMARKETPLACEABI,
+} from "../../constants";
 import { useWasteWiseContext } from "../context";
 import { MdEventNote } from "react-icons/md";
 
 const CardTwo = () => {
   // Items in the marketplace
   const { data } = useContractRead({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "listingId",
   });
 

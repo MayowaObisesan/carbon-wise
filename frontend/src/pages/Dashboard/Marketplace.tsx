@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useContractEvent, useContractRead } from "wagmi";
+import { useWatchContractEvent, useContractRead, useReadContract } from "wagmi";
 import { formatUnits } from "viem";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
@@ -8,6 +8,7 @@ import {
   EVENT_MARKETPLACE_ADDRESS,
   EVENTMARKETPLACEABI,
 } from "../../../constants";
+import { toast } from "sonner";
 
 type Props = {};
 
@@ -15,22 +16,32 @@ const Marketplace = (props: Props) => {
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const { isLoading } = useContractRead({
+  const { isError, isLoading, isSuccess, data, error } = useReadContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "getAllActiveItemInfo",
-    onError(data: any) {
-      console.log(data);
-    },
-    onSuccess(data: any) {
-      setListings(data);
-    },
+    // onError(data: any) {
+    //   console.log(data);
+    // },
+    // onSuccess(data: any) {
+    //   setListings(data);
+    // },
   });
-  useContractEvent({
+
+  useEffect(() => {
+    setListings(data as any[]);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    console.log(error);
+    toast.error("Error occurred when Reading Marketplace data");
+  }, [isError]);
+
+  useWatchContractEvent({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     eventName: "ListingCreated",
-    listener(log) {
+    onLogs(log: any) {
       console.log(log);
     },
   });

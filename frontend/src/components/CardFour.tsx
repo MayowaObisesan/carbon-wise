@@ -1,13 +1,13 @@
 import { useAccount, useContractRead } from "wagmi";
 import { useWasteWiseContext } from "../context";
-import { WASTEWISE_ADDRESS, WasteWiseABI } from "../../constants";
+import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 const CardFour = () => {
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const { data } = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getAllUsers",
     account: address,
   });

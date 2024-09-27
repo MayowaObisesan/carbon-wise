@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useContractWrite } from "wagmi";
+import { useContractWrite, useSimulateContract, useWriteContract } from "wagmi";
 import Button from "../../components/Button";
 import { useWasteWiseContext } from "../../context";
 import { formatDate } from "../../utils";
@@ -20,13 +20,14 @@ const Profile = () => {
   const [email, setEmail] = useState<string>(currentUser?.email);
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
-  const { data, error, write, isError, isLoading, isSuccess } =
-    useContractWrite({
-      address: CARBONWISE_ADDRESS,
-      abi: CARBONWISEABI,
-      args: [{ ...currentUser, country, gender, phoneNo, email }],
-      functionName: "editUser",
-    });
+  const { data, error, isError, isLoading, isSuccess } = useSimulateContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    args: [{ ...currentUser, country, gender, phoneNo, email }],
+    functionName: "editUser",
+  });
+
+  const { writeContract } = useWriteContract();
 
   useEffect(() => {
     if (isSuccess) {
@@ -102,7 +103,7 @@ const Profile = () => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    write?.();
+    writeContract?.(data!.request);
   }
 
   return (
@@ -209,7 +210,10 @@ const Profile = () => {
               <div className="stat-figure text-secondary">
                 <div className="avatar online">
                   <div className="w-16 rounded-full">
-                    <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img
+                      alt=""
+                      src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    />
                   </div>
                 </div>
               </div>

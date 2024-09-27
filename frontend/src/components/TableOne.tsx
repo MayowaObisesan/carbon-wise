@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useAccount, useBalance, useContractRead } from "wagmi";
 import {
-  WASTEWISE_ADDRESS,
-  WASTEWISE_TOKEN_ADDRESS,
-  WasteWiseABI,
+  CARBONWISE_ADDRESS,
+  USD_TOKEN_ADDRESS,
+  CARBONWISEABI,
 } from "../../constants";
 import BrandOne from "../assets/images/brand/brand-01.svg";
 import BrandTwo from "../assets/images/brand/brand-02.svg";
@@ -21,8 +21,8 @@ const TableOne = () => {
   const leaderboardArray: any[] = [];
 
   const { data } = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getAllUsers",
     account: address,
     onSuccess(data) {
@@ -50,7 +50,7 @@ const TableOne = () => {
   const tokenBalance = (addr: any) => {
     const { data: tokenData, isSuccess } = useBalance({
       address: addr,
-      token: WASTEWISE_TOKEN_ADDRESS,
+      token: USD_TOKEN_ADDRESS,
       onSuccess(td) {
         // tokenArray[addr] = tokenData;
         setLeaderboard(true);

@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { useAccount, useContractRead } from "wagmi";
-import { WASTEWISE_ADDRESS, WasteWiseABI } from "../../constants";
+import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 type contextType = {
   wastewiseStore: any;
@@ -110,8 +110,8 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   }, [notifCount]);
 
   const { data } = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getUser",
     // args: [address],
     account: address,
@@ -124,8 +124,8 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   console.log(data);
 
   const statisticsRead = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getStatistics",
     account: address,
     onSuccess(data) {
