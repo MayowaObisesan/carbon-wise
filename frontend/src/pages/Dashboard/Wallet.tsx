@@ -1,4 +1,4 @@
-import { useAccount, useContractEvent, useContractRead } from "wagmi";
+import { useAccount, useReadContract, useWatchContractEvent } from "wagmi";
 import { useWasteWiseContext } from "../../context";
 import { formatDate, formatDateShort, shortenAddress } from "../../utils";
 import {
@@ -30,24 +30,21 @@ const Wallet = () => {
   } = useWasteWiseContext();
   const notificationCount = useNotificationCount();
 
-  const { data } = useContractRead({
+  const { data, isSuccess } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     functionName: "getUserTransactions",
     account: address,
-    onSuccess(res) {
-      setTransactions(res as any);
-    },
   });
 
-  const recycledData = useContractRead({
+  const recycledData = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     functionName: "getUserRecycles",
     account: address,
   });
 
-  const { data: tokenData, isSuccess: gotTokenBalance } = useContractRead({
+  const { data: tokenData, isSuccess: gotTokenBalance } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "balanceOf",
@@ -61,11 +58,11 @@ const Wallet = () => {
     }
   }, [gotTokenBalance]);
   // Plastic Deposit event
-  useContractEvent({
+  useWatchContractEvent({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     eventName: "PlasticDeposited",
-    listener(log) {
+    onLogs(log) {
       // Handle the event returned here.
       console.log("Wallet page transactions fetched");
       if ((log[0] as any)?.args?.depositor === currentUser?.userAddr) {
@@ -84,14 +81,11 @@ const Wallet = () => {
               });
           },
         });
-        const { data } = useContractRead({
+        const { data } = useReadContract({
           address: CARBONWISE_ADDRESS,
           abi: CARBONWISEABI,
           functionName: "getUserTransactions",
           account: address,
-          onSuccess(res) {
-            setTransactions(res as any);
-          },
         });
         // setTransactions(data);
         // setTransactions(log);
@@ -100,11 +94,11 @@ const Wallet = () => {
   });
 
   // Profile Update event
-  useContractEvent({
+  useWatchContractEvent({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     eventName: "UserEdited",
-    listener(log) {
+    onLogs(log) {
       // Handle the event returned here.
       console.log(log);
       console.log("Wallet page profile update fetched");
@@ -357,6 +351,12 @@ const Wallet = () => {
       return <span className="badge badge-neutral badge-md">Profile</span>;
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTransactions(data as any);
+    }
+  }, [isSuccess])
 
   return (
     <section className="relative flex flex-col w-full p-4 space-y-12 lg:py-8">
