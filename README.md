@@ -82,15 +82,12 @@ The smart contracts are released under the UNLICENSED and MIT licenses, allowing
 
 # Deployed contract Address
 
-- RCarbon-Wise
-0xCD721817d72508D6506a0c64a1695A802c838674
+Contract Addresses associated with Carbon-Wise on Lisk Sepolia Testnet
 
-- Wastewise:
-0xd31c46e577dec42b691b6bc2de7f2d5c202102bc
+USDToken - 0xa2AC8D024CF130f5a54380122ae0d76d865339b4
 
-https://goerli.basescan.org/address/0xd31c46e577dec42b691b6bc2de7f2d5c202102bc
+CarbonWise - 0x1933Eda841a710E454583ea441e5fc43b19C306c
 
-- MarketPlace:
-0x9d2a9adfbe03bf043dc806e4b79b34e3132b6c08
+EventMarketPlace - 0x19Ebea8A04476F2d4f8734bd31eC26403d057702
 
-https://goerli.basescan.org/address/0x9d2a9adfbe03bf043dc806e4b79b34e3132b6c08
+CcMarketPlace - 0x6Eb37b2f0B5C9cA138E706815734cccf854c0e34
