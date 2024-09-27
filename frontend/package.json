@@ -34,7 +34,7 @@
     "sonner": "^1.2.0",
     "sort-by": "^0.0.2",
     "util": "^0.12.4",
-    "viem": "~0.3.36",
+    "viem": "^2.21.15",
     "wagmi": "^1.0.6"
   },
   "devDependencies": {
