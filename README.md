@@ -1,30 +1,30 @@
-# WasteWise Protocol Smart Contract Documentation
+# CarbonWise Smart Contract Documentation
 
 ## Overview
 
-**WasteWise** protocol is a green chain, sustainable environment-first (Waste to Wealth) blockchain-powered platform designed to incentivize recycling and responsible waste disposal, contributing significantly to the creation of cleaner, more sustainable urban environments.
+**CarbonWise** is a green chain, sustainable environment-first (Waste to Wealth) blockchain-powered platform designed to incentivize recycling and responsible waste disposal, contributing significantly to the creation of cleaner, more sustainable urban environments.
 
-_WasteWise plays a pivotal role in advancing Sustainable Development Goal 11 - "Sustainable Cities and Communities._
+_CarbonWise plays a pivotal role in advancing Sustainable Development Goal 11 - "Sustainable Cities and Communities._
 
-The WasteWise Protocol is a comprehensive blockchain-based solution comprising three core contracts: `WasteWise`, `RwasteWise`, and `MarketPlace`. This integrated system is designed to promote environmental sustainability by rewarding users for recycling efforts through the issuance of receipt tokens (RWISE) and enabling the trade of items in a marketplace.
+The CarbonWise is a comprehensive blockchain-based solution comprising three core contracts: `CarbonWise`, `RCarbonWise`, and `MarketPlace`. This integrated system is designed to promote environmental sustainability by rewarding users for recycling efforts through the issuance of receipt tokens (RWISE) and enabling the trade of items in a marketplace.
 
 ## Contracts
 
-### WasteWise
+### CarbonWise
 
-- **Name**: WasteWise
+- **Name**: CarbonWise
 - **License**: UNLICENSED
 - **Solidity Version**: ^0.8.13
 
-**WasteWise** is a smart contract that manages user recycling information and rewards users for their recycling activities. Users can create accounts, record recycling transactions, and earn tokens for their efforts.
+**CarbonWise** is a smart contract that manages user recycling information and rewards users for their recycling activities. Users can create accounts, record recycling transactions, and earn tokens for their efforts.
 
-### RwasteWise
+### RCarbonWise
 
-- **Name**: RwasteWise
+- **Name**: RCarbonWise
 - **License**: MIT
 - **Solidity Version**: >=0.7.0 <0.9.0
 
-**RwasteWise** is the Receipt token contract used within the WasteWise Protocol. It allows the minting and burning of receipt tokens and serves as a reward for users who deposit pet bottles.
+**RCarbonWise** is the Receipt token contract used within the CarbonWise. It allows the minting and burning of receipt tokens and serves as a reward for users who deposit pet bottles.
 
 ### MarketPlace
 
@@ -36,7 +36,7 @@ The WasteWise Protocol is a comprehensive blockchain-based solution comprising t
 
 ## Core Functionality
 
-### User Account Management (WasteWise)
+### User Account Management (CarbonWise)
 
 - Users can create accounts with personal information.
 - Recycling transactions are recorded, and users earn tokens.
@@ -57,15 +57,15 @@ The WasteWise Protocol is a comprehensive blockchain-based solution comprising t
 
 ## Data Structures
 
-- **User Structure (WasteWise)**: Represents user information.
-- **Gender Enumeration (WasteWise)**: Enumerates user gender.
-- **Recycled Structure (WasteWise)**: Represents recycling transactions.
+- **User Structure (CarbonWise)**: Represents user information.
+- **Gender Enumeration (CarbonWise)**: Enumerates user gender.
+- **Recycled Structure (CarbonWise)**: Represents recycling transactions.
 - **ItemInfo Structure (MarketPlace)**: Stores item listing information.
 
 ## State Variables
 
-- **WasteWise**: Stores user data and recycling transactions.
-- **RwasteWise**: Manages receipt tokens.
+- **CarbonWise**: Stores user data and recycling transactions.
+- **RCarbonWise**: Manages receipt tokens.
 - **MarketPlace**: Manages item listings and transactions.
 
 ## Custom Errors
@@ -74,7 +74,7 @@ The WasteWise Protocol is a comprehensive blockchain-based solution comprising t
 
 ## Usage
 
-The WasteWise Protocol smart contract system is designed to create a sustainable ecosystem where users are rewarded for recycling and can trade items in a marketplace. Users can create accounts, record recycling transactions, manage receipt tokens, and participate in the marketplace. The system encourages environmental sustainability and promotes recycling practices.
+The CarbonWise smart contract system is designed to create a sustainable ecosystem where users are rewarded for recycling and can trade items in a marketplace. Users can create accounts, record recycling transactions, manage receipt tokens, and participate in the marketplace. The system encourages environmental sustainability and promotes recycling practices.
 
 ## License
 
@@ -82,7 +82,7 @@ The smart contracts are released under the UNLICENSED and MIT licenses, allowing
 
 # Deployed contract Address
 
-- Rwastewise
+- RCarbonWise
 0xCD721817d72508D6506a0c64a1695A802c838674
 
 - Wastewise:
