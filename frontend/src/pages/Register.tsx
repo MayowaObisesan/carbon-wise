@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import { CountryDropdown } from "react-country-region-selector";
 import {
-  usePrepareContractWrite,
-  useContractWrite,
-  useWaitForTransaction,
-  useContractRead,
   useAccount,
-  useContractEvent,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import { WasteWise } from "../components/WasteWise";
@@ -34,24 +31,17 @@ const Register = () => {
   const { currentUser, setCurrentUser, wastewiseStore, setNotifCount } =
     useWasteWiseContext();
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
 
-  const { config } = usePrepareContractWrite({
-    address: CARBONWISE_ADDRESS,
-    abi: CARBONWISEABI,
-    args: [name, country, gender, number, email],
-    functionName: "createUserAcct",
-  });
 
-  const { data, write, isError, isLoading, isSuccess } =
-    useContractWrite(config);
-  const { isLoading: settling, error } = useWaitForTransaction({
+  const { isLoading: settling, error } = useWaitForTransactionReceipt({
     confirmations: 1,
-    hash: data?.hash,
+    hash
   });
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      console.log(hash);
       // setCurrentUser(data);
       toast.success("Registration successful", {
         duration: 10000,
@@ -123,7 +113,12 @@ const Register = () => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    write?.();
+    writeContract({
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISEABI,
+      args: [name, country, gender, number, email],
+      functionName: "createUserAcct",
+    });
   }
 
   return (
@@ -316,7 +311,7 @@ const Register = () => {
               <Button
                 name={isLoading ? "Loading..." : "Sign up"}
                 size="md btn-block lg:btn-wide"
-                disabled={!write || isLoading}
+                disabled={isLoading}
                 onClick={handleSubmit}
               >
                 {(isLoading || settling) && <span className="loading"></span>}
@@ -335,7 +330,7 @@ const Register = () => {
               <div>
                 Successfully signed you up!
                 <div>
-                  <a href={`https://sepolia.etherscan.io/tx/${data?.hash}`}>
+                  <a href={`https://sepolia.etherscan.io/tx/${hash}`}>
                     Confirm your transaction on Etherscan
                   </a>
                 </div>

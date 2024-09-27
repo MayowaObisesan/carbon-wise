@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import {
   useAccount,
-  useContractEvent,
-  useContractRead,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWatchContractEvent,
+  useWriteContract,
 } from "wagmi";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatEther, formatUnits, parseEther } from "viem";
@@ -36,6 +35,9 @@ const SingleEvent = () => {
 
   const navigate = useNavigate();
 
+  const { data: hash, writeContract, isError: isError1, isPending: isLoading1, isSuccess: isSuccess1 } = useWriteContract()
+  const { data: hash2, writeContract: writeContract2, isError: isError3, isPending: isLoading2, isSuccess: isSuccess3 } = useWriteContract()
+
   const increase = () => {
     setAmount(amount + 1);
   };
@@ -48,40 +50,25 @@ const SingleEvent = () => {
     }
   };
 
-  const { isLoading } = useContractRead({
+  const { isLoading, isError, isSuccess, data } = useReadContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "getItemInfo",
     args: [id],
-    onError(data: any) {
-      console.log(data);
-    },
-    onSuccess(data: any) {
-      setListing(data);
-      setLoading(false);
-      setPrice(Number(formatUnits(data.price, 18)));
-      settotal(amount * Number(formatUnits(data.price, 18)));
-    },
   });
 
-  const { data: allowanceData, isLoading: loading1 } = useContractRead({
+  const { data: allowanceData, isLoading: loading1, isError: isError2, isSuccess: isSuccess2 } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "allowance",
     args: [address, EVENT_MARKETPLACE_ADDRESS],
-    onError(data: any) {
-      console.log(data);
-    },
-    onSuccess(data: any) {
-      setAllowance(data);
-    },
   });
 
-  useContractEvent({
+  useWatchContractEvent({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     eventName: "Approval",
-    listener(log: any) {
+    onLogs(log: any) {
       setallowanceListener(log);
     },
   });
@@ -95,63 +82,32 @@ const SingleEvent = () => {
     }
   };
 
-  const { config: buyListingConfig } = usePrepareContractWrite({
-    address: EVENT_MARKETPLACE_ADDRESS,
-    abi: EVENTMARKETPLACEABI,
-    functionName: "buyListing",
-    args: [listing?.itemId, amount],
-    onError(data: any) {
-      console.log(data);
-      // toast.error("!Failed to purchase item");
-      setLoading(false);
-    },
-  });
-  const {
-    data: payData,
-    write,
-    isError: isErrorP,
-  } = useContractWrite(buyListingConfig);
 
-  const { config: approveListing } = usePrepareContractWrite({
-    address: USD_TOKEN_ADDRESS,
-    abi: USDTOKENABI,
-    functionName: "approve",
-    args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)],
-    onError(data: any) {
-      console.log(data);
-      toast.error("Approval failed");
-      setLoadingA(false);
-    },
-  });
 
-  const {
-    data: approveData,
-    write: write2,
-    isError: isErrorA,
-  } = useContractWrite(approveListing);
 
-  useWaitForTransaction({
-    hash: approveData?.hash,
-    onSettled(data, error) {
-      if (data?.blockHash) {
-        toast.success("Approval successful");
-        console.log("he don approve");
-        setLoadingA(false);
-        // navigate()
-        // write?.();
-      }
-    },
+
+  const { isLoading: settling1 } = useWaitForTransactionReceipt({
+    hash: hash2,
+    // onSettled(data, error) {
+    //   if (data?.blockHash) {
+    //     toast.success("Approval successful");
+    //     console.log("he don approve");
+    //     setLoadingA(false);
+    //     // navigate()
+    //     // write?.();
+    //   }
+    // },
   });
-  useWaitForTransaction({
-    hash: payData?.hash,
-    onSettled(data, error) {
-      if (data?.blockHash) {
-        console.log("he don pay");
-        toast.success("Item successfully purchased");
-        setLoading(false);
-        navigate("/dashboard/myEvents");
-      }
-    },
+  const { isLoading: settling2 } = useWaitForTransactionReceipt({
+    hash: hash,
+    // onSettled(data, error) {
+    //   if (data?.blockHash) {
+    //     console.log("he don pay");
+    //     toast.success("Item successfully purchased");
+    //     setLoading(false);
+    //     navigate("/dashboard/myEvents");
+    //   }
+    // },
   });
 
   const handleApprove = (e: any) => {
@@ -159,14 +115,36 @@ const SingleEvent = () => {
     // const value = allowanceAmountRef.current?.value;
     // setAllowanceAmount(value);
     setLoadingA(true);
-    write2?.();
+    writeContract2({
+      address: USD_TOKEN_ADDRESS,
+      abi: USDTOKENABI,
+      functionName: "approve",
+      args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)]
+    });
   };
   const handlePay = async () => {
     setLoading(true);
     console.log(true);
     // write2?.();
-    write?.();
+    writeContract({
+      address: EVENT_MARKETPLACE_ADDRESS,
+      abi: EVENTMARKETPLACEABI,
+      functionName: "buyListing",
+      args: [listing?.itemId, amount],
+    });
   };
+
+  useEffect(() => {
+    if (isError1) {
+      console.log("error")
+      setLoading(false);
+    }
+    if (isError3) {
+      console.log("Error");
+      toast.error("Approval failed");
+      setLoadingA(false);
+    }
+  }, [isError1, isError3])
 
   useEffect(() => {
     if (isLoading) {
@@ -174,16 +152,16 @@ const SingleEvent = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isErrorA) {
-      setLoadingA(false);
-    }
-  }, [isErrorA]);
-  useEffect(() => {
-    if (isErrorP) {
-      setLoading(false);
-    }
-  }, [isErrorP]);
+  // useEffect(() => {
+  //   if (isErrorA) {
+  //     setLoadingA(false);
+  //   }
+  // }, [isErrorA]);
+  // useEffect(() => {
+  //   if (isErrorP) {
+  //     setLoading(false);
+  //   }
+  // }, [isErrorP]);
   useEffect(() => {
     settotal(amount * price);
     window.localStorage.setItem("itemAmount", `${amount}`);
@@ -191,6 +169,27 @@ const SingleEvent = () => {
   useEffect(() => { }, [allowanceAmount]);
   useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("Error");
+    }
+    if (isSuccess) {
+      setListing(data);
+      setLoading(false);
+      setPrice(Number(formatUnits(data?.price, 18)));
+      settotal(amount * Number(formatUnits(data?.price, 18)));
+    }
+  }, [isError, isSuccess])
+
+  useEffect(() => {
+    if (isError2) {
+      console.log("Error");
+    }
+    if (isSuccess2) {
+      setAllowance(allowanceData as any);
+    }
+  }, [isError2, isSuccess2])
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start gap-x-8">

@@ -1,27 +1,13 @@
-import { configureChains, createConfig } from "wagmi";
+import { createConfig, http } from "wagmi";
 import { liskSepolia } from "viem/chains";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-
-import { publicProvider } from "wagmi/providers/public";
-
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [
-    liskSepolia,
-    ...(import.meta.env?.MODE === "development" ? [liskSepolia] : []),
-  ],
-  [
-    alchemyProvider({ apiKey: "ix0-fxmVivwaIWYHtIpwVZB7wC8TpxEm" }),
-    publicProvider(),
-  ]
-);
+import { metaMask } from "wagmi/connectors";
 
 console.log(liskSepolia);
 
 export const config = createConfig({
-  autoConnect: true,
+  chains: [liskSepolia],
   connectors: [
-    new MetaMaskConnector({ chains }),
+    metaMask(),
     // new CoinbaseWalletConnector({
     //   chains,
     //   options: {
@@ -36,6 +22,7 @@ export const config = createConfig({
     //   },
     // }),
   ],
-  publicClient,
-  webSocketPublicClient,
+  transports: {
+    [liskSepolia.id]: http(),
+  },
 });
