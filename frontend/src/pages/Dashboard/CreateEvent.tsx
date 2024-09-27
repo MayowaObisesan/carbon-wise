@@ -87,7 +87,7 @@ const CreateEvent = (props: Props) => {
 
   useEffect(() => {
     if (image != "") {
-      writeContract?.(data!.request);
+      writeContract(data!.request);
     }
   }, [image, name, description, deadline, price]);
 
