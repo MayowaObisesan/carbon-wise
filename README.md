@@ -1,30 +1,34 @@
-# CarbonWise Smart Contract Documentation
+# Carbon-Wise Smart Contract Documentation
 
 ## Overview
 
-**CarbonWise** is a cutting-edge blockchain-powered platform designed to address two major global challenges: plastic waste and climate change. By transforming plastic waste recycling into tradeable carbon credits, CarbonWise offers a unique solution that incentivizes responsible waste disposal while contributing to global climate action. With a transparent and secure platform powered by blockchain, we’re helping users make a measurable difference in the fight against climate change, while also benefiting from the growing carbon market. Every recycled bottle not only reduces plastic waste but also contributes to significant CO₂ savings.
+**Carbon-Wise** is a cutting-edge blockchain-powered platform designed to address two major global challenges: plastic waste and climate change. By transforming plastic waste recycling into tradeable carbon credits, Carbon-Wise offers a unique solution that incentivizes responsible waste disposal while contributing to global climate action. With a transparent and secure platform powered by blockchain, we’re helping users make a measurable difference in the fight against climate change, while also benefiting from the growing carbon market. Every recycled bottle not only reduces plastic waste but also contributes to significant CO₂ savings.
 
-Let’s turn waste into wealth—and carbon reductions. Let’s build a sustainable future with **CarbonWise**.
+Let’s turn waste into wealth—and carbon reductions. Let’s build a sustainable future with **Carbon-Wise**.
 
-The CarbonWise is a comprehensive blockchain-based solution comprising three core contracts: `CarbonWise`, `RCarbonWise`, and `MarketPlace`. This integrated system is designed to promote environmental sustainability by rewarding users for recycling efforts through the issuance of receipt tokens (RWISE) and enabling the trade of items in a marketplace.
+## The Platform: Carbon-Wise
+
+**Carbon-Wise** tokenizes real-world assets (recycled plastic) to create a transparent and verifiable market for carbon credits. Our platform enables users to deposit plastic waste at designated collection points in exchange for Deposit Tokens, which can be spent in the marketplace. The collected plastics are then sent to recycling facilities where they are processed and converted into verifiable carbon credits.
 
 ## Contracts
 
-### CarbonWise
+The Carbon-Wise is a comprehensive blockchain-based solution comprising three core contracts: `Carbon-Wise`, `RCarbon-Wise`, and `MarketPlace`. This integrated system is designed to promote environmental sustainability by rewarding users for recycling efforts through the issuance of receipt tokens (RWISE) and enabling the trade of items in a marketplace.
 
-- **Name**: CarbonWise
+### Carbon-Wise
+
+- **Name**: Carbon-Wise
 - **License**: UNLICENSED
 - **Solidity Version**: ^0.8.13
 
-**CarbonWise** is a smart contract that manages user recycling information and rewards users for their recycling activities. Users can create accounts, record recycling transactions, and earn tokens for their efforts.
+**Carbon-Wise** is a smart contract that manages user recycling information and rewards users for their recycling activities. Users can create accounts, record recycling transactions, and earn tokens for their efforts.
 
-### RCarbonWise
+### RCarbon-Wise
 
-- **Name**: RCarbonWise
+- **Name**: RCarbon-Wise
 - **License**: MIT
 - **Solidity Version**: >=0.7.0 <0.9.0
 
-**RCarbonWise** is the Receipt token contract used within the CarbonWise. It allows the minting and burning of receipt tokens and serves as a reward for users who deposit pet bottles.
+**RCarbon-Wise** is the Receipt token contract used within the Carbon-Wise. It allows the minting and burning of receipt tokens and serves as a reward for users who deposit pet bottles.
 
 ### MarketPlace
 
@@ -36,14 +40,14 @@ The CarbonWise is a comprehensive blockchain-based solution comprising three cor
 
 ## Core Functionality
 
-### User Account Management (CarbonWise)
+### User Account Management (Carbon-Wise)
 
 - Users can create accounts with personal information.
 - Recycling transactions are recorded, and users earn tokens.
 - Users can edit their information.
 - User data is stored in a structured format.
 
-### Receipt Token Management (RCarbonWise)
+### Receipt Token Management (RCarbon-Wise)
 
 - Token contract to mint and burn receipt tokens.
 - Users receive tokens as rewards for recycling efforts.
@@ -57,15 +61,15 @@ The CarbonWise is a comprehensive blockchain-based solution comprising three cor
 
 ## Data Structures
 
-- **User Structure (CarbonWise)**: Represents user information.
-- **Gender Enumeration (CarbonWise)**: Enumerates user gender.
-- **Recycled Structure (CarbonWise)**: Represents recycling transactions.
+- **User Structure (Carbon-Wise)**: Represents user information.
+- **Gender Enumeration (Carbon-Wise)**: Enumerates user gender.
+- **Recycled Structure (Carbon-Wise)**: Represents recycling transactions.
 - **ItemInfo Structure (MarketPlace)**: Stores item listing information.
 
 ## State Variables
 
-- **CarbonWise**: Stores user data and recycling transactions.
-- **RCarbonWise**: Manages receipt tokens.
+- **Carbon-Wise**: Stores user data and recycling transactions.
+- **RCarbon-Wise**: Manages receipt tokens.
 - **MarketPlace**: Manages item listings and transactions.
 
 ## Custom Errors
@@ -74,7 +78,7 @@ The CarbonWise is a comprehensive blockchain-based solution comprising three cor
 
 ## Usage
 
-The CarbonWise smart contract system is designed to create a sustainable ecosystem where users are rewarded for recycling and can trade items in a marketplace. Users can create accounts, record recycling transactions, manage receipt tokens, and participate in the marketplace. The system encourages environmental sustainability and promotes recycling practices.
+The Carbon-Wise smart contract system is designed to create a sustainable ecosystem where users are rewarded for recycling and can trade items in a marketplace. Users can create accounts, record recycling transactions, manage receipt tokens, and participate in the marketplace. The system encourages environmental sustainability and promotes recycling practices.
 
 ## License
 
@@ -82,7 +86,7 @@ The smart contracts are released under the UNLICENSED and MIT licenses, allowing
 
 # Deployed contract Address
 
-- RCarbonWise
+- RCarbon-Wise
 0xCD721817d72508D6506a0c64a1695A802c838674
 
 - Wastewise:
