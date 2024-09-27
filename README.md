@@ -1,5 +1,7 @@
 # Carbon-Wise Smart Contract Documentation
 
+![Image](./carbon-wise-logo.svg)
+
 ## Overview
 
 **Carbon-Wise** is a cutting-edge blockchain-powered platform designed to address two major global challenges: plastic waste and climate change. By transforming plastic waste recycling into tradeable carbon credits, Carbon-Wise offers a unique solution that incentivizes responsible waste disposal while contributing to global climate action. With a transparent and secure platform powered by blockchain, we’re helping users make a measurable difference in the fight against climate change, while also benefiting from the growing carbon market. Every recycled bottle not only reduces plastic waste but also contributes to significant CO₂ savings.
@@ -9,6 +11,8 @@ Let’s turn waste into wealth—and carbon reductions. Let’s build a sustaina
 ## The Platform: Carbon-Wise
 
 **Carbon-Wise** tokenizes real-world assets (recycled plastic) to create a transparent and verifiable market for carbon credits. Our platform enables users to deposit plastic waste at designated collection points in exchange for Deposit Tokens, which can be spent in the marketplace. The collected plastics are then sent to recycling facilities where they are processed and converted into verifiable carbon credits.
+
+![Image](./Roadmap.svg)
 
 ## Contracts
 
