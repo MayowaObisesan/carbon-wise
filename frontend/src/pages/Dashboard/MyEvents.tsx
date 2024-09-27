@@ -1,8 +1,17 @@
 import { formatDate } from "../../utils";
 import { useEffect, useState } from "react";
-import { useAccount, useContractEvent, useContractRead } from "wagmi";
-import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
+import {
+  useAccount,
+  useWatchContractEvent,
+  useContractRead,
+  useReadContract,
+} from "wagmi";
+import {
+  EVENT_MARKETPLACE_ADDRESS,
+  EVENTMARKETPLACEABI,
+} from "../../../constants";
 import { formatEther } from "viem";
+import { toast } from "sonner";
 
 type Props = {};
 
@@ -11,26 +20,26 @@ const MyEvents = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const { address } = useAccount();
 
-  const { isLoading } = useContractRead({
+  const { isLoading, isError, isSuccess, data, error } = useReadContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "getEventsByUser",
     args: [address],
-    onError(data: any) {
-      console.log(data);
-      setLoading(false);
-    },
-    onSuccess(data: any) {
-      setEvents(data);
-      setLoading(false);
-    },
+    // onError(data: any) {
+    //   console.log(data);
+    //   setLoading(false);
+    // },
+    // onSuccess(data: any) {
+    //   setEvents(data);
+    //   setLoading(false);
+    // },
   });
 
-  useContractEvent({
+  useWatchContractEvent({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     eventName: "ListingBought",
-    listener(log) {
+    onLogs(log) {
       console.log(log);
     },
   });
@@ -40,6 +49,17 @@ const MyEvents = (props: Props) => {
       setLoading(true);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(error);
+    setLoading(false);
+    toast.error("Error occurred reading events");
+  }, [isError]);
+
+  useEffect(() => {
+    setEvents(data as any[]);
+    setLoading(false);
+  }, [isSuccess]);
 
   return (
     <div className="my-8 w-10/12">

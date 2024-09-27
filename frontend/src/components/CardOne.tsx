@@ -1,9 +1,7 @@
 import { useAccount, useContractRead } from "wagmi";
 import { useWasteWiseContext } from "../context";
-import {
-  USD_TOKEN_ADDRESS,
-  USDTOKENABI,
-} from "../../constants";
+import { USDTOKENABI, USD_TOKEN_ADDRESS } from "../../constants";
+
 import { formatEther } from "viem";
 import { GiToken } from "react-icons/gi";
 

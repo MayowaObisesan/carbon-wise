@@ -3,12 +3,14 @@ import * as ReactDOM from "react-dom/client";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-
 import { App } from "./App";
 import { config } from "./wagmi";
 import WastewiseProvider from "./context";
 // import "./satoshi.css";
 import "./index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const queryClient = new QueryClient()
 

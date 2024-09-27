@@ -1,27 +1,11 @@
-import { createConfig, http } from "wagmi";
-import { liskSepolia } from "viem/chains";
 import { metaMask } from "wagmi/connectors";
 
-console.log(liskSepolia);
+import { http, createConfig } from "wagmi";
+import { liskSepolia } from "wagmi/chains";
 
 export const config = createConfig({
   chains: [liskSepolia],
-  connectors: [
-    metaMask(),
-    // new CoinbaseWalletConnector({
-    //   chains,
-    //   options: {
-    //     appName: "wagmi",
-    //   },
-    // }),
-    // new InjectedConnector({
-    //   chains,
-    //   options: {
-    //     name: "Injected",
-    //     shimDisconnect: true,
-    //   },
-    // }),
-  ],
+  connectors: [metaMask()],
   transports: {
     [liskSepolia.id]: http(),
   },

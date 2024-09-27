@@ -4,9 +4,9 @@ import { useRef, useState, useEffect } from "react";
 import localforage from "localforage";
 import {
   useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
+  useSimulateContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import { CARBONWISEABI, CARBONWISE_ADDRESS } from "../../../constants";
@@ -22,7 +22,7 @@ const Recycle = () => {
   const { currentUser, wastewiseStore, setNotifCount } = useWasteWiseContext();
   const navigate = useNavigate();
 
-  const { config: depositPlasticConfig } = usePrepareContractWrite({
+  const { data } = useSimulateContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     functionName: "depositPlastic",
@@ -33,20 +33,25 @@ const Recycle = () => {
     data: depositPlasticData,
     isError: isDepositPlasticError,
     error,
-    write: depositPlasticWrite,
-    isLoading,
-  } = useContractWrite(depositPlasticConfig);
+    writeContract: depositPlasticWrite,
+    isPending,
+  } = useWriteContract();
 
   const { isLoading: isDepositingPlastic, isSuccess: isPlasticDeposited } =
-    useWaitForTransaction({
-      hash: depositPlasticData?.hash,
-      onSettled(data, error) {
-        if (data?.blockHash) {
-          setNumPlastic(0);
-          setUserId(0);
-        }
-      },
+    useWaitForTransactionReceipt({
+      hash: depositPlasticData,
+      // onSettled(data: { blockHash: any }, error: any) {
+      //   if (data?.blockHash) {
+      //     setNumPlastic(0);
+      //     setUserId(0);
+      //   }
+      // },
     });
+
+  useEffect(() => {
+    setNumPlastic(0);
+    setUserId(0);
+  }, [isPlasticDeposited]);
 
   useEffect(() => {
     if (isDepositingPlastic) {
@@ -60,17 +65,17 @@ const Recycle = () => {
   const handleDepositPlastic = async (e: any) => {
     e.preventDefault();
     // console.log(true);
-    depositPlasticWrite?.();
+    depositPlasticWrite?.(data!.request);
   };
 
   useEffect(() => {
-    if (isLoading) {
+    if (isPending) {
       toast.loading("Approving Recycled item(s)", {
         // description: "My description",
         duration: 5000,
       });
     }
-  }, [isLoading]);
+  }, [isPending]);
 
   useEffect(() => {
     if (isPlasticDeposited) {
@@ -213,7 +218,7 @@ const Recycle = () => {
             </label>
           </div>
           <Button name="Recycle" size="block" customStyle="w-full">
-            {(isLoading || isDepositingPlastic) && (
+            {(isPending || isDepositingPlastic) && (
               <span className="loading"></span>
             )}
           </Button>
