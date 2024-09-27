@@ -1,4 +1,4 @@
-# WasteWise Frontend Repository
+# Carbon-Wise Frontend Repository
 
 This is a [wagmi](https://wagmi.sh) + [Vite](https://vitejs.dev/) + [@wagmi/cli](https://wagmi.sh/cli) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
 
