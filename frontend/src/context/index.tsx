@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useContractRead, useReadContract } from "wagmi";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 type contextType = {
@@ -109,13 +109,15 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     fetchNotifications();
   }, [notifCount]);
 
-  const { data } = useContractRead({
+  const { data } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     functionName: "getUser",
     // args: [address],
     account: address,
-    enabled: true,
+    query: {
+      enabled: true,
+    },
     // onSuccess(data) {
     //   setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     // },
@@ -123,25 +125,25 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
 
   console.log(data);
 
-  const statisticsRead = useContractRead({
+  const statisticsRead = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
     functionName: "getStatistics",
     account: address,
-    onSuccess(data) {
-      setStatistics(data as any);
-    },
+    // onSuccess(data) {
+    //   setStatistics(data as any);
+    // },
   });
 
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
-    return () => { };
+    return () => {};
   }, [data, isRegistered]);
 
   useEffect(() => {
     setStatistics(statisticsRead.data);
-  }, [statisticsRead.data]);
+  }, [statisticsRead.data, statisticsRead.isSuccess]);
 
   return (
     <WastewiseContext.Provider

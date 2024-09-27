@@ -12,5 +12,14 @@ export default defineConfig({
       util: 'util',
     },
   },
+  build: {
+    rollupOptions: {
+      external: [
+        '@safe-globalThis/safe-apps-sdk',
+        '@safe-globalThis/safe-apps-provider'
+        // ... other external modules ...
+      ],
+    },
+  },
   plugins: [react()],
 })

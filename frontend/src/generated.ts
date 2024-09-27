@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   useContractRead,
   UseContractReadConfig,
@@ -445,13 +446,13 @@ export function useErc20Write<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc20ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
+      PrepareWriteContractResult<typeof erc20ABI, string>['request']['abi'],
+      TFunctionName,
+      TMode
+    >
     : UseContractWriteConfig<typeof erc20ABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
+      abi?: never
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, TFunctionName, TMode>({
     abi: erc20ABI,
@@ -465,17 +466,17 @@ export function useErc20Write<
 export function useErc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'approve'
-        >['request']['abi'],
-        'approve',
-        TMode
-      > & { functionName?: 'approve' }
+      PrepareWriteContractResult<
+        typeof erc20ABI,
+        'approve'
+      >['request']['abi'],
+      'approve',
+      TMode
+    > & { functionName?: 'approve' }
     : UseContractWriteConfig<typeof erc20ABI, 'approve', TMode> & {
-        abi?: never
-        functionName?: 'approve'
-      } = {} as any,
+      abi?: never
+      functionName?: 'approve'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, 'approve', TMode>({
     abi: erc20ABI,
@@ -490,17 +491,17 @@ export function useErc20Approve<TMode extends WriteContractMode = undefined>(
 export function useErc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'transfer'
-        >['request']['abi'],
-        'transfer',
-        TMode
-      > & { functionName?: 'transfer' }
+      PrepareWriteContractResult<
+        typeof erc20ABI,
+        'transfer'
+      >['request']['abi'],
+      'transfer',
+      TMode
+    > & { functionName?: 'transfer' }
     : UseContractWriteConfig<typeof erc20ABI, 'transfer', TMode> & {
-        abi?: never
-        functionName?: 'transfer'
-      } = {} as any,
+      abi?: never
+      functionName?: 'transfer'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, 'transfer', TMode>({
     abi: erc20ABI,
@@ -517,17 +518,17 @@ export function useErc20TransferFrom<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'transferFrom'
-        >['request']['abi'],
-        'transferFrom',
-        TMode
-      > & { functionName?: 'transferFrom' }
+      PrepareWriteContractResult<
+        typeof erc20ABI,
+        'transferFrom'
+      >['request']['abi'],
+      'transferFrom',
+      TMode
+    > & { functionName?: 'transferFrom' }
     : UseContractWriteConfig<typeof erc20ABI, 'transferFrom', TMode> & {
-        abi?: never
-        functionName?: 'transferFrom'
-      } = {} as any,
+      abi?: never
+      functionName?: 'transferFrom'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, 'transferFrom', TMode>({
     abi: erc20ABI,
@@ -544,17 +545,17 @@ export function useErc20IncreaseAllowance<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'increaseAllowance'
-        >['request']['abi'],
-        'increaseAllowance',
-        TMode
-      > & { functionName?: 'increaseAllowance' }
+      PrepareWriteContractResult<
+        typeof erc20ABI,
+        'increaseAllowance'
+      >['request']['abi'],
+      'increaseAllowance',
+      TMode
+    > & { functionName?: 'increaseAllowance' }
     : UseContractWriteConfig<typeof erc20ABI, 'increaseAllowance', TMode> & {
-        abi?: never
-        functionName?: 'increaseAllowance'
-      } = {} as any,
+      abi?: never
+      functionName?: 'increaseAllowance'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, 'increaseAllowance', TMode>({
     abi: erc20ABI,
@@ -571,17 +572,17 @@ export function useErc20DecreaseAllowance<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'decreaseAllowance'
-        >['request']['abi'],
-        'decreaseAllowance',
-        TMode
-      > & { functionName?: 'decreaseAllowance' }
+      PrepareWriteContractResult<
+        typeof erc20ABI,
+        'decreaseAllowance'
+      >['request']['abi'],
+      'decreaseAllowance',
+      TMode
+    > & { functionName?: 'decreaseAllowance' }
     : UseContractWriteConfig<typeof erc20ABI, 'decreaseAllowance', TMode> & {
-        abi?: never
-        functionName?: 'decreaseAllowance'
-      } = {} as any,
+      abi?: never
+      functionName?: 'decreaseAllowance'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc20ABI, 'decreaseAllowance', TMode>({
     abi: erc20ABI,
@@ -931,13 +932,13 @@ export function useErc721Write<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc721ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
+      PrepareWriteContractResult<typeof erc721ABI, string>['request']['abi'],
+      TFunctionName,
+      TMode
+    >
     : UseContractWriteConfig<typeof erc721ABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
+      abi?: never
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc721ABI, TFunctionName, TMode>({
     abi: erc721ABI,
@@ -951,17 +952,17 @@ export function useErc721Write<
 export function useErc721Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc721ABI,
-          'approve'
-        >['request']['abi'],
-        'approve',
-        TMode
-      > & { functionName?: 'approve' }
+      PrepareWriteContractResult<
+        typeof erc721ABI,
+        'approve'
+      >['request']['abi'],
+      'approve',
+      TMode
+    > & { functionName?: 'approve' }
     : UseContractWriteConfig<typeof erc721ABI, 'approve', TMode> & {
-        abi?: never
-        functionName?: 'approve'
-      } = {} as any,
+      abi?: never
+      functionName?: 'approve'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc721ABI, 'approve', TMode>({
     abi: erc721ABI,
@@ -978,17 +979,17 @@ export function useErc721SafeTransferFrom<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc721ABI,
-          'safeTransferFrom'
-        >['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { functionName?: 'safeTransferFrom' }
+      PrepareWriteContractResult<
+        typeof erc721ABI,
+        'safeTransferFrom'
+      >['request']['abi'],
+      'safeTransferFrom',
+      TMode
+    > & { functionName?: 'safeTransferFrom' }
     : UseContractWriteConfig<typeof erc721ABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
+      abi?: never
+      functionName?: 'safeTransferFrom'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc721ABI, 'safeTransferFrom', TMode>({
     abi: erc721ABI,
@@ -1005,17 +1006,17 @@ export function useErc721SetApprovalForAll<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc721ABI,
-          'setApprovalForAll'
-        >['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { functionName?: 'setApprovalForAll' }
+      PrepareWriteContractResult<
+        typeof erc721ABI,
+        'setApprovalForAll'
+      >['request']['abi'],
+      'setApprovalForAll',
+      TMode
+    > & { functionName?: 'setApprovalForAll' }
     : UseContractWriteConfig<typeof erc721ABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
+      abi?: never
+      functionName?: 'setApprovalForAll'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc721ABI, 'setApprovalForAll', TMode>({
     abi: erc721ABI,
@@ -1032,17 +1033,17 @@ export function useErc721TransferFrom<
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc721ABI,
-          'transferFrom'
-        >['request']['abi'],
-        'transferFrom',
-        TMode
-      > & { functionName?: 'transferFrom' }
+      PrepareWriteContractResult<
+        typeof erc721ABI,
+        'transferFrom'
+      >['request']['abi'],
+      'transferFrom',
+      TMode
+    > & { functionName?: 'transferFrom' }
     : UseContractWriteConfig<typeof erc721ABI, 'transferFrom', TMode> & {
-        abi?: never
-        functionName?: 'transferFrom'
-      } = {} as any,
+      abi?: never
+      functionName?: 'transferFrom'
+    } = {} as any,
 ) {
   return useContractWrite<typeof erc721ABI, 'transferFrom', TMode>({
     abi: erc721ABI,
