@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Address, useAccount, useNetwork, useWaitForTransaction } from "wagmi";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 
 import {
   useErc20Allowance,
@@ -12,6 +12,7 @@ import {
   usePrepareErc20Approve,
   usePrepareErc20Transfer,
 } from "../generated";
+import { Address } from "viem";
 
 export function ERC20() {
   const { address } = useAccount();
@@ -53,7 +54,7 @@ function Name({ contractAddress }: { contractAddress: Address }) {
   });
   return (
     <div>
-      Name: {name} ({symbol})
+      Name: {name as string} ({symbol as string})
     </div>
   );
 }
@@ -97,10 +98,10 @@ function Allowance({
     args: spender && amount ? [spender, BigInt(amount)] : undefined,
     enabled: Boolean(spender && amount),
   });
-  const { data, write } = useErc20Approve(config);
+  const { data, writeContract } = useErc20Approve(config);
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+    hash: data,
   });
 
   const { data: balance } = useErc20Allowance({
@@ -128,10 +129,13 @@ function Allowance({
           placeholder="amount (units)"
           value={amount}
         />
-        <button disabled={isLoading && !write} onClick={() => write?.()}>
+        {/* <button
+          disabled={isLoading && !writeContract}
+          onClick={() => writeContract()}
+        >
           set
-        </button>
-        {isLoading && <ProcessingMessage hash={data?.hash} />}
+        </button> */}
+        {/* {isLoading && <ProcessingMessage hash={data?.hash} />} */}
         {isSuccess && <div>Success!</div>}
         {isError && <div>Error: {error?.message}</div>}
       </div>
@@ -149,10 +153,10 @@ function Transfer({ contractAddress }: { contractAddress: Address }) {
     args: address && amount ? [address, BigInt(amount)] : undefined,
     enabled: Boolean(address && amount),
   });
-  const { data, write } = useErc20Transfer(config);
+  const { data, writeContract } = useErc20Transfer(config);
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+    hash: data,
   });
 
   return (
@@ -168,10 +172,10 @@ function Transfer({ contractAddress }: { contractAddress: Address }) {
         placeholder="amount (in wei)"
         value={amount}
       />
-      <button disabled={!write} onClick={() => write?.()}>
+      {/* <button disabled={!write} onClick={() => write?.()}>
         transfer
-      </button>
-      {isLoading && <ProcessingMessage hash={data?.hash} />}
+      </button> */}
+      {isLoading && <ProcessingMessage hash={data} />}
       {isSuccess && <div>Success!</div>}
       {isError && <div>Error: {error?.message}</div>}
     </div>
@@ -179,14 +183,14 @@ function Transfer({ contractAddress }: { contractAddress: Address }) {
 }
 
 function ProcessingMessage({ hash }: { hash?: `0x${string}` }) {
-  const { chain } = useNetwork();
-  const etherscan = chain?.blockExplorers?.etherscan;
+  // const { chain } = useNetwork();
+  // const etherscan = chain?.blockExplorers?.etherscan;
   return (
     <span>
       Processing transaction...{" "}
-      {etherscan && (
+      {/* {etherscan && (
         <a href={`${etherscan.url}/tx/${hash}`}>{etherscan.name}</a>
-      )}
+      )} */}
     </span>
   );
 }

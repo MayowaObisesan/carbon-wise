@@ -35,8 +35,20 @@ const SingleEvent = () => {
 
   const navigate = useNavigate();
 
-  const { data: hash, writeContract, isError: isError1, isPending: isLoading1, isSuccess: isSuccess1 } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError3, isPending: isLoading2, isSuccess: isSuccess3 } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isError: isError1,
+    isPending: isLoading1,
+    isSuccess: isSuccess1,
+  } = useWriteContract();
+  const {
+    data: hash2,
+    writeContract: writeContract2,
+    isError: isError3,
+    isPending: isLoading2,
+    isSuccess: isSuccess3,
+  } = useWriteContract();
 
   const increase = () => {
     setAmount(amount + 1);
@@ -57,7 +69,12 @@ const SingleEvent = () => {
     args: [id],
   });
 
-  const { data: allowanceData, isLoading: loading1, isError: isError2, isSuccess: isSuccess2 } = useReadContract({
+  const {
+    data: allowanceData,
+    isLoading: loading1,
+    isError: isError2,
+    isSuccess: isSuccess2,
+  } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "allowance",
@@ -81,10 +98,6 @@ const SingleEvent = () => {
       return false;
     }
   };
-
-
-
-
 
   const { isLoading: settling1 } = useWaitForTransactionReceipt({
     hash: hash2,
@@ -119,7 +132,7 @@ const SingleEvent = () => {
       address: USD_TOKEN_ADDRESS,
       abi: USDTOKENABI,
       functionName: "approve",
-      args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)]
+      args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)],
     });
   };
   const handlePay = async () => {
@@ -136,7 +149,7 @@ const SingleEvent = () => {
 
   useEffect(() => {
     if (isError1) {
-      console.log("error")
+      console.log("error");
       setLoading(false);
     }
     if (isError3) {
@@ -144,7 +157,7 @@ const SingleEvent = () => {
       toast.error("Approval failed");
       setLoadingA(false);
     }
-  }, [isError1, isError3])
+  }, [isError1, isError3]);
 
   useEffect(() => {
     if (isLoading) {
@@ -166,8 +179,8 @@ const SingleEvent = () => {
     settotal(amount * price);
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
-  useEffect(() => { }, [allowanceAmount]);
-  useEffect(() => { }, [allowanceListener]);
+  useEffect(() => {}, [allowanceAmount]);
+  useEffect(() => {}, [allowanceListener]);
   console.log(allowance);
 
   useEffect(() => {
@@ -177,10 +190,10 @@ const SingleEvent = () => {
     if (isSuccess) {
       setListing(data);
       setLoading(false);
-      setPrice(Number(formatUnits(data?.price, 18)));
-      settotal(amount * Number(formatUnits(data?.price, 18)));
+      setPrice(Number(formatUnits((data as any)?.price, 18)));
+      settotal(amount * Number(formatUnits((data as any)?.price, 18)));
     }
-  }, [isError, isSuccess])
+  }, [isError, isSuccess]);
 
   useEffect(() => {
     if (isError2) {
@@ -189,7 +202,7 @@ const SingleEvent = () => {
     if (isSuccess2) {
       setAllowance(allowanceData as any);
     }
-  }, [isError2, isSuccess2])
+  }, [isError2, isSuccess2]);
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start gap-x-8">
@@ -249,11 +262,11 @@ const SingleEvent = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                    (
-                      document.getElementById(
-                        "my_modal_2"
-                      ) as HTMLDialogElement
-                    )?.showModal()
+                      (
+                        document.getElementById(
+                          "my_modal_2"
+                        ) as HTMLDialogElement
+                      )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}

@@ -22,14 +22,19 @@ export function WasteWise() {
   //   const { data: ensAvatar } = useEnsAvatar({ address });
   const { isRegistered } = useWasteWiseContext();
   //   const { data: ensName } = useEnsName({ address });
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect({
-      onSuccess(data, variables, context) {
-        setTimeout(() => {
-          sdgModal.current?.showModal();
-        }, 800);
-      },
-    });
+  const { connect, connectors, error, isPending, isSuccess } = useConnect({
+    // onSuccess(data, variables, context) {
+    //   setTimeout(() => {
+    //     sdgModal.current?.showModal();
+    //   }, 800);
+    // },
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      sdgModal.current?.showModal();
+    }, 800);
+  }, [isSuccess]);
 
   const { disconnect } = useDisconnect();
   const [showConnectError, setShowConnectError] = useState<boolean>(false);
@@ -186,7 +191,7 @@ export function WasteWise() {
           key={connectors[0].id}
           onClick={() => handleConnect(connectors[0])}
         >
-          {isLoading ? <span className="loading"></span> : "Connect Wallet"}
+          {isPending ? <span className="loading"></span> : "Connect Wallet"}
         </Button>
         {/* <ul
           tabIndex={0}
@@ -214,7 +219,7 @@ export function WasteWise() {
         </ul> */}
       </div>
 
-      {!isLoading && showConnectError && (
+      {!isPending && showConnectError && (
         <div className="hidden">
           {toast.error((error as BaseError).message)}
         </div>
