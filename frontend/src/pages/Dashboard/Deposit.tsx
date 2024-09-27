@@ -65,7 +65,7 @@ const Recycle = () => {
   const handleDepositPlastic = async (e: any) => {
     e.preventDefault();
     // console.log(true);
-    depositPlasticWrite?.(data!.request);
+    depositPlasticWrite(data!.request);
   };
 
   useEffect(() => {

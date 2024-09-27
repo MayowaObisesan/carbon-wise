@@ -103,7 +103,7 @@ const Profile = () => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    writeContract?.(data!.request);
+    writeContract(data!.request);
   }
 
   return (

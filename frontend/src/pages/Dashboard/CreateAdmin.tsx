@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import {
   useAccount,
   useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
+  useSimulateContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -21,63 +22,75 @@ const CreateAdmin = (props: Props) => {
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
-  const { config: addAdmin } = usePrepareContractWrite({
+  const { data: addAdmin } = useSimulateContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISE_ABI,
     functionName: "addAdmins",
     args: [address],
-    onError(data: any) {
-      console.log(data);
-    },
+    // onError(data: any) {
+    //   console.log(data);
+    // },
   });
   const {
     data: approveAdmin,
-    write,
-    isLoading: loadingA,
-  } = useContractWrite(addAdmin);
+    writeContract: writeContractAdmin,
+    isPending: loadingA,
+    isError: isLoadingAError,
+    error: loadingAError,
+  } = useWriteContract();
 
-  const { config: addVerifier } = usePrepareContractWrite({
+  useEffect(() => {
+    console.log(loadingAError);
+  }, [isLoadingAError]);
+
+  const { data: addVerifier } = useSimulateContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISE_ABI,
     functionName: "addVerifiers",
     args: [address],
-    onError(data: any) {
-      console.log(data);
-    },
+    // onError(data: any) {
+    //   console.log(data);
+    // },
   });
   const {
     data: approveVerifier,
-    write: write2,
-    isLoading: loadingV,
-  } = useContractWrite(addVerifier);
+    writeContract: writeContractVerifier,
+    isPending: loadingV,
+  } = useWriteContract();
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
-    useWaitForTransaction({
-      hash: approveVerifier?.hash,
-      onSettled(data, error) {
-        if (data?.blockHash) {
-          console.log("he don enter");
-          navigate("/dashboard");
-        }
-      },
+    useWaitForTransactionReceipt({
+      hash: approveVerifier,
+      // onSettled(data, error) {
+      //   if (data?.blockHash) {
+      //     // console.log("he don enter");
+      //     navigate("/dashboard");
+      //   }
+      // },
     });
+
   const { isLoading: isAddingAdmin, isSuccess: isAdminSuccess } =
-    useWaitForTransaction({
-      hash: approveAdmin?.hash,
-      onSettled(data, error) {
-        if (data?.blockHash) {
-          navigate("/dashboard");
-        }
-      },
+    useWaitForTransactionReceipt({
+      hash: approveAdmin,
+      // onSettled(data, error) {
+      //   if (data?.blockHash) {
+      //     navigate("/dashboard");
+      //   }
+      // },
     });
+
+  useEffect(() => {
+    navigate("/dashboard");
+  }, [isAdminSuccess, isVerifierSuccess]);
+
   const handleAddAdmin = async () => {
-    write?.();
+    writeContractAdmin(addAdmin!.request);
     setLoading(true);
     console.log(true);
   };
   const handleAddVerifier = async () => {
     console.log("clicking");
-    write2?.();
+    writeContractVerifier(addVerifier!.request);
     setLoading(true);
     console.log(true);
   };
@@ -167,7 +180,7 @@ const CreateAdmin = (props: Props) => {
   //   write?.();
   // }, [address]);
 
-  useEffect(() => { }, [role]);
+  useEffect(() => {}, [role]);
 
   return (
     <div className="mb-8 ">
@@ -184,6 +197,7 @@ const CreateAdmin = (props: Props) => {
               onChange={(e) => setAddress(e.target.value)}
             />
             <select
+              title="Select Role"
               className="select select-bordered w-full my-8"
               // onChange={(e) => console.log(e.target)}
               onChange={(e) => setRole(e.target.value)}
