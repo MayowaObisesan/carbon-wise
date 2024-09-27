@@ -43,7 +43,7 @@ The CarbonWise is a comprehensive blockchain-based solution comprising three cor
 - Users can edit their information.
 - User data is stored in a structured format.
 
-### Receipt Token Management (RwasteWise)
+### Receipt Token Management (RCarbonWise)
 
 - Token contract to mint and burn receipt tokens.
 - Users receive tokens as rewards for recycling efforts.
