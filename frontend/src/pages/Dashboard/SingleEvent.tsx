@@ -177,8 +177,8 @@ const SingleEvent = () => {
     if (isSuccess) {
       setListing(data);
       setLoading(false);
-      setPrice(Number(formatUnits(data?.price, 18)));
-      settotal(amount * Number(formatUnits(data?.price, 18)));
+      // setPrice(Number(formatUnits(data?.price, 18)));
+      // settotal(amount * Number(formatUnits(data?.price, 18)));
     }
   }, [isError, isSuccess])
 

@@ -26,12 +26,12 @@ const TableOne = () => {
     abi: CARBONWISEABI,
     functionName: "getAllUsers",
     account: address,
-    onSuccess(data) {
-      // setLeaderboard(true);
-    },
-    select: (dt: any) => {
-      return dt.filter((t: any) => !t.isAdmin);
-    },
+    // onSuccess(data) {
+    //   // setLeaderboard(true);
+    // },
+    // select: (dt: any) => {
+    //   return dt.filter((t: any) => !t.isAdmin);
+    // },
     // select: (dt: any) => {
     //   for (let i = 0; i < (dt as any)?.length; i++) {
     //     leaderboardArray.concat({
@@ -52,10 +52,10 @@ const TableOne = () => {
     const { data: tokenData, isSuccess } = useBalance({
       address: addr,
       token: USD_TOKEN_ADDRESS,
-      onSuccess(td) {
-        // tokenArray[addr] = tokenData;
-        setLeaderboard(true);
-      },
+      // onSuccess(td) {
+      //   // tokenArray[addr] = tokenData;
+      //   setLeaderboard(true);
+      // },
     });
 
     return tokenData?.formatted;

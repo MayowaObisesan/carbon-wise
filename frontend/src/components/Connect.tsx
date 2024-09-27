@@ -3,7 +3,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export function Connect() {
   const { connector, isConnected } = useAccount()
-  const { connect, connectors, error, isLoading, pendingConnector } =
+  const { connect, connectors, error, isPending } =
     useConnect()
   const { disconnect } = useDisconnect()
 
@@ -21,7 +21,7 @@ export function Connect() {
           .map((x) => (
             <button key={x.id} onClick={() => connect({ connector: x })}>
               {x.name}
-              {isLoading && x.id === pendingConnector?.id && ' (connecting)'}
+              {isPending && x.id === connector?.id && ' (connecting)'}
             </button>
           ))}
       </div>

@@ -1,16 +1,16 @@
 import { BaseError } from 'viem'
-import { useNetwork, useSwitchNetwork } from 'wagmi'
+// import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 export function NetworkSwitcher() {
-  const { chain } = useNetwork()
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork()
+  // const { chain } = useNetwork()
+  // const { chains, error, isLoading, pendingChainId, switchNetwork } =
+  //   useSwitchNetwork()
 
-  if (!chain) return null
+  // if (!chain) return null
 
   return (
     <div>
-      <div>
+      {/* <div>
         Connected to {chain?.name ?? chain?.id}
         {chain?.unsupported && ' (unsupported)'}
       </div>
@@ -26,9 +26,9 @@ export function NetworkSwitcher() {
             ),
           )}
         </div>
-      )}
+      )} */}
 
-      <div>{error && (error as BaseError).shortMessage}</div>
+      {/* <div>{error && (error as BaseError).shortMessage}</div> */}
     </div>
   )
 }

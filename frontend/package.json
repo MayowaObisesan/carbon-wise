@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "npm run wagmi && vite",
-    "build": "npm run wagmi && tsc && vite build",
-    "preview": "vite preview",
-    "wagmi": "wagmi generate"
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -36,7 +35,7 @@
     "sort-by": "^0.0.2",
     "util": "^0.12.4",
     "viem": "^2.21.15",
-    "wagmi": "^1.0.6"
+    "wagmi": "^2.12.16"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",
