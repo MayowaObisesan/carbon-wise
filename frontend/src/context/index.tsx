@@ -136,7 +136,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
-    return () => {};
+    return () => { };
   }, [data, isRegistered]);
 
   useEffect(() => {

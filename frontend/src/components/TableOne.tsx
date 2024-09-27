@@ -4,6 +4,7 @@ import {
   CARBONWISE_ADDRESS,
   USD_TOKEN_ADDRESS,
   CARBONWISEABI,
+
 } from "../../constants";
 import BrandOne from "../assets/images/brand/brand-01.svg";
 import BrandTwo from "../assets/images/brand/brand-02.svg";
@@ -67,7 +68,7 @@ const TableOne = () => {
       <div className="w-full p-8 rounded-xl border border-base-300 my-2 dark:bg-base-300">
         <h4 className="mb-8 text-xl font-semibold text-base-content">
           {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
+            currentUser?.role === 2
             ? "All Recyclers"
             : "Leaderboard"}
         </h4>
