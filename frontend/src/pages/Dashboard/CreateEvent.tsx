@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { MARKETPLACE_ADDRESS, MarketPlaceABI } from "../../../constants";
+import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
 import { pinFileToIPFS } from "../../utils";
 import { toast } from "sonner";
 import { parseEther } from "viem";
@@ -42,8 +42,8 @@ const CreateEvent = (props: Props) => {
   };
 
   const { write, isLoading, data } = useContractWrite({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "createListing",
     args: [name, description, image, parseEther(`${price}`), deadline],
     onError() {

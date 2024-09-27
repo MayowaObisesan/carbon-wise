@@ -1,7 +1,7 @@
 import { formatDate } from "../../utils";
 import { useEffect, useState } from "react";
 import { useAccount, useContractEvent, useContractRead } from "wagmi";
-import { MARKETPLACE_ADDRESS, MarketPlaceABI } from "../../../constants";
+import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
 import { formatEther } from "viem";
 
 type Props = {};
@@ -12,8 +12,8 @@ const MyEvents = (props: Props) => {
   const { address } = useAccount();
 
   const { isLoading } = useContractRead({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "getEventsByUser",
     args: [address],
     onError(data: any) {
@@ -27,8 +27,8 @@ const MyEvents = (props: Props) => {
   });
 
   useContractEvent({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     eventName: "ListingBought",
     listener(log) {
       console.log(log);

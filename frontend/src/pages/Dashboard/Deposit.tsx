@@ -9,7 +9,7 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 
-import { WASTEWISE_ADDRESS, WasteWiseABI } from "../../../constants";
+import { CARBONWISEABI, CARBONWISE_ADDRESS } from "../../../constants";
 import { useWasteWiseContext } from "../../context";
 import useNotificationCount from "../../hooks/useNotificationCount";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +23,8 @@ const Recycle = () => {
   const navigate = useNavigate();
 
   const { config: depositPlasticConfig } = usePrepareContractWrite({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "depositPlastic",
     args: [numPlastic, userId],
   });

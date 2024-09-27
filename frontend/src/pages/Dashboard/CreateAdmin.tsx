@@ -7,9 +7,9 @@ import {
 } from "wagmi";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import WASTEWISE_ABI from "../../../constants/wasteWiseABI.json";
+import CARBONWISE_ABI from "../../../constants/carbonwise.json";
 import { toast } from "sonner";
-import { WASTEWISE_ADDRESS } from "../../../constants";
+import { CARBONWISE_ADDRESS } from "../../../constants";
 
 type Props = {};
 
@@ -22,8 +22,8 @@ const CreateAdmin = (props: Props) => {
   const navigate = useNavigate();
 
   const { config: addAdmin } = usePrepareContractWrite({
-    address: WASTEWISE_ADDRESS,
-    abi: WASTEWISE_ABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISE_ABI,
     functionName: "addAdmins",
     args: [address],
     onError(data: any) {
@@ -37,8 +37,8 @@ const CreateAdmin = (props: Props) => {
   } = useContractWrite(addAdmin);
 
   const { config: addVerifier } = usePrepareContractWrite({
-    address: WASTEWISE_ADDRESS,
-    abi: WASTEWISE_ABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISE_ABI,
     functionName: "addVerifiers",
     args: [address],
     onError(data: any) {
@@ -167,7 +167,7 @@ const CreateAdmin = (props: Props) => {
   //   write?.();
   // }, [address]);
 
-  useEffect(() => {}, [role]);
+  useEffect(() => { }, [role]);
 
   return (
     <div className="mb-8 ">
