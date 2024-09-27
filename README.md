@@ -2,9 +2,9 @@
 
 ## Overview
 
-**CarbonWise** is a green chain, sustainable environment-first (Waste to Wealth) blockchain-powered platform designed to incentivize recycling and responsible waste disposal, contributing significantly to the creation of cleaner, more sustainable urban environments.
+**CarbonWise** is a cutting-edge blockchain-powered platform designed to address two major global challenges: plastic waste and climate change. By transforming plastic waste recycling into tradeable carbon credits, CarbonWise offers a unique solution that incentivizes responsible waste disposal while contributing to global climate action. With a transparent and secure platform powered by blockchain, we’re helping users make a measurable difference in the fight against climate change, while also benefiting from the growing carbon market. Every recycled bottle not only reduces plastic waste but also contributes to significant CO₂ savings.
 
-_CarbonWise plays a pivotal role in advancing Sustainable Development Goal 11 - "Sustainable Cities and Communities._
+Let’s turn waste into wealth—and carbon reductions. Let’s build a sustainable future with **CarbonWise**.
 
 The CarbonWise is a comprehensive blockchain-based solution comprising three core contracts: `CarbonWise`, `RCarbonWise`, and `MarketPlace`. This integrated system is designed to promote environmental sustainability by rewarding users for recycling efforts through the issuance of receipt tokens (RWISE) and enabling the trade of items in a marketplace.
 
