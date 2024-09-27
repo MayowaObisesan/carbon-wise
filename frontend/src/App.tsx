@@ -27,6 +27,10 @@ import MyEvents from "./pages/Dashboard/MyEvents";
 import SingleEvent from "./pages/Dashboard/SingleEvent";
 import CreateAdmin from "./pages/Dashboard/CreateAdmin";
 import Stats from "./components/dashboard/home/Stats";
+import CreateCarbon from "./pages/Dashboard/CreateCarbon";
+import SingleCarbon from "./pages/Dashboard/SingleCarbon";
+import CarbonMarketplace from "./pages/Dashboard/CarbonMarket";
+import CompanyRegister from "./pages/Dashboard/CompanyRegister";
 
 export function App() {
   return (
@@ -90,10 +94,14 @@ export function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="recycle" element={<Recycle />} />
             <Route path="marketplace" element={<Marketplace />} />
+            <Route path="carbonmarket" element={<CarbonMarketplace />} />
             <Route path="createEvent" element={<CreateEvent />} />
+            <Route path="createCarbon" element={<CreateCarbon />} />
             <Route path="purchases" element={<MyEvents />} />
             <Route path="createAdmin" element={<CreateAdmin />} />
             <Route path="marketplace/event/:id" element={<SingleEvent />} />
+            <Route path="carbonmarket/credit/:id" element={<SingleCarbon />} />
+            <Route path="companyregister" element={<CompanyRegister />} />
           </Route>
           {/* <Route
           path="/Login"

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -21,63 +20,52 @@ const CreateAdmin = (props: Props) => {
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
-  const { config: addAdmin } = usePrepareContractWrite({
-    address: CARBONWISE_ADDRESS,
-    abi: CARBONWISE_ABI,
-    functionName: "addAdmins",
-    args: [address],
-    onError(data: any) {
-      console.log(data);
-    },
-  });
-  const {
-    data: approveAdmin,
-    write,
-    isLoading: loadingA,
-  } = useContractWrite(addAdmin);
-
-  const { config: addVerifier } = usePrepareContractWrite({
-    address: CARBONWISE_ADDRESS,
-    abi: CARBONWISE_ABI,
-    functionName: "addVerifiers",
-    args: [address],
-    onError(data: any) {
-      console.log(data);
-    },
-  });
-  const {
-    data: approveVerifier,
-    write: write2,
-    isLoading: loadingV,
-  } = useContractWrite(addVerifier);
+  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
+  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
-    useWaitForTransaction({
-      hash: approveVerifier?.hash,
-      onSettled(data, error) {
-        if (data?.blockHash) {
-          console.log("he don enter");
-          navigate("/dashboard");
-        }
-      },
+    useWaitForTransactionReceipt({
+      hash: hash2,
+      // onSettled(data, error) {
+      //   if (data?.blockHash) {
+      //     console.log("he don enter");
+      //     navigate("/dashboard");
+      //   }
+      // },
     });
   const { isLoading: isAddingAdmin, isSuccess: isAdminSuccess } =
-    useWaitForTransaction({
-      hash: approveAdmin?.hash,
-      onSettled(data, error) {
-        if (data?.blockHash) {
-          navigate("/dashboard");
-        }
-      },
+    useWaitForTransactionReceipt({
+      hash,
+      // onSettled(data, error) {
+      //   if (data?.blockHash) {
+      //     navigate("/dashboard");
+      //   }
+      // },
     });
   const handleAddAdmin = async () => {
-    write?.();
+    writeContract({
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISE_ABI,
+      functionName: "addAdmins",
+      args: [address],
+      // onError(data: any) {
+      //   console.log(data);
+      // },
+    });
     setLoading(true);
     console.log(true);
   };
   const handleAddVerifier = async () => {
     console.log("clicking");
-    write2?.();
+    writeContract2({
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISE_ABI,
+      functionName: "addVerifiers",
+      args: [address],
+      // onError(data: any) {
+      //   console.log(data);
+      // },
+    });
     setLoading(true);
     console.log(true);
   };
@@ -110,23 +98,23 @@ const CreateAdmin = (props: Props) => {
     }
   }, [isAdminSuccess]);
 
-  useEffect(() => {
-    if (loadingA) {
-      toast.loading("Creating Admin...", {
-        // description: "My description",
-        duration: 5000,
-      });
-    }
-  }, [loadingA]);
+  // useEffect(() => {
+  //   if (loadingA) {
+  //     toast.loading("Creating Admin...", {
+  //       // description: "My description",
+  //       duration: 5000,
+  //     });
+  //   }
+  // }, [loadingA]);
 
-  useEffect(() => {
-    if (loadingV) {
-      toast.loading("Creating Verifier", {
-        // description: "My description",
-        duration: 5000,
-      });
-    }
-  }, [loadingV]);
+  // useEffect(() => {
+  //   if (loadingV) {
+  //     toast.loading("Creating Verifier", {
+  //       // description: "My description",
+  //       duration: 5000,
+  //     });
+  //   }
+  // }, [loadingV]);
   // useEffect(() => {
   //   write?.();
   //   if (loading) {
@@ -211,7 +199,10 @@ const CreateAdmin = (props: Props) => {
               </option>
             </select>
             <Button name="submit" size="block" customStyle="w-full">
-              {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
+              {/* {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
+                <span className="loading"></span>
+              )} */}
+              {(isAddingVerifier || isAddingAdmin) && (
                 <span className="loading"></span>
               )}
             </Button>
