@@ -12,11 +12,10 @@ import { formatEther, formatUnits, parseEther } from "viem";
 import { formatDate } from "../../utils";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import {
-  MARKETPLACE_ADDRESS,
-  MarketPlaceABI,
-  TokenABI,
-  WASTEWISE_TOKEN_ADDRESS,
-  WASTEWISE_TOKEN_ABI,
+  EVENT_MARKETPLACE_ADDRESS,
+  EVENTMARKETPLACEABI,
+  USD_TOKEN_ADDRESS,
+  USDTOKENABI,
 } from "../../../constants";
 import { toast } from "sonner";
 
@@ -50,8 +49,8 @@ const SingleEvent = () => {
   };
 
   const { isLoading } = useContractRead({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "getItemInfo",
     args: [id],
     onError(data: any) {
@@ -66,10 +65,10 @@ const SingleEvent = () => {
   });
 
   const { data: allowanceData, isLoading: loading1 } = useContractRead({
-    address: WASTEWISE_TOKEN_ADDRESS,
-    abi: WASTEWISE_TOKEN_ABI,
+    address: USD_TOKEN_ADDRESS,
+    abi: USDTOKENABI,
     functionName: "allowance",
-    args: [address, MARKETPLACE_ADDRESS],
+    args: [address, EVENT_MARKETPLACE_ADDRESS],
     onError(data: any) {
       console.log(data);
     },
@@ -79,8 +78,8 @@ const SingleEvent = () => {
   });
 
   useContractEvent({
-    address: WASTEWISE_TOKEN_ADDRESS,
-    abi: WASTEWISE_TOKEN_ABI,
+    address: USD_TOKEN_ADDRESS,
+    abi: USDTOKENABI,
     eventName: "Approval",
     listener(log: any) {
       setallowanceListener(log);
@@ -97,8 +96,8 @@ const SingleEvent = () => {
   };
 
   const { config: buyListingConfig } = usePrepareContractWrite({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "buyListing",
     args: [listing?.itemId, amount],
     onError(data: any) {
@@ -114,10 +113,10 @@ const SingleEvent = () => {
   } = useContractWrite(buyListingConfig);
 
   const { config: approveListing } = usePrepareContractWrite({
-    address: WASTEWISE_TOKEN_ADDRESS,
-    abi: WASTEWISE_TOKEN_ABI,
+    address: USD_TOKEN_ADDRESS,
+    abi: USDTOKENABI,
     functionName: "approve",
-    args: [MARKETPLACE_ADDRESS, parseEther(`${total}`)],
+    args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)],
     onError(data: any) {
       console.log(data);
       toast.error("Approval failed");
@@ -189,8 +188,8 @@ const SingleEvent = () => {
     settotal(amount * price);
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
-  useEffect(() => {}, [allowanceAmount]);
-  useEffect(() => {}, [allowanceListener]);
+  useEffect(() => { }, [allowanceAmount]);
+  useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
   return (
     <div className="mb-8">
@@ -251,11 +250,11 @@ const SingleEvent = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                      (
-                        document.getElementById(
-                          "my_modal_2"
-                        ) as HTMLDialogElement
-                      )?.showModal()
+                    (
+                      document.getElementById(
+                        "my_modal_2"
+                      ) as HTMLDialogElement
+                    )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}

@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import SignUpButton from "../components/SignUpButton";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
-import { WASTEWISE_ADDRESS, WasteWiseABI } from "../../constants";
+import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import useNotificationCount from "../hooks/useNotificationCount";
 import Navbar from "../components/Navbar";
 
@@ -36,8 +36,8 @@ const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 
   const { config } = usePrepareContractWrite({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     args: [name, country, gender, number, email],
     functionName: "createUserAcct",
   });

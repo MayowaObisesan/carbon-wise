@@ -3,7 +3,7 @@ import { useContractWrite } from "wagmi";
 import Button from "../../components/Button";
 import { useWasteWiseContext } from "../../context";
 import { formatDate } from "../../utils";
-import { WASTEWISE_ADDRESS, WasteWiseABI } from "../../../constants";
+import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../../constants";
 import { toast } from "sonner";
 import useNotificationCount from "../../hooks/useNotificationCount";
 import { useNavigate } from "react-router-dom";
@@ -22,8 +22,8 @@ const Profile = () => {
 
   const { data, error, write, isError, isLoading, isSuccess } =
     useContractWrite({
-      address: WASTEWISE_ADDRESS,
-      abi: WasteWiseABI,
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISEABI,
       args: [{ ...currentUser, country, gender, phoneNo, email }],
       functionName: "editUser",
     });

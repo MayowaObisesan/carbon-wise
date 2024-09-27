@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { formatDate } from "../../utils";
 import {
-  MARKETPLACE_ADDRESS,
-  MarketPlaceABI,
-  WASTEWISE_TOKEN_ADDRESS,
+  EVENT_MARKETPLACE_ADDRESS,
+  EVENTMARKETPLACEABI,
 } from "../../../constants";
 
 type Props = {};
@@ -17,8 +16,8 @@ const Marketplace = (props: Props) => {
   const [loading, setLoading] = useState(false);
 
   const { isLoading } = useContractRead({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     functionName: "getAllActiveItemInfo",
     onError(data: any) {
       console.log(data);
@@ -28,8 +27,8 @@ const Marketplace = (props: Props) => {
     },
   });
   useContractEvent({
-    address: MARKETPLACE_ADDRESS,
-    abi: MarketPlaceABI,
+    address: EVENT_MARKETPLACE_ADDRESS,
+    abi: EVENTMARKETPLACEABI,
     eventName: "ListingCreated",
     listener(log) {
       console.log(log);

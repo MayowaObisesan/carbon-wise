@@ -2,10 +2,10 @@ import { useAccount, useContractEvent, useContractRead } from "wagmi";
 import { useWasteWiseContext } from "../../context";
 import { formatDate, formatDateShort, shortenAddress } from "../../utils";
 import {
-  WASTEWISE_ADDRESS,
-  WASTEWISE_TOKEN_ABI,
-  WASTEWISE_TOKEN_ADDRESS,
-  WasteWiseABI,
+  CARBONWISE_ADDRESS,
+  CARBONWISEABI,
+  USD_TOKEN_ADDRESS,
+  USDTOKENABI,
 } from "../../../constants";
 import ReactApexChart from "react-apexcharts";
 import React, { useEffect, useState } from "react";
@@ -31,8 +31,8 @@ const Wallet = () => {
   const notificationCount = useNotificationCount();
 
   const { data } = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getUserTransactions",
     account: address,
     onSuccess(res) {
@@ -41,15 +41,15 @@ const Wallet = () => {
   });
 
   const recycledData = useContractRead({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     functionName: "getUserRecycles",
     account: address,
   });
 
   const { data: tokenData, isSuccess: gotTokenBalance } = useContractRead({
-    address: WASTEWISE_TOKEN_ADDRESS,
-    abi: WASTEWISE_TOKEN_ABI,
+    address: USD_TOKEN_ADDRESS,
+    abi: USDTOKENABI,
     functionName: "balanceOf",
     args: [address],
   });
@@ -62,8 +62,8 @@ const Wallet = () => {
   }, [gotTokenBalance]);
   // Plastic Deposit event
   useContractEvent({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     eventName: "PlasticDeposited",
     listener(log) {
       // Handle the event returned here.
@@ -85,8 +85,8 @@ const Wallet = () => {
           },
         });
         const { data } = useContractRead({
-          address: WASTEWISE_ADDRESS,
-          abi: WasteWiseABI,
+          address: CARBONWISE_ADDRESS,
+          abi: CARBONWISEABI,
           functionName: "getUserTransactions",
           account: address,
           onSuccess(res) {
@@ -101,8 +101,8 @@ const Wallet = () => {
 
   // Profile Update event
   useContractEvent({
-    address: WASTEWISE_ADDRESS,
-    abi: WasteWiseABI,
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
     eventName: "UserEdited",
     listener(log) {
       // Handle the event returned here.
@@ -499,14 +499,14 @@ const Wallet = () => {
                   Latest:{" "}
                   {recycledData?.data && !!(recycledData?.data as any).length
                     ? new Date(
-                        formatDate(
-                          Number(
-                            (recycledData.data as any)[
-                              (recycledData?.data as any)?.length - 1
-                            ]?.timeRecycled
-                          )
+                      formatDate(
+                        Number(
+                          (recycledData.data as any)[
+                            (recycledData?.data as any)?.length - 1
+                          ]?.timeRecycled
                         )
-                      ).toDateString()
+                      )
+                    ).toDateString()
                     : "-"}
                 </div>
               </div>
