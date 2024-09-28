@@ -19,8 +19,7 @@ const Navbar = () => {
     <section className="sticky top-0 z-10 px-2 py-2 lg:px-8 lg:py-4 bg-transparent backdrop-blur-3xl">
       <div className="navbar bg-base-200 w-full mx-auto rounded-2xl dark:bg-base-300">
         <div className="navbar-start flex-1 font-bold">
-          {/* <Logo /> */}
-          CarbonWise
+          <Logo />
         </div>
         <div className={"navbar-end gap-2 space-x-4"}>
           <div className="flex-none">

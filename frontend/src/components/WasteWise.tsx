@@ -142,13 +142,13 @@ export function WasteWise() {
                 </div>
               </form>
               <h3 className="font-bold text-2xl px-1 pb-2 lg:px-4">Welcome</h3>
-              <div className="px-1 py-1 lg:px-4 lg:py-4 leading-8">
+              <div className="px-1 py-1 lg:px-4 lg:py-4 leading-8 text-balance">
                 Thank you for connecting to carbon-wise. We will like to get
                 some info about you so that we can personalize your EIA card.
                 <div>
                   Kindly click the signup button to fill in those details.
                 </div>
-                <Link to="/register">
+                <Link to="/register" className="block mt-4">
                   <Button>Signup</Button>
                 </Link>
               </div>
@@ -187,7 +187,7 @@ export function WasteWise() {
           size="md"
           customStyle="text-xs lg:text-base"
           type={"button"}
-          disabled={!connectors[0].ready}
+          disabled={!connectors[0].id}
           key={connectors[0].id}
           onClick={() => handleConnect(connectors[0])}
         >

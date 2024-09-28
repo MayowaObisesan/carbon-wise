@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/wastewise_logo.png";
+import logo from "../assets/images/logo/transparent/logo3.svg";
 
 type Props = {
   hideText?: boolean;
@@ -13,7 +13,7 @@ const Logo = (props: Props) => {
     >
       <img src={logo} alt="" className="h-6 lg:h-7" />
       {!props.hideText && (
-        <span className="font-extrabold pl-1">WasteWise</span>
+        <span className="font-extrabold pl-1">Carbon-wise</span>
       )}
     </Link>
   );
