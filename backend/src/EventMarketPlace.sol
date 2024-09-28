@@ -18,7 +18,7 @@ interface CarbonWise {
 
 /**
  * @title MarketPlace: A smart contract for managing item listings in a marketplace.
- * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
+ * @author Mayowa Obisesan, Isaac Wanger, konyeri Joshua, Mitong Dapal
  * @dev This MarketPlace contract allows users who have recycled their pet Bottles to easily redeem their receipt tokens.
  */
 contract EventMarketPlace {

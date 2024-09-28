@@ -10,11 +10,11 @@ interface USDToken {
     function transfer(address to, uint256 value) external returns (bool);
 }
 /**
- * @title  WasteWise: A smart contract for managing user recycling information and rewards.
- * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
+ * @title  Carbon-Wise: A smart contract for managing user recycling information and rewards.
+ * @author Mayowa Obisesan, Isaac Wanger, konyeri Joshua, Mitong Dapal
  */
 contract CarbonWise {
-    USDToken usdt; // An instance of RwasteWise contract.
+    USDToken usdt; // An instance of RCarbon-Wise contract.
 
     // Create state variables that will be used for statistics
     struct Statistics {

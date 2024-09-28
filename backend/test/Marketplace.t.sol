@@ -2,16 +2,16 @@
 pragma solidity ^0.8.13;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {RwasteWise} from "../src/RwasteWise.sol";
-import {WasteWise} from "../src/Wastewise.sol";
+import {RcarbonWise} from "../src/RcarbonWise.sol";
+import {CarbonWise} from "../src/Carbonwise.sol";
 
 import {MarketPlace} from "../src/MarketPlace.sol";
 import {Helpers} from "./Helpers.sol";
 
 contract MarketPlaceTest is Helpers {
     MarketPlace marketPlace;
-    RwasteWise wasteToken;
-    WasteWise wasteWise;
+    RcarbonWise wasteToken;
+    CarbonWise carbonWise;
 
     MarketPlace.ItemInfo itemInfo;
 
@@ -22,20 +22,20 @@ contract MarketPlaceTest is Helpers {
     uint pKeyA;
     uint pKeyB;
 
-    WasteWise.User uObject;
+    CarbonWise.User uObject;
     address[] admins = new address[](2);
 
     function setUp() public {
         admins[0] = address(0x3333);
         admins[1] = address(0x4444);
-        wasteToken = new RwasteWise();
-        wasteWise = new WasteWise(address(wasteToken), admins);
-        marketPlace = new MarketPlace(address(wasteToken), address(wasteWise));
+        wasteToken = new RcarbonWise();
+        carbonWise = new CarbonWise(address(wasteToken), admins);
+        marketPlace = new MarketPlace(address(wasteToken), address(carbonWise));
         vm.prank(address(6));
-        wasteWise.createUserAcct(
+        carbonWise.createUserAcct(
             "ola",
             "nig",
-            WasteWise.Gender.Male,
+            CarbonWise.Gender.Male,
             987654,
             "@gmail.com"
         );
@@ -103,22 +103,22 @@ contract MarketPlaceTest is Helpers {
     }
 
     function testCreateAcct() public {
-        wasteWise.createUserAcct(
+        carbonWise.createUserAcct(
             "ola",
             "nig",
-            WasteWise.Gender.Male,
+            CarbonWise.Gender.Male,
             987654,
             "@gmail.com"
         );
-        WasteWise.User memory user = wasteWise.getUser();
+        CarbonWise.User memory user = carbonWise.getUser();
         assertEq(user.name, "ola");
     }
 
     function testDepositPlastic() public {
         vm.prank(admins[0]);
-        wasteWise.addVerifiers(address(6));
+        carbonWise.addVerifiers(address(6));
         vm.startPrank(address(6));
-        wasteWise.depositPlastic(2, 1);
+        carbonWise.depositPlastic(2, 1);
         wasteToken.approve(
             address(marketPlace),
             wasteToken.balanceOf(address(6))
@@ -140,7 +140,7 @@ contract MarketPlaceTest is Helpers {
 
     function testFailNoApprovalDepositPlastic() public {
         vm.startPrank(address(6));
-        wasteWise.depositPlastic(2, 1);
+        carbonWise.depositPlastic(2, 1);
         vm.stopPrank();
         vm.prank(address(0x3333));
         marketPlace.createListing(
@@ -161,7 +161,7 @@ contract MarketPlaceTest is Helpers {
 
     function testFailInsufficientToken() public {
         vm.startPrank(address(6));
-        wasteWise.depositPlastic(1, 1);
+        carbonWise.depositPlastic(1, 1);
         wasteToken.approve(
             address(marketPlace),
             wasteToken.balanceOf(address(6))
@@ -182,7 +182,7 @@ contract MarketPlaceTest is Helpers {
 
     function testFailListingNotActive() public {
         vm.startPrank(address(6));
-        wasteWise.depositPlastic(2, 1);
+        carbonWise.depositPlastic(2, 1);
         wasteToken.approve(
             address(marketPlace),
             wasteToken.balanceOf(address(6))
