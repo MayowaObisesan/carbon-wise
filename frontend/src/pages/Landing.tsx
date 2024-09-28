@@ -554,7 +554,7 @@ const Landing = (props: Props) => {
             {/* <!-- End Col --> */}
 
             <div className="mt-3">
-              <p className="text-gray-500">
+             {/* <p className="text-gray-500">
                 We're part of the{" "}
                 <a
                   className="font-semibold text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400"
@@ -564,6 +564,7 @@ const Landing = (props: Props) => {
                 </a>{" "}
                 family.
               </p>
+              */}
               <p className="text-gray-500">
                 © Carbon-Wise. {new Date().getFullYear()}.
                 <br />
