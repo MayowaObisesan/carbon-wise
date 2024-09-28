@@ -13,7 +13,7 @@ const Logo = (props: Props) => {
     >
       <img src={logo} alt="" className="h-6 lg:h-7" />
       {!props.hideText && (
-        <span className="font-extrabold pl-1">WasteWise</span>
+        <span className="font-extrabold pl-1">Carbon-Wise</span>
       )}
     </Link>
   );

@@ -349,10 +349,10 @@ const Register = () => {
           <div className="w-10/12 text-xl font-normal light:text-[#02582E] leading-[3]">
             <h1 className="text-2xl">Hello... 👋🏼</h1>
             <br />
-            Welcome to Wastewise.
+            Welcome to Carbon-Wise.
             <br />
             We'll like to know some of your information to personalize your
-            experience on Wastewise.
+            experience on Carbon-Wise.
             <br />
             Join the community that makes saving the planet a rewarding
             activity.

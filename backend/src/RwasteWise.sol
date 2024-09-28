@@ -5,9 +5,9 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 /**
- * @title WasteWise Receipt Token
- * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
- * @notice This is the Receipt token that the user gets upon successful deposit of pet bottles on the WastWise Protocol
+ * @title Carbon-Wise Receipt Token
+ * @author Mayowa Obisesan, Isaac Wanger, konyeri Joshua and Mitong Dapal
+ * @notice This is the Receipt token that the user gets upon successful deposit of pet bottles on the Carbon-Wise Protocol
  * @dev This implements an ERC2O Token using the OpenZeppelin library
  *
  */

@@ -5,8 +5,8 @@ import {console2} from "forge-std/Test.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
- * @title  WasteWise: A smart contract for managing user recycling information and rewards.
- * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
+ * @title  Carbon-Wise: A smart contract for managing user recycling information and rewards.
+ * @author Mayowa Obisesan, Isaac Wanger, Konyeri Joshua, Mitong Dapal
  */
 contract WasteWise {
     RwasteWise rwasteWise; // An instance of RwasteWise contract.
