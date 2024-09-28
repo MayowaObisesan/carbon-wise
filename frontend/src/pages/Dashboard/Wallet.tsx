@@ -356,7 +356,7 @@ const Wallet = () => {
     if (isSuccess) {
       setTransactions(data as any);
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   return (
     <section className="relative flex flex-col w-full p-4 space-y-12 lg:py-8">
@@ -499,14 +499,14 @@ const Wallet = () => {
                   Latest:{" "}
                   {recycledData?.data && !!(recycledData?.data as any).length
                     ? new Date(
-                      formatDate(
-                        Number(
-                          (recycledData.data as any)[
-                            (recycledData?.data as any)?.length - 1
-                          ]?.timeRecycled
+                        formatDate(
+                          Number(
+                            (recycledData.data as any)[
+                              (recycledData?.data as any)?.length - 1
+                            ]?.timeRecycled
+                          )
                         )
-                      )
-                    ).toDateString()
+                      ).toDateString()
                     : "-"}
                 </div>
               </div>
