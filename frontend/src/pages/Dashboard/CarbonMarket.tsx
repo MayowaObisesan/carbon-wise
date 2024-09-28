@@ -5,26 +5,25 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { formatDate } from "../../utils";
 import {
-    EVENT_MARKETPLACE_ADDRESS,
-    EVENTMARKETPLACEABI,
+    CC_MARKETPLACE_ADDRESS,
+    CCMARKETPLACEABI,
 } from "../../../constants";
 
 type Props = {};
 
 const CarbonMarketplace = (props: Props) => {
     const [listings, setListings] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
 
     const { isLoading, isError
         , isSuccess, data
     } = useReadContract({
-        address: EVENT_MARKETPLACE_ADDRESS,
-        abi: EVENTMARKETPLACEABI,
-        functionName: "getAllActiveItemInfo",
+        address: CC_MARKETPLACE_ADDRESS,
+        abi: CCMARKETPLACEABI,
+        functionName: "getAllItemInfo",
     });
     useWatchContractEvent({
-        address: EVENT_MARKETPLACE_ADDRESS,
-        abi: EVENTMARKETPLACEABI,
+        address: CC_MARKETPLACE_ADDRESS,
+        abi: CCMARKETPLACEABI,
         eventName: "ListingCreated",
         onLogs(log) {
             console.log(log);
@@ -54,20 +53,15 @@ const CarbonMarketplace = (props: Props) => {
                         return (
                             <Link to={`event/${item?.itemId}`} key={index}>
                                 <div className="card w-80 sm:w-[28rem] md:w-80 bg-base-100 shadow-xl">
-                                    <figure>
-                                        <img src={item?.image} alt="Shoes" />
-                                    </figure>
                                     <div className="card-body">
                                         <h2 className="card-title">
-                                            {item?.name}
+                                            {item?.description}
                                             <div className="badge badge-secondary">NEW</div>
                                         </h2>
-                                        <p>{item?.description}</p>
-                                        <p>Ends: {formatDate(Number(item?.deadline))}</p>
                                         <div className="card-actions justify-between items-center mt-3">
                                             <p className="text-lg text-[#026937]">Available</p>
                                             <h3 className="font-bold text-lg">
-                                                {formatUnits(item?.price, 18)} <span>RWISE</span>
+                                                {Number(item?.price)} <span>USDT</span>
                                             </h3>
                                         </div>
                                     </div>

@@ -11,12 +11,19 @@ import { formatEther, formatUnits, parseEther } from "viem";
 import { formatDate } from "../../utils";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import {
+  CC_MARKETPLACE_ADDRESS,
+  CCMARKETPLACEABI,
   EVENT_MARKETPLACE_ADDRESS,
   EVENTMARKETPLACEABI,
   USD_TOKEN_ADDRESS,
   USDTOKENABI,
 } from "../../../constants";
 import { toast } from "sonner";
+
+interface datap {
+  price: number,
+  description: string
+}
 
 const SingleCarbon = () => {
   let { id } = useParams();
@@ -38,39 +45,23 @@ const SingleCarbon = () => {
   const { data: hash, writeContract, isError: isError1, isPending: isLoading1, isSuccess: isSuccess1 } = useWriteContract()
   const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
 
-  const increase = () => {
-    setAmount(amount + 1);
-  };
-
-  const decrease = () => {
-    if (amount == 1) {
-      setAmount(1);
-    } else {
-      setAmount(amount - 1);
-    }
-  };
-
-  const { isLoading } = useReadContract({
-    address: EVENT_MARKETPLACE_ADDRESS,
-    abi: EVENTMARKETPLACEABI,
+  const { isLoading, data, isSuccess } = useReadContract({
+    address: CC_MARKETPLACE_ADDRESS,
+    abi: CCMARKETPLACEABI,
     functionName: "getItemInfo",
     args: [id],
     // onError(data: any) {
     //     console.log(data);
     // },
-    // onSuccess(data: any) {
-    //     setListing(data);
-    //     setLoading(false);
-    //     setPrice(Number(formatUnits(data.price, 18)));
-    //     settotal(amount * Number(formatUnits(data.price, 18)));
-    // },
   });
 
-  const { data: allowanceData, isLoading: loading1 } = useReadContract({
+
+
+  const { data: allowanceData, isLoading: loading1, isSuccess: isSuccess3 } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "allowance",
-    args: [address, EVENT_MARKETPLACE_ADDRESS],
+    args: [address, CC_MARKETPLACE_ADDRESS],
     // onError(data: any) {
     //     console.log(data);
     // },
@@ -78,6 +69,17 @@ const SingleCarbon = () => {
     //     setAllowance(data);
     // },
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setListing(data);
+      setLoading(false);
+      settotal(amount * Number((data as datap).price));
+    }
+    if (isSuccess3) {
+      setAllowance(allowanceData as any);
+    }
+  }, [isSuccess, isSuccess3])
 
   useWatchContractEvent({
     address: USD_TOKEN_ADDRESS,
@@ -97,7 +99,7 @@ const SingleCarbon = () => {
     }
   };
 
-  useWaitForTransactionReceipt({
+  const { isLoading: settling1, isSuccess: success } = useWaitForTransactionReceipt({
     hash: hash2,
     // onSettled(data, error) {
     //     if (data?.blockHash) {
@@ -109,7 +111,7 @@ const SingleCarbon = () => {
     //     }
     // },
   });
-  useWaitForTransactionReceipt({
+  const { isLoading: settling2, isSuccess: success2 } = useWaitForTransactionReceipt({
     hash,
     // onSettled(data, error) {
     //     if (data?.blockHash) {
@@ -121,6 +123,35 @@ const SingleCarbon = () => {
     // },
   });
 
+  useEffect(() => {
+    if (settling1) {
+      toast.loading("Approving Contract", {
+        // description: "My description",
+        duration: 10000,
+      });
+    }
+    if (success) {
+      toast.success("Approval successful");
+      console.log("he don approve");
+      setLoadingA(false);
+    }
+  }, [settling1, success]);
+
+  useEffect(() => {
+    if (settling2) {
+      toast.loading("Purchasing", {
+        // description: "My description",
+        duration: 10000,
+      });
+    }
+    if (success2) {
+      console.log("he don pay");
+      toast.success("Item successfully purchased");
+      setLoading(false);
+      navigate("/dashboard/purchases");
+    }
+  }, [settling2, success2]);
+
   const handleApprove = (e: any) => {
     e.preventDefault();
     // const value = allowanceAmountRef.current?.value;
@@ -130,7 +161,7 @@ const SingleCarbon = () => {
       address: USD_TOKEN_ADDRESS,
       abi: USDTOKENABI,
       functionName: "approve",
-      args: [EVENT_MARKETPLACE_ADDRESS, parseEther(`${total}`)],
+      args: [CC_MARKETPLACE_ADDRESS, parseEther(`${total}`)],
       // onError(data: any) {
       //     console.log(data);
       //     toast.error("Approval failed");
@@ -143,10 +174,10 @@ const SingleCarbon = () => {
     console.log(true);
     // write2?.();
     writeContract({
-      address: EVENT_MARKETPLACE_ADDRESS,
-      abi: EVENTMARKETPLACEABI,
+      address: CC_MARKETPLACE_ADDRESS,
+      abi: CCMARKETPLACEABI,
       functionName: "buyListing",
-      args: [listing?.itemId, amount],
+      args: [listing?.itemId],
       // onError(data: any) {
       //     console.log(data);
       //     // toast.error("!Failed to purchase item");
@@ -172,65 +203,28 @@ const SingleCarbon = () => {
   //     }
   // }, [isErrorP]);
   useEffect(() => {
-    settotal(amount * price);
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
   useEffect(() => { }, [allowanceAmount]);
   useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
+
+
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start gap-x-8">
         <div className="card mb-5 w-[95%] max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
-          <figure>
-            <img src={listing?.image} alt="Shoes" />
-          </figure>
           <div className="card-body">
             <h2 className="card-title">
               {listing?.name}
               <div className="badge badge-secondary">NEW</div>
             </h2>
             <p>{listing?.description}</p>
-            <p>Ends: {formatDate(Number(listing?.deadline))}</p>
             <div className="card-actions justify-between items-center mt-5">
-              <div className="grid grid-cols-3 gap-x-5 items-center">
-                <button className="" onClick={decrease}>
-                  <FaMinus />
-                </button>
-                <h2 className="text-center text-lg font-semibold">{amount}</h2>
-                <button className="" onClick={increase}>
-                  <FaPlus />
-                </button>
-              </div>
               <h3 className="font-bold text-lg">
-                {listing ? formatUnits(listing?.price, 18) : ""}{" "}
-                <span>RWISE</span>
+                {listing ? Number(listing?.price) : ""}{" "}
+                <span>USDT</span>
               </h3>
-            </div>
-            {/* <div className="divider"></div> */}
-            <div className="overflow-x-auto my-4">
-              <table className="table">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th>ListingId</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* row 1 */}
-                  <tr>
-                    <td>{listing ? Number(listing.itemId) : "-"}</td>
-                    <td>
-                      {listing ? formatUnits(listing?.price, 18) : 0} RWISE
-                    </td>
-                    <td>{amount}</td>
-                    <td>{total} RWISE</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
             <button
               className="btn bg-[#026937] hover:bg-[#026937]"
@@ -354,7 +348,7 @@ const SingleCarbon = () => {
           <p className="py-4">
             {/* Your approval should be more than{" "} */}
             Clicking "Approve" will set an allowance of{" "}
-            <span className="font-bold">{total} RWISE</span>.
+            <span className="font-bold">{total} USDT</span>.
           </p>
           <form onSubmit={handleApprove}>
             {/* <input

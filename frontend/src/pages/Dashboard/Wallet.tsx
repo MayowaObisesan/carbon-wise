@@ -54,7 +54,7 @@ const Wallet = () => {
 
   useEffect(() => {
     if (gotTokenBalance) {
-      setTokenBalance(Number(tokenData));
+      setTokenBalance(tokenData as any);
     }
   }, [gotTokenBalance]);
   // Plastic Deposit event
@@ -499,14 +499,14 @@ const Wallet = () => {
                   Latest:{" "}
                   {recycledData?.data && !!(recycledData?.data as any).length
                     ? new Date(
-                        formatDate(
-                          Number(
-                            (recycledData.data as any)[
-                              (recycledData?.data as any)?.length - 1
-                            ]?.timeRecycled
-                          )
+                      formatDate(
+                        Number(
+                          (recycledData.data as any)[
+                            (recycledData?.data as any)?.length - 1
+                          ]?.timeRecycled
                         )
-                      ).toDateString()
+                      )
+                    ).toDateString()
                     : "-"}
                 </div>
               </div>

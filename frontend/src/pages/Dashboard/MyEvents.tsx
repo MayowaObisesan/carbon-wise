@@ -51,14 +51,18 @@ const MyEvents = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log(error);
-    setLoading(false);
-    toast.error("Error occurred reading events");
+    if (isError) {
+      console.log(error);
+      setLoading(false);
+      // toast.error("Error occurred reading events");
+    }
   }, [isError]);
 
   useEffect(() => {
-    setEvents(data as any[]);
-    setLoading(false);
+    if (isSuccess) {
+      setEvents(data as any[]);
+      setLoading(false);
+    }
   }, [isSuccess]);
 
   return (

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  useAccount,
-  useContractWrite,
   useSimulateContract,
   useWaitForTransactionReceipt,
   useWriteContract,
@@ -32,6 +30,8 @@ const CreateEvent = (props: Props) => {
     setDeadline(dts);
   };
 
+  const { writeContract, data: createEventData, isError } = useWriteContract();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (
@@ -50,23 +50,14 @@ const CreateEvent = (props: Props) => {
     }
   };
 
-  const { data, isError } = useSimulateContract({
-    address: EVENT_MARKETPLACE_ADDRESS,
-    abi: EVENTMARKETPLACEABI,
-    functionName: "createListing",
-    args: [name, description, image, parseEther(`${price}`), deadline],
-    // onError() {
-    //   toast.error("!Failed to create an event.");
-    //   setLoading(false);
-    // },
-  });
+
 
   useEffect(() => {
-    toast.error("!Failed to create an event.");
-    setLoading(false);
+    if (isError) {
+      toast.error("!Failed to create an event.");
+      setLoading(false);
+    }
   }, [isError]);
-
-  const { writeContract, data: createEventData } = useWriteContract();
 
   const { isSuccess } = useWaitForTransactionReceipt({
     hash: createEventData,
@@ -80,14 +71,26 @@ const CreateEvent = (props: Props) => {
   });
 
   useEffect(() => {
-    toast.success("Event successfully created");
-    setLoading(false);
-    // navigate("/dashboard/marketplace");
+    if (isSuccess) {
+      toast.success("Event successfully created");
+      setLoading(false);
+      navigate("/dashboard/marketplace");
+    }
+
   }, [isSuccess]);
 
   useEffect(() => {
     if (image != "") {
-      writeContract(data!.request);
+      writeContract({
+        address: EVENT_MARKETPLACE_ADDRESS,
+        abi: EVENTMARKETPLACEABI,
+        functionName: "createListing",
+        args: [name, description, image, parseEther(`${price}`), deadline],
+        // onError() {
+        //   toast.error("!Failed to create an event.");
+        //   setLoading(false);
+        // },
+      });
     }
   }, [image, name, description, deadline, price]);
 
@@ -136,7 +139,7 @@ const CreateEvent = (props: Props) => {
               </div>
               <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
                 <label className="label">
-                  <span className="label-text">Event Price ($RWISE)</span>
+                  <span className="label-text">Event Price (USDT)</span>
                 </label>
                 <input
                   type="number"

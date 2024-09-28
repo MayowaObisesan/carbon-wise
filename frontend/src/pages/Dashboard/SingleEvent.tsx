@@ -18,6 +18,17 @@ import {
 } from "../../../constants";
 import { toast } from "sonner";
 
+
+interface datap {
+  name: string;
+  description: string;
+  image: string;
+  price: bigint;
+  deadline: bigint;
+  lister: string;
+  itemId: bigint,
+}
+
 const SingleEvent = () => {
   let { id } = useParams();
   const [listing, setListing] = useState<any>();
@@ -86,7 +97,7 @@ const SingleEvent = () => {
 
 
 
-  const { isLoading: settling1 } = useWaitForTransactionReceipt({
+  const { isLoading: settling1, isSuccess: success } = useWaitForTransactionReceipt({
     hash: hash2,
     // onSettled(data, error) {
     //   if (data?.blockHash) {
@@ -98,7 +109,21 @@ const SingleEvent = () => {
     //   }
     // },
   });
-  const { isLoading: settling2 } = useWaitForTransactionReceipt({
+
+  useEffect(() => {
+    if (settling1) {
+      toast.loading("Approving Contract", {
+        // description: "My description",
+        duration: 10000,
+      });
+    }
+    if (success) {
+      toast.success("Approval successful");
+      console.log("he don approve");
+      setLoadingA(false);
+    }
+  }, [settling1, success]);
+  const { isLoading: settling2, isSuccess: success2 } = useWaitForTransactionReceipt({
     hash: hash,
     // onSettled(data, error) {
     //   if (data?.blockHash) {
@@ -110,6 +135,20 @@ const SingleEvent = () => {
     // },
   });
 
+  useEffect(() => {
+    if (settling2) {
+      toast.loading("Purchasing", {
+        // description: "My description",
+        duration: 10000,
+      });
+    }
+    if (success2) {
+      console.log("he don pay");
+      toast.success("Item successfully purchased");
+      setLoading(false);
+      navigate("/dashboard/purchases");
+    }
+  }, [settling2, success2]);
   const handleApprove = (e: any) => {
     e.preventDefault();
     // const value = allowanceAmountRef.current?.value;
@@ -165,8 +204,8 @@ const SingleEvent = () => {
     if (isSuccess) {
       setListing(data);
       setLoading(false);
-      // setPrice(Number(formatUnits(data?.price, 18)));
-      // settotal(amount * Number(formatUnits(data?.price, 18)));
+      setPrice(Number(formatUnits((data as datap)?.price, 18)));
+      settotal(amount * Number(formatUnits((data as datap)?.price, 18)));
     }
   }, [isError, isSuccess])
 
@@ -204,7 +243,7 @@ const SingleEvent = () => {
               </div>
               <h3 className="font-bold text-lg">
                 {listing ? formatUnits(listing?.price, 18) : ""}{" "}
-                <span>RWISE</span>
+                <span>USDT</span>
               </h3>
             </div>
             {/* <div className="divider"></div> */}
@@ -224,10 +263,10 @@ const SingleEvent = () => {
                   <tr>
                     <td>{listing ? Number(listing.itemId) : "-"}</td>
                     <td>
-                      {listing ? formatUnits(listing?.price, 18) : 0} RWISE
+                      {listing ? formatUnits(listing?.price, 18) : 0} USDT
                     </td>
                     <td>{amount}</td>
-                    <td>{total} RWISE</td>
+                    <td>{total} USDT</td>
                   </tr>
                 </tbody>
               </table>
@@ -354,7 +393,7 @@ const SingleEvent = () => {
           <p className="py-4">
             {/* Your approval should be more than{" "} */}
             Clicking "Approve" will set an allowance of{" "}
-            <span className="font-bold">{total} RWISE</span>.
+            <span className="font-bold">{total} USDT</span>.
           </p>
           <form onSubmit={handleApprove}>
             {/* <input

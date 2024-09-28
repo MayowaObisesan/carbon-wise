@@ -33,8 +33,10 @@ const Marketplace = (props: Props) => {
   }, [isSuccess]);
 
   useEffect(() => {
-    console.log(error);
-    toast.error("Error occurred when Reading Marketplace data");
+    if (isError) {
+      console.log(error);
+    }
+    // toast.error("Error occurred when Reading Marketplace data");
   }, [isError]);
 
   useWatchContractEvent({
@@ -73,7 +75,7 @@ const Marketplace = (props: Props) => {
                     <div className="card-actions justify-between items-center mt-3">
                       <p className="text-lg text-[#026937]">Available</p>
                       <h3 className="font-bold text-lg">
-                        {formatUnits(item?.price, 18)} <span>RWISE</span>
+                        {formatUnits(item?.price, 18)} <span>USDT</span>
                       </h3>
                     </div>
                   </div>

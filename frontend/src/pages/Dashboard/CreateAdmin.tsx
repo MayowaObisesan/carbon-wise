@@ -45,7 +45,12 @@ const CreateAdmin = (props: Props) => {
     });
 
   useEffect(() => {
-    navigate("/dashboard");
+    if (isAdminSuccess) {
+      navigate("/dashboard");
+    }
+    if (isVerifierSuccess) {
+      navigate("/dashboard");
+    }
   }, [isAdminSuccess, isVerifierSuccess]);
 
   const handleAddAdmin = async () => {
@@ -173,7 +178,7 @@ const CreateAdmin = (props: Props) => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Type here"
+              placeholder="Type address here"
               className="input input-bordered w-full "
               onChange={(e) => setAddress(e.target.value)}
             />

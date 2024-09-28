@@ -57,6 +57,12 @@ const Sidebar = (props: Props) => {
     } else if (location.pathname === "/dashboard/createAdmin") {
       setIsActive("createAdmin");
     }
+    else if (location.pathname === "/dashboard/disbursement") {
+      setIsActive("disbursement");
+    }
+    else if (location.pathname === "/dashboard/createCarbon") {
+      setIsActive("createCarbon");
+    }
   }, [location]);
 
   // set style for active link
@@ -220,6 +226,30 @@ const Sidebar = (props: Props) => {
                 >
                   <FaUserShield />
                   <h2 className="text-lg">Create Admin</h2>
+                </Link>
+              </li>
+            )}
+            {currentUser?.isAdmin && (
+              <li>
+                <Link
+                  to="/dashboard/createCarbon"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "createCarbon" ? activeLinkStyle : {}}
+                >
+                  <FaWallet />
+                  <h2 className="text-lg">Sell Credits</h2>
+                </Link>
+              </li>
+            )}
+            {currentUser?.isAdmin && (
+              <li>
+                <Link
+                  to="/dashboard/disbursement"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "disbursement" ? activeLinkStyle : {}}
+                >
+                  <FaWallet />
+                  <h2 className="text-lg">Disbursement</h2>
                 </Link>
               </li>
             )}
