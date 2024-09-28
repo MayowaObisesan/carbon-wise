@@ -434,7 +434,7 @@ const Wallet = () => {
                 <div className="stat">
                   <div className="stat-title">user Id</div>
                   <div className="stat-value">1004</div>
-                  <div className="stat-desc">Your wastewise ID</div>
+                  <div className="stat-desc">Your Carbon-Wise ID</div>
                 </div>
               </div>
               <div className="stats stats-vertical bg-transparent">

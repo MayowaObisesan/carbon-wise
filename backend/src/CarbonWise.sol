@@ -1,15 +1,20 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
-import {RwasteWise} from "./RwasteWise.sol";
-import {console2} from "forge-std/Test.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+interface USDToken {
+
+    function balanceOf(address account) external view returns (uint256);
+
+    function mint(address userAccount, uint256 amountToMint) external;
+
+    function transfer(address to, uint256 value) external returns (bool);
+}
 /**
- * @title  WasteWise: A smart contract for managing user recycling information and rewards.
- * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
+ * @title  Carbon-Wise: A smart contract for managing user recycling information and rewards.
+ * @author Mayowa Obisesan, Isaac Wanger, konyeri Joshua, Mitong Dapal
  */
-contract WasteWise {
-    RwasteWise rwasteWise; // An instance of RwasteWise contract.
+contract CarbonWise {
+    USDToken usdt; // An instance of RCarbon-Wise contract.
 
     // Create state variables that will be used for statistics
     struct Statistics {
@@ -37,14 +42,24 @@ contract WasteWise {
         string name;
         string country;
         Gender gender;
-        uint phoneNo;
         string email;
         uint timeJoined;
-        address referral;
         uint tokenQty;
         bool isAdmin;
         Role role;
+        uint xpoints;
+        uint xrate;
         // uint approvalCount;
+    }
+
+    struct Company {
+        uint id;
+        address userAddr;
+        string name;
+        string country;
+        uint phoneNo;
+        string email;
+        uint timeJoined;
     }
 
     struct Transaction {
@@ -89,10 +104,11 @@ contract WasteWise {
 
     /// @dev Mapping to store user data.
     mapping(address => User) public UserMap;
+    mapping(address => Company) public CompanyMap;
 
     mapping(uint => AdminRequest) adminRequest;
     mapping(address => mapping(address => bool)) hasApprovedAdmin;
-    mapping(uint => address) IdToAddress;
+    mapping(uint => address) public IdToAddress;
 
     Statistics public statistics;
 
@@ -101,12 +117,16 @@ contract WasteWise {
     User[] allUsers; // An array to store all user data.
     //User[] allAdmins; // An array to store all admins
     User[] verifiers;
+    Company[] allCompanies;
+
     address[] public allAdmins; // An array to store all admins
 
     uint public userId; // A counter to track the number of users in the system.
+    uint public companyId; 
 
     // Custom Errors
     error UserAcctNotCreated();
+    error CompanyAcctNotCreated();
     error ZeroAmountNotAllow();
     error UserAccountAlreadyExist();
     error UserDoesNotExist();
@@ -128,6 +148,16 @@ contract WasteWise {
         uint256 timeJoined
     );
 
+    event CompanyAccountCreated(
+        uint256 indexed userId,
+        string _name,
+        string _country,
+        uint256 _phone,
+        string indexed _email,
+        address indexed user,
+        uint256 timeJoined
+    );
+
     event PlasticDeposited(
         address indexed depositor,
         uint256 indexed _qtyrecycled,
@@ -140,7 +170,6 @@ contract WasteWise {
         string indexed name,
         string indexed email,
         string country,
-        uint256 phoneNo,
         Gender gender
     );
 
@@ -150,6 +179,7 @@ contract WasteWise {
     event VerifierAdded(address indexed verifier, address indexed admins);
     event VerifierRemoved(address indexed verifier, address indexed admins);
     event StatisticsUpdated(Statistics _statistics);
+    event Disbursed(uint totalFunds);
 
     error OnlyTheVerifiersCanCallThisFunction();
 
@@ -172,7 +202,7 @@ contract WasteWise {
     }
 
     constructor(address tokenAddress, address[] memory _admins) {
-        rwasteWise = RwasteWise(tokenAddress);
+        usdt = USDToken(tokenAddress);
         // Set each address in _admins as an admin
         for (uint i = 0; i < _admins.length; i++) {
             User storage user = UserMap[_admins[i]];
@@ -211,7 +241,6 @@ contract WasteWise {
         user.userAddr = msg.sender;
         user.country = _country;
         user.gender = _gender;
-        user.phoneNo = _phone;
         user.email = _email;
         user.timeJoined = block.timestamp;
         IdToAddress[userId] = msg.sender;
@@ -234,6 +263,44 @@ contract WasteWise {
             block.timestamp
         );
         emit StatisticsUpdated(statistics);
+    }
+
+    function createCompanyAcct(
+        string memory _name,
+        string memory _country,
+        uint _phone,
+        string memory _email
+    ) public {
+        companyId++;
+
+        if (CompanyMap[msg.sender].userAddr == msg.sender) {
+            revert CompanyAcctNotCreated();
+        }
+        Company storage user = CompanyMap[msg.sender];
+
+        // TODO: Email should be unique.
+        // TODO: Implement the test as well
+
+        user.id = userId;
+        user.name = _name;
+        user.userAddr = msg.sender;
+        user.country = _country;
+        user.phoneNo = _phone;
+        user.email = _email;
+        user.timeJoined = block.timestamp;
+        IdToAddress[userId] = msg.sender;
+
+        allCompanies.push(user);
+
+        emit CompanyAccountCreated(
+            userId,
+            _name,
+            _country,
+            _phone,
+            _email,
+            msg.sender,
+            block.timestamp
+        );
     }
 
     /**
@@ -274,7 +341,9 @@ contract WasteWise {
         user.tokenQty = user.tokenQty + _qtyrecycled;
 
         // Mint receiptTokens of the same amount, `_qtyrecycled`, to the user upon successful recycling
-        rwasteWise.mintReceipt(_userAddr, _qtyrecycled * 10 ** 18);
+        user.xpoints = _qtyrecycled * 10;
+
+        allUsers[_userId - 1] = user;
 
         // Avoid updating Statistics from state directly.
         Statistics memory _stats;
@@ -294,6 +363,24 @@ contract WasteWise {
         );
     }
 
+    function disbursement() external onlyAdmins {
+        uint totalXpoints;
+        uint total = usdt.balanceOf(address(this));
+
+         for (uint256 i = 0; i < allUsers.length; i++) {
+            totalXpoints += allUsers[i].xpoints;
+        }
+        for (uint256 i = 0; i < allUsers.length; i++) {
+            allUsers[i].xrate = (allUsers[i].xpoints * 10000) / totalXpoints;
+        }
+
+        for (uint256 i = 0; i < allUsers.length; i++) {
+            usdt.transfer(allUsers[i].userAddr, (allUsers[i].xrate * total) / 10000);
+        }
+
+        emit Disbursed(total);   
+    }
+
     /**
      * @dev Get all recycling transactions for the user.
      * @return An array of recycling transactions for the user.
@@ -310,39 +397,37 @@ contract WasteWise {
      * @param _user The updated user information.
      * @dev Edit user information.
      */
-    function editUser(User calldata _user) public {
-        if (UserMap[_user.userAddr].userAddr != _user.userAddr) {
-            revert UserAcctNotCreated();
-        }
-        User storage user = UserMap[_user.userAddr];
-        user.name = _user.name;
-        user.country = _user.country;
-        user.email = _user.email;
-        user.phoneNo = _user.phoneNo;
-        user.gender = _user.gender;
+    // function editUser(User calldata _user) public {
+    //     if (UserMap[_user.userAddr].userAddr != _user.userAddr) {
+    //         revert UserAcctNotCreated();
+    //     }
+    //     User storage user = UserMap[_user.userAddr];
+    //     user.name = _user.name;
+    //     user.country = _user.country;
+    //     user.email = _user.email;
+    //     user.gender = _user.gender;
 
-        // Create a new transaction
-        Transaction memory transaction;
-        transaction.date = block.timestamp;
-        transaction.typeOfTransaction = Type.User;
+    //     // Create a new transaction
+    //     Transaction memory transaction;
+    //     transaction.date = block.timestamp;
+    //     transaction.typeOfTransaction = Type.User;
 
-        // Store the transaction for the user
-        transactionsMap[msg.sender].push(transaction);
+    //     // Store the transaction for the user
+    //     transactionsMap[msg.sender].push(transaction);
 
-        // Avoid updating Statistics from state directly.
-        Statistics memory _stats;
-        _stats.totalTransactions = statistics.totalTransactions + 1;
-        statistics.totalTransactions = _stats.totalTransactions;
+    //     // Avoid updating Statistics from state directly.
+    //     Statistics memory _stats;
+    //     _stats.totalTransactions = statistics.totalTransactions + 1;
+    //     statistics.totalTransactions = _stats.totalTransactions;
 
-        emit UserEdited(
-            user.userAddr,
-            user.name,
-            user.email,
-            user.country,
-            user.phoneNo,
-            user.gender
-        );
-    }
+    //     emit UserEdited(
+    //         user.userAddr,
+    //         user.name,
+    //         user.email,
+    //         user.country,
+    //         user.gender
+    //     );
+    // }
 
     /**
      * @dev Get all user data.
@@ -350,6 +435,10 @@ contract WasteWise {
      */
     function getAllUsers() public view returns (User[] memory) {
         return allUsers;
+    }
+
+    function getAllCompanies() public view returns (Company[] memory) {
+        return allCompanies;
     }
 
     /**
@@ -366,6 +455,10 @@ contract WasteWise {
      */
     function getUser() public view returns (User memory) {
         return UserMap[msg.sender];
+    }
+
+    function getCompany() public view returns (Company memory) {
+        return CompanyMap[msg.sender];
     }
 
     function getUserById(uint256 _userId) public view returns (User memory) {
@@ -455,34 +548,34 @@ contract WasteWise {
         emit VerifierAdded(_addr, msg.sender);
     }
 
-    function removeVerifiers(address _addr) public onlyAdmins {
-        if (_addr != UserMap[_addr].userAddr) {
-            revert UserDoesNotExist();
-        }
+    // function removeVerifiers(address _addr) public onlyAdmins {
+    //     if (_addr != UserMap[_addr].userAddr) {
+    //         revert UserDoesNotExist();
+    //     }
 
-        if (UserMap[_addr].role != Role.VERIFIERS) {
-            revert UserIsNotVerifier();
-        }
+    //     if (UserMap[_addr].role != Role.VERIFIERS) {
+    //         revert UserIsNotVerifier();
+    //     }
 
-        // Remove the user from the verifiers array
-        for (uint i = 0; i < verifiers.length; i++) {
-            if (verifiers[i].userAddr == _addr) {
-                verifiers[i] = verifiers[verifiers.length - 1];
-                verifiers.pop();
-                break;
-            }
-        }
+    //     // Remove the user from the verifiers array
+    //     for (uint i = 0; i < verifiers.length; i++) {
+    //         if (verifiers[i].userAddr == _addr) {
+    //             verifiers[i] = verifiers[verifiers.length - 1];
+    //             verifiers.pop();
+    //             break;
+    //         }
+    //     }
 
-        // Update the user's role
-        UserMap[_addr].role = Role.VERIFIERS;
+    //     // Update the user's role
+    //     UserMap[_addr].role = Role.VERIFIERS;
 
-        Statistics memory _stats;
-        // Increase the minted statistics, recycled and transactions
-        _stats.totalTransactions = statistics.totalTransactions - 1;
-        statistics.totalTransactions = _stats.totalTransactions;
+    //     Statistics memory _stats;
+    //     // Increase the minted statistics, recycled and transactions
+    //     _stats.totalTransactions = statistics.totalTransactions - 1;
+    //     statistics.totalTransactions = _stats.totalTransactions;
 
-        emit VerifierRemoved(_addr, msg.sender);
-    }
+    //     emit VerifierRemoved(_addr, msg.sender);
+    // }
 
     function getStatistics() public view returns (Statistics memory) {
         return statistics;

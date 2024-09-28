@@ -22,19 +22,16 @@ export function WasteWise() {
   //   const { data: ensAvatar } = useEnsAvatar({ address });
   const { isRegistered } = useWasteWiseContext();
   //   const { data: ensName } = useEnsName({ address });
-  const { connect, connectors, error, isPending, isSuccess } = useConnect({
-    // onSuccess(data, variables, context) {
-    //   setTimeout(() => {
-    //     sdgModal.current?.showModal();
-    //   }, 800);
-    // },
-  });
-
-  useEffect(() => {
-    setTimeout(() => {
-      sdgModal.current?.showModal();
-    }, 800);
-  }, [isSuccess]);
+  const { connect, connectors, error, isPending } =
+    useConnect({
+      mutation: {
+        onSuccess() {
+          setTimeout(() => {
+            sdgModal.current?.showModal();
+          }, 800);
+        }
+      },
+    });
 
   const { disconnect } = useDisconnect();
   const [showConnectError, setShowConnectError] = useState<boolean>(false);
@@ -64,8 +61,6 @@ export function WasteWise() {
       }, 400);
     }
   };
-
-  console.log(connectors);
 
   const handleConnect = (connector: any) => {
     connect({ connector });

@@ -200,21 +200,21 @@ const Landing = (props: Props) => {
                   />
                 </svg>
                 <span className="relative z-[1] italic text-gray-800 dark:text-neutral-content">
-                  Carbon-wise mission is to incentivize people for disposing
-                  their waste with a focus on plastics in accordance with the
+                Carbon-Wise mission is to incentivize people for disposing their
+                  waste with a focus on plastics in accordance with the
                   Sustainable development goals (SDG 3, 6, 11, 14 and 15).
-                  Carbon-wise aims to help foster a generation that will be
-                  known for reducing the effect of plastic. With an aim to
-                  target campuses and institutions, with the incentives to
-                  recycle, keep the environment clean and reduce climate action.
-                  Carbon-wise aims makes saving the planet a rewarding activity.
+                  Carbon-Wise aims to help foster a generation that will be known
+                  for reducing the effect of plastic. With an aim to target
+                  campuses and institutions, with the incentives to recycle,
+                  keep the environment clean and reduce climate action.
+                  Carbon-Wise aims makes saving the planet a rewarding activity.
                 </span>
               </p>
             </div>
 
             <footer className="mt-6">
               <div className="font-semibold text-gray-800 dark:text-neutral-content">
-                Carbon-wise Team
+              Carbon-Wise Team
               </div>
               {/* <div className="text-sm text-gray-500">
                 Product Manager | Airbnb
@@ -254,7 +254,7 @@ const Landing = (props: Props) => {
                   </div>
                   <div className="timeline-start md:text-end mb-10">
                     <time className="font-mono italic">September 2024</time>
-                    <div className="text-lg font-black">CarbonWise is born</div>
+                    <div className="text-lg font-black">Carbon-Wise is born</div>
                     We launched carbon-wise with a mission to help fight against
                     plastic pollution on the earth. With our target on the youth
                     who we believe will be crucial to the next plastic-free
@@ -279,9 +279,9 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-end md:text-start mb-10">
-                    <time className="font-mono italic">December 2023</time>
-                    <div className="text-lg font-black">Launch CarbonWise</div>
-                    We aim to go live with carbon-wise on mainnet after a month
+                    <time className="font-mono italic">December 2024</time>
+                    <div className="text-lg font-black">Launch Carbon-Wise</div>
+                    We aim to go live with Carbon-Wise on mainnet after months
                     of rigorous testing, analysis and professional vetting and a
                     round of alpha and beta testers.
                   </div>
@@ -304,9 +304,9 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-start md:text-end mb-10">
-                    <time className="font-mono italic">February 2024</time>
-                    <div className="text-lg font-black">Carbon-wise Blog</div>
-                    Information is Power. Carbon-wise plans to have a blog that
+                    <time className="font-mono italic">February 2025</time>
+                    <div className="text-lg font-black">Carbon-Wise Blog</div>
+                    Information is Power. Carbon-Wise plans to have a blog that
                     creates awareness about the environment. There will be a
                     weekly blog release about how plastic pollution have caused
                     havoc to the environment. We believe that this will: (1.)
@@ -337,10 +337,10 @@ const Landing = (props: Props) => {
                     <div className="text-lg font-black">
                       Onboard Ambassadors and Launch Discord Server
                     </div>
-                    From the first quarter of 2025, carbon-wise aims to onboard
+                    From the first quarter of 2025, Carbon-Wise aims to onboard
                     ambassadors. This ambassadors will help with the discord
                     community and also help raise more awareness about the
-                    environment. Carbon-wise is all about the environment.
+                    environment.
                   </div>
                   <hr />
                 </li>
@@ -361,10 +361,10 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-start mb-10 md:text-end">
-                    <time className="font-mono italic">May 2024</time>
+                    <time className="font-mono italic">May 2025</time>
                     <div className="text-lg font-black">Feedback hub</div>
                     Feedback is key for the growth of any individual, group or
-                    community. Carbon-wise aims to build a feedback for the
+                    community. Carbon-Wise aims to build a feedback for the
                     platform that will allow us to get feedback anytime and
                     anywhere in the world, 24 times a day, 7 days a week,
                     leveraging the power of blockchain technology.
@@ -388,9 +388,9 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-end md:text-start mb-10">
-                    <time className="font-mono italic">June 2024</time>
+                    <time className="font-mono italic">June 2025</time>
                     <div className="text-lg font-black">
-                      Partner with other War against Plastics Community
+                      Partner with other War against Plastics Communities
                     </div>
                     We intend to partner with other communities that wage war
                     against plastic pollution, both offline and online. We will
@@ -411,11 +411,11 @@ const Landing = (props: Props) => {
       {/* <section>
         Our mission is to partner with campuses to create awareness of the SD
         Goals and foster the understanding and compliance with the SD Goals 3,
-        6, 11, 14 and 15. Carbon-wise mission is to incentivize people for their
-        compliance with the Sustainable development goals. With wastewise first
+        6, 11, 14 and 15. Carbon-Wise mission is to incentivize people for their
+        compliance with the Sustainable development goals. With Carbon-Wise first
         targeting campuses and institutions, you are incentivized to recycle,
-        keep the environment clean, reduce climate action. Carbon-wise makes
-        saving the planet a rewarding activity. Carbon-wise will help create a
+        keep the environment clean, reduce climate action. Carbon-Wise makes
+        saving the planet a rewarding activity. Carbon-Wise will help create a
         generation that are known for reducing toxic
       </section> */}
       {/* <div>
@@ -455,26 +455,26 @@ const Landing = (props: Props) => {
             <div className="grid sm:grid-cols-2 gap-6 md:gap-12">
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What is Carbon-wise?
+                  What is Carbon-Wise?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Carbon-wise is a platform for individuals called recyclers who
+                Carbon-Wise is a platform for individuals called recyclers who
                   will be rewarded for being responsible for a Plastic-free
                   earth. Our slogan is "Rewarding Responsibility", we aim to
-                  make recycling waste a rewarding experience.
+                  make recycling waste a rewarding experience. On the other hand, we generate carbon credits from our recycling efforts which are tokenized as Real World Assets and those tokens are sold to help individuals, businesses and governments off-set their carbon footprints.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  How can I become an Carbon-wise ambassador?
+                  How can I become an Carbon-Wise ambassador?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Carbon-wise Ambassadorship program is in our roadmap with
-                  plans as to how we intend to build the carbon-wise community.
-                  We intend to have a durable structure that we can build upon
-                  for years to come as we grow as a community. Details about our
+                Carbon-Wise Ambassadorship program is in our roadmap with plans
+                  as to how we intend to build the carbon-wise community. We
+                  intend to have a durable structure that we can build upon for
+                  years to come as we grow as a community. Details about our
                   ambassadorship program will be communicated on this website
                   once we are about to launch the ambassadorship program.
                 </p>
@@ -486,7 +486,7 @@ const Landing = (props: Props) => {
                   Is Carbon-wise a company?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Carbon-wise is a community of people, organization and groups
+                  Yes, Carbon-wise is a company that orgainizes communities of people, organization and groups
                   with the goal of incentivizing recycling of plastic related
                   products and waste in general. Carbon-wise and its community
                   aims to foster a clean earth on community at a time.
@@ -521,7 +521,7 @@ const Landing = (props: Props) => {
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What are Carbon-wise long-term goals?
+                  What are Carbon-Wise long-term goals?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
                   To put an end to the pollution caused by plastics and
@@ -554,7 +554,7 @@ const Landing = (props: Props) => {
             {/* <!-- End Col --> */}
 
             <div className="mt-3">
-              <p className="text-gray-500">
+             {/* <p className="text-gray-500">
                 We're part of the{" "}
                 <a
                   className="font-semibold text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400"
@@ -564,8 +564,9 @@ const Landing = (props: Props) => {
                 </a>{" "}
                 family.
               </p>
+              */}
               <p className="text-gray-500">
-                © Carbon-wise. {new Date().getFullYear()}.
+                © Carbon-Wise. {new Date().getFullYear()}.
                 <br />
                 All rights reserved.
               </p>

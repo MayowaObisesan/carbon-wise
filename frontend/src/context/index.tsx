@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAccount, useContractRead, useReadContract } from "wagmi";
+import { useAccount, useReadContract, } from "wagmi";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 type contextType = {
@@ -67,6 +67,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const { address, isConnected } = useAccount();
+  console.log(address)
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<userDataType | {}>({});
   const [notifCount, setNotifCount] = useState(0);
@@ -115,9 +116,6 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     functionName: "getUser",
     // args: [address],
     account: address,
-    query: {
-      enabled: true,
-    },
     // onSuccess(data) {
     //   setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     // },
@@ -138,7 +136,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
-    return () => {};
+    return () => { };
   }, [data, isRegistered]);
 
   useEffect(() => {
