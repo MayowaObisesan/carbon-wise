@@ -22,12 +22,22 @@ import {
 
 type Props = {};
 
+interface datap {
+  id: bigint;
+  userAddr: string;
+  name: string;
+  country: string;
+  phoneNo: bigint;
+  email: string;
+  timeJoined: bigint;
+}
+
 
 
 const Sidebar = (props: Props) => {
   const [isActive, setIsActive] = useState("");
   const location = useLocation();
-  const [company, setCompany] = useState(null)
+  const [company, setCompany] = useState<any>()
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const { data, isLoading, isSuccess } = useReadContract({
@@ -43,7 +53,7 @@ const Sidebar = (props: Props) => {
     }
   }, [isSuccess, isLoading])
 
-  console.log(currentUser)
+  console.log(data)
   // update activeItem based on current location
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -270,7 +280,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {company && (
+            {(company as datap)?.name !== "" && (
               <li>
                 <Link
                   to="/dashboard/carbonmarket"
@@ -282,7 +292,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {company && (
+            {(company as datap)?.name !== "" && (
               <li>
                 <Link
                   to="/dashboard/carbonpurchases"
