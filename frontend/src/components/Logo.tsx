@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/wastewise_logo.png";
+import logo from "../assets/images/logo/transparent/logo3.svg";
 
 type Props = {
   hideText?: boolean;
