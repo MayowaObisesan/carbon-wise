@@ -143,8 +143,8 @@ export function WasteWise() {
               </form>
               <h3 className="font-bold text-2xl px-1 pb-2 lg:px-4">Welcome</h3>
               <div className="px-1 py-1 lg:px-4 lg:py-4 leading-8">
-                Thank you for connecting to wastewise. We will like to get some
-                info about you so that we can personalize your EIA card.
+                Thank you for connecting to carbon-wise. We will like to get
+                some info about you so that we can personalize your EIA card.
                 <div>
                   Kindly click the signup button to fill in those details.
                 </div>

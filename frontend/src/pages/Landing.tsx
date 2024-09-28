@@ -226,7 +226,7 @@ const Landing = (props: Props) => {
         {/* <!-- End Testimonials --> */}
       </section>
 
-      <section className="hero min-h-screen bg-base-100">
+      <section className="hero min-h-screen bg-base-100 hidden">
         {/* <!-- Testimonials --> */}
         <div className="relative max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
           {/* <!-- Blockquote --> */}
@@ -253,9 +253,9 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-start md:text-end mb-10">
-                    <time className="font-mono italic">November 2023</time>
-                    <div className="text-lg font-black">Wastewise is born</div>
-                    We launched wastewise with a mission to help fight against
+                    <time className="font-mono italic">September 2024</time>
+                    <div className="text-lg font-black">CarbonWise is born</div>
+                    We launched carbon-wise with a mission to help fight against
                     plastic pollution on the earth. With our target on the youth
                     who we believe will be crucial to the next plastic-free
                     generation.
