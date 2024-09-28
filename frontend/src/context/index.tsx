@@ -67,6 +67,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const { address, isConnected } = useAccount();
+  console.log(address)
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<userDataType | {}>({});
   const [notifCount, setNotifCount] = useState(0);

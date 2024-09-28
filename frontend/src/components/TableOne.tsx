@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   useAccount,
   useBalance,
-  useContractRead,
   useReadContract,
 } from "wagmi";
 import {
@@ -80,7 +79,7 @@ const TableOne = () => {
       <div className="w-full p-8 rounded-xl border border-base-300 my-2 dark:bg-base-300">
         <h4 className="mb-8 text-xl font-semibold text-base-content">
           {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
+            currentUser?.role === 2
             ? "All Recyclers"
             : "Leaderboard"}
         </h4>
@@ -135,7 +134,7 @@ const TableOne = () => {
                   </td>
                   <td>{shortenAddress(eachUser.userAddr)}</td>
                   <td className="">
-                    {(!!leaderboard && tokenBalance(eachUser.userAddr)) || 0}
+                    {/* {(!!leaderboard && tokenBalance(eachUser.userAddr)) || 0} */}
                   </td>
                   <th>
                     <button className="btn btn-ghost btn-xs">details</button>

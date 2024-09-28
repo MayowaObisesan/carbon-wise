@@ -82,7 +82,7 @@ const CreateEvent = (props: Props) => {
   useEffect(() => {
     toast.success("Event successfully created");
     setLoading(false);
-    navigate("/dashboard/marketplace");
+    // navigate("/dashboard/marketplace");
   }, [isSuccess]);
 
   useEffect(() => {
