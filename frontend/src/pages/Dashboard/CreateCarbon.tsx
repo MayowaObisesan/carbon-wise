@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useSimulateContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
+import {
+  CC_MARKETPLACE_ADDRESS,
+  CCMARKETPLACEABI,
+} from "../../../constants";
 import { pinFileToIPFS } from "../../utils";
 import { toast } from "sonner";
 import { parseEther } from "viem";
@@ -9,76 +16,63 @@ import { parseEther } from "viem";
 type Props = {};
 
 const CreateCarbon = (props: Props) => {
-  const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [imagePath, setImagePath] = useState(null);
-  const [image, setImage] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
-  const [deadline, setDeadline] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { data: hash, writeContract, isError, isPending: isLoading1, isSuccess } = useWriteContract()
-
-  const toTimeStamp = (strDate: string) => {
-    const dt = Date.parse(strDate);
-    const dts = dt / 1000;
-    setDeadline(dts);
-  };
+  const { writeContract, data: createEventData, isError, isPending } = useWriteContract();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (
-      name == "" ||
-      description == "" ||
-      imagePath == null ||
-      price == 0 ||
-      deadline == 0
-    ) {
-      console.log(name, description, imagePath, price, deadline);
-      toast.error("No field should be empty");
-    } else {
-      setLoading(true);
-      const imgUrl = await pinFileToIPFS(imagePath);
-      if (imgUrl) setImage(imgUrl);
-    }
+    writeContract({
+      address: CC_MARKETPLACE_ADDRESS,
+      abi: CCMARKETPLACEABI,
+      functionName: "createListing",
+      args: [description, price],
+      // onError() {
+      //   toast.error("!Failed to create an event.");
+      //   setLoading(false);
+      // },
+    });
   };
 
-  writeContract({
-    address: EVENT_MARKETPLACE_ADDRESS,
-    abi: EVENTMARKETPLACEABI,
-    functionName: "createListing",
-    args: [name, description, image, parseEther(`${price}`), deadline],
-    // onError() {
-    //     toast.error("!Failed to create an event.");
-    //     setLoading(false);
-    // },
-  });
 
-  useWaitForTransactionReceipt({
-    hash,
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("!Failed to create an event.");
+      setLoading(false);
+    }
+  }, [isError]);
+
+  const { isSuccess, isLoading } = useWaitForTransactionReceipt({
+    hash: createEventData,
     // onSettled(data, error) {
-    //     if (data?.blockHash) {
-    //         toast.success("Event successfully created");
-    //         setLoading(false);
-    //         navigate("/dashboard/marketplace");
-    //     }
+    //   if (data?.blockHash) {
+    //     toast.success("Event successfully created");
+    //     setLoading(false);
+    //     navigate("/dashboard/marketplace");
+    //   }
     // },
   });
 
   useEffect(() => {
-    if (image != "") {
-      writeContract({
-        address: EVENT_MARKETPLACE_ADDRESS,
-        abi: EVENTMARKETPLACEABI,
-        functionName: "createListing",
-        args: [name, description, image, parseEther(`${price}`), deadline],
-        // onError() {
-        //     toast.error("!Failed to create an event.");
-        //     setLoading(false);
-        // },
+    if (isSuccess) {
+      toast.success("Carbon credit successfully created");
+      setLoading(false);
+      navigate("/dashboard/carbonmarket");
+    }
+    if (isLoading) {
+      toast.info("Carbon credit creating");
+    }
+    if (isPending) {
+      toast.loading("Carbon credit creating", {
+        // description: "My description",
+        duration: 5000,
       });
     }
-  }, [image, name, description, deadline, price]);
+
+  }, [isLoading, isSuccess, isPending]);
 
   const navigate = useNavigate();
 
@@ -86,69 +80,37 @@ const CreateCarbon = (props: Props) => {
     <div className="mb-8">
       <div className="card w-[95%] mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
         <h3 className="uppercase text-xl text-center font-bold">
-          Post your event
+          Sell Carbon Credit
         </h3>
         <div className="card-body">
           <form onSubmit={handleSubmit}>
-            <div className="md:grid md:grid-cols-2 gap-x-5 sm:justify-center">
+            <div className="md:grid gap-x-5 sm:justify-center">
               <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
                 <label className="label">
-                  <span className="label-text">Event Name</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter name"
-                  className="input input-bordered w-full"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
-                <label className="label">
-                  <span className="label-text">Event Description</span>
-                </label>
-                <textarea
-                  className="textarea textarea-bordered"
-                  placeholder="Enter description"
-                  onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-              </div>
-              <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
-                <label className="label">
-                  <span className="label-text">Event Banner</span>
-                </label>
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full"
-                  onChange={(e) => setImagePath(e.target.files as any)}
-                  title="file"
-                />
-              </div>
-              <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
-                <label className="label">
-                  <span className="label-text">Event Price ($RWISE)</span>
+                  <span className="label-text">Credit Amount (1 per usdt) </span>
                 </label>
                 <input
                   type="number"
-                  placeholder="Enter price"
+                  placeholder="Enter amount"
                   className="input input-bordered w-full"
                   onChange={(e) => setPrice(Number(e.target.value))}
                 />
               </div>
               <div className="form-control mb-3 w-full max-w-xs sm:max-w-md md:max-w-xl mx-auto">
                 <label className="label">
-                  <span className="label-text">Event Deadline</span>
+                  <span className="label-text">Credit Description</span>
                 </label>
                 <input
-                  type="datetime-local"
+                  type="text"
+                  placeholder="Enter name"
                   className="input input-bordered w-full"
-                  onChange={(e) => toTimeStamp(e.target.value)}
-                  title="time"
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
             </div>
             <div className="card-actions">
               <button className="btn w-full max-w-xs sm:max-w-md mx-auto md:max-w-2xl text-white bg-[#026937] hover:bg-[#026937]">
-                {loading ? (
+                {isPending ? (
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   "submit"

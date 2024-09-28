@@ -98,7 +98,7 @@ const TableOne = () => {
                 {/* <th>avatar</th> */}
                 <th>Name</th>
                 <th>address</th>
-                <th>token Earned</th>
+                <th>XP Earned</th>
                 <th>Plastic Recycled</th>
               </tr>
             </thead>
@@ -134,7 +134,7 @@ const TableOne = () => {
                   </td>
                   <td>{shortenAddress(eachUser.userAddr)}</td>
                   <td className="">
-                    {/* {(!!leaderboard && tokenBalance(eachUser.userAddr)) || 0} */}
+                    {(!!leaderboard && Number(eachUser.xpoints)) || 0} XP
                   </td>
                   <th>
                     <button className="btn btn-ghost btn-xs">details</button>

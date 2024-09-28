@@ -31,8 +31,9 @@ const CompanyRegister = () => {
     const { currentUser, setCurrentUser, wastewiseStore, setNotifCount } =
         useWasteWiseContext();
     const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
-
     const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
+
+
     const { isLoading: settling, error } = useWaitForTransactionReceipt({
         confirmations: 1,
         hash
@@ -60,7 +61,7 @@ const CompanyRegister = () => {
             // const redirectTo = "";
             // if (currentUser.role === 1) {}
             setTimeout(() => {
-                navigate("/dashboard/wallet");
+                navigate("/dashboard/carbonmarket");
             }, 1200);
         }
     }, [isSuccess]);
@@ -86,7 +87,7 @@ const CompanyRegister = () => {
 
     useEffect(() => {
         if (isLoading) {
-            toast.loading("Registering your information. Kindly hold", {
+            toast.loading("Companying your information. Kindly hold", {
                 // description: "My description",
                 duration: 15000,
             });
@@ -115,8 +116,9 @@ const CompanyRegister = () => {
         writeContract({
             address: CARBONWISE_ADDRESS,
             abi: CARBONWISEABI,
-            args: [name, country, gender, number, email],
-            functionName: "createUserAcct",
+            args: [name, country, number, email],
+            functionName: "createCompanyAcct",
+            account: address
         });
     }
 
@@ -149,12 +151,12 @@ const CompanyRegister = () => {
             /> */}
                         <div className="form-control w-full my-4">
                             <label className="label">
-                                <span className="label-text">Nickname</span>
+                                <span className="label-text">Company Name</span>
                                 {/* <span className="label-text-alt">Top Right label</span> */}
                             </label>
                             <input
                                 type="text"
-                                name="Name"
+                                name="company name"
                                 placeholder="What can we call you"
                                 className="input input-bordered w-full"
                                 defaultValue={name}
@@ -171,7 +173,7 @@ const CompanyRegister = () => {
                         {/* Email form input */}
                         <div className="form-control w-full my-4">
                             <label className="label">
-                                <span className="label-text">Email</span>
+                                <span className="label-text">Company Email</span>
                             </label>
                             <input
                                 type="text"
@@ -253,29 +255,7 @@ const CompanyRegister = () => {
             </div> */}
 
                         {/* Gender Form input */}
-                        <div className="form-control w-full">
-                            <label className="label">
-                                <span className="label-text">Select Gender</span>
-                                {/* <span className="label-text-alt">Alt label</span> */}
-                            </label>
-                            <div className="join">
-                                {["female", "male"].map((eachGender) => (
-                                    <input
-                                        className="join-item btn checked:btn-green-600 flex-1 capitalize"
-                                        type="radio"
-                                        name="options"
-                                        value={eachGender}
-                                        aria-label={eachGender}
-                                        onChange={handleGenderChange}
-                                    />
-                                ))}
-                            </div>
-                            <label className="label">
-                                <span className="label-text-alt text-error">
-                                    {/* Invalid Email Address */}
-                                </span>
-                            </label>
-                        </div>
+
 
                         {/* <label htmlFor="number" className="text-base-content">
               Number:{" "}

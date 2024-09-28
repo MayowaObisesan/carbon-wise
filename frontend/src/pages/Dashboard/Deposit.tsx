@@ -22,13 +22,6 @@ const Recycle = () => {
   const { currentUser, wastewiseStore, setNotifCount } = useWasteWiseContext();
   const navigate = useNavigate();
 
-  const { data } = useSimulateContract({
-    address: CARBONWISE_ADDRESS,
-    abi: CARBONWISEABI,
-    functionName: "depositPlastic",
-    args: [numPlastic, userId],
-  });
-
   const {
     data: depositPlasticData,
     isError: isDepositPlasticError,
@@ -65,7 +58,12 @@ const Recycle = () => {
   const handleDepositPlastic = async (e: any) => {
     e.preventDefault();
     // console.log(true);
-    depositPlasticWrite(data!.request);
+    depositPlasticWrite({
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISEABI,
+      functionName: "depositPlastic",
+      args: [numPlastic, userId],
+    });
   };
 
   useEffect(() => {
@@ -79,6 +77,8 @@ const Recycle = () => {
 
   useEffect(() => {
     if (isPlasticDeposited) {
+      setNumPlastic(0);
+      setUserId(0);
       toast.success("Successfully Approved Recycled item(s)", {
         // description: "My description",
         duration: 5000,
@@ -200,7 +200,7 @@ const Recycle = () => {
               className="input input-lg input-bordered w-full placeholder:text-base"
             />
             <label className="label">
-              <span className="label-text-alt">You will get 15 tokens</span>
+              <span className="label-text-alt">You will get {numPlastic} tokens</span>
             </label>
             <label className="label">
               <span className="label-text">User Id</span>

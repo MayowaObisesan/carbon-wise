@@ -20,6 +20,7 @@ import CreateCarbon from "./pages/Dashboard/CreateCarbon";
 import SingleCarbon from "./pages/Dashboard/SingleCarbon";
 import CarbonMarketplace from "./pages/Dashboard/CarbonMarket";
 import CompanyRegister from "./pages/Dashboard/CompanyRegister";
+import Disbursement from "./pages/Dashboard/Disbursement";
 
 export function App() {
   return (
@@ -82,6 +83,7 @@ export function App() {
             <Route path="wallet" element={<Wallet />} />
             <Route path="settings" element={<Settings />} />
             <Route path="recycle" element={<Recycle />} />
+            <Route path="disbursement" element={<Disbursement />} />
             <Route path="marketplace" element={<Marketplace />} />
             <Route path="carbonmarket" element={<CarbonMarketplace />} />
             <Route path="createEvent" element={<CreateEvent />} />
@@ -90,13 +92,13 @@ export function App() {
             <Route path="createAdmin" element={<CreateAdmin />} />
             <Route path="marketplace/event/:id" element={<SingleEvent />} />
             <Route path="carbonmarket/credit/:id" element={<SingleCarbon />} />
-            <Route path="companyregister" element={<CompanyRegister />} />
           </Route>
           {/* <Route
           path="/Login"
           element={<Login />}
         ></Route> */}
           <Route path="register" element={<Register />}></Route>
+          <Route path="companyregister" element={<CompanyRegister />} />
         </Routes>
       </BrowserRouter>
     </section>
