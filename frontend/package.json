@@ -36,7 +36,7 @@
     "sort-by": "^0.0.2",
     "util": "^0.12.4",
     "viem": "^2.21.15",
-    "wagmi": "^2.12.15"
+    "wagmi": "^1.0.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",
