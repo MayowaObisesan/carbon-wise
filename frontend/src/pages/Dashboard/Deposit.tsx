@@ -42,8 +42,6 @@ const Recycle = () => {
     });
 
   useEffect(() => {
-    setNumPlastic(0);
-    setUserId(0);
   }, [isPlasticDeposited]);
 
   useEffect(() => {
@@ -77,8 +75,6 @@ const Recycle = () => {
 
   useEffect(() => {
     if (isPlasticDeposited) {
-      setNumPlastic(0);
-      setUserId(0);
       toast.success("Successfully Approved Recycled item(s)", {
         // description: "My description",
         duration: 5000,

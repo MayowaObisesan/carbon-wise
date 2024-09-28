@@ -51,7 +51,7 @@ const CarbonMarketplace = (props: Props) => {
                 ) : (
                     listings.map((item, index) => {
                         return (
-                            <Link to={`event/${item?.itemId}`} key={index}>
+                            <Link to={`credit/${item?.itemId}`} key={index}>
                                 <div className="card w-80 sm:w-[28rem] md:w-80 bg-base-100 shadow-xl">
                                     <div className="card-body">
                                         <h2 className="card-title">

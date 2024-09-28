@@ -53,7 +53,7 @@ const Sidebar = (props: Props) => {
     }
   }, [isSuccess, isLoading])
 
-  console.log(data)
+  console.log(currentUser)
   // update activeItem based on current location
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -142,7 +142,7 @@ const Sidebar = (props: Props) => {
                 {/* <a className="active">Home</a> */}
               </li>
             )}
-            {currentUser?.role == 0 || currentUser?.role == 3 && (
+            {currentUser?.role === 0 && (
               <li>
                 <Link
                   to="/dashboard/leaderboard"
@@ -155,7 +155,55 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {currentUser?.role == 0 || currentUser?.role == 1 || currentUser?.role == 2 && (<li>
+            {currentUser?.role === 2 && (
+              <li>
+                <Link
+                  to="/dashboard/leaderboard"
+                  className="items-center"
+                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                >
+                  {/* <img src={wallet} alt="wallet-Icon" /> */}
+                  <FaPeopleGroup />
+                  <h2 className="text-lg">Leaderboard</h2>
+                </Link>
+              </li>
+            )}
+            {currentUser?.role === 1 && (
+              <li>
+                <Link
+                  to="/dashboard/leaderboard"
+                  className="items-center"
+                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                >
+                  {/* <img src={wallet} alt="wallet-Icon" /> */}
+                  <FaPeopleGroup />
+                  <h2 className="text-lg">Leaderboard</h2>
+                </Link>
+              </li>
+            )}
+            {currentUser?.role === 0 && (<li>
+              <Link
+                to="/dashboard/wallet"
+                className="items-center"
+                style={isActive === "wallet" ? activeLinkStyle : {}}
+              >
+                {/* <img src={wallet} alt="wallet-Icon" /> */}
+                <FaWallet />
+                <h2 className="text-lg">Wallet</h2>
+              </Link>
+            </li>)}
+            {currentUser?.role === 2 && (<li>
+              <Link
+                to="/dashboard/wallet"
+                className="items-center"
+                style={isActive === "wallet" ? activeLinkStyle : {}}
+              >
+                {/* <img src={wallet} alt="wallet-Icon" /> */}
+                <FaWallet />
+                <h2 className="text-lg">Wallet</h2>
+              </Link>
+            </li>)}
+            {currentUser?.role === 1 && (<li>
               <Link
                 to="/dashboard/wallet"
                 className="items-center"
