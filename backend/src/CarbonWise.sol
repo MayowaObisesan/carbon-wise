@@ -341,7 +341,7 @@ contract CarbonWise {
         user.tokenQty = user.tokenQty + _qtyrecycled;
 
         // Mint receiptTokens of the same amount, `_qtyrecycled`, to the user upon successful recycling
-        user.xpoints = _qtyrecycled * 10;
+        user.xpoints = user.xpoints + (_qtyrecycled * 10);
 
         allUsers[_userId - 1] = user;
 
