@@ -2,16 +2,26 @@
 
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {RwasteWise} from "./RwasteWise.sol";
-import {WasteWise} from "./Wastewise.sol";
+
+interface USDToken {
+    
+    function balanceOf(address account) external view returns (uint256);
+
+    function transferFrom(address from, address to, uint256 value) external returns (bool);
+
+    function burn(address userAccount,uint256 amountToBurn) external ;
+}
+
+interface CarbonWise {
+    function getAdmins() external view returns (address[] memory);
+}
 
 /**
  * @title MarketPlace: A smart contract for managing item listings in a marketplace.
  * @author Marcellus Ifeanyi, Mayowa Obisesan, Biliqis Onikoyi, Isaac Wanger, konyeri Joshua
  * @dev This MarketPlace contract allows users who have recycled their pet Bottles to easily redeem their receipt tokens.
  */
-contract MarketPlace {
+contract EventMarketPlace {
     /// @dev Structure to represent information about an item listing.
     struct ItemInfo {
         string name;
@@ -31,6 +41,18 @@ contract MarketPlace {
         uint itemPrice;
         uint itemId;
         uint qty;
+    }
+
+    struct Statistics {
+        uint totalUsers;
+        uint totalAdmins;
+        uint totalVerifiers;
+        uint totalRecycled;
+        uint totalTransactions;
+        uint totalMarketplaceEvents;
+        uint totalExpiredMarketplaceEvents;
+        uint totalMinted;
+        uint totalSupply;
     }
 
     enum Type {
@@ -85,20 +107,20 @@ contract MarketPlace {
 
     
 
-    RwasteWise rwasteWise;
-    WasteWise wasteWise;
+    USDToken usdt;
+    CarbonWise carbonwise;
 
-    WasteWise.Statistics statistics;
+    Statistics statistics;
 
-    constructor(address tokenAddress, address wasteWiseAddr) {
-        rwasteWise = RwasteWise(tokenAddress);
-        wasteWise = WasteWise(wasteWiseAddr);
+    constructor(address tokenAddress, address carbonWiseAddr) {
+        usdt = USDToken(tokenAddress);
+        carbonwise = CarbonWise(carbonWiseAddr);
     }
 
     modifier onlyAdmins() {
         bool isAdmin;
-        for (uint i = 0; i < wasteWise.getAdmins().length; i++) {
-            if (wasteWise.getAdmins()[i] == msg.sender) {
+        for (uint i = 0; i < carbonwise.getAdmins().length; i++) {
+            if (carbonwise.getAdmins()[i] == msg.sender) {
                 isAdmin = true;
             }
         }
@@ -142,14 +164,14 @@ contract MarketPlace {
         if (block.timestamp > newItemInfo.deadline) revert ListingNotActive();
 
         uint256 totalPrice = newItemInfo.price * quantity;
-        if (rwasteWise.balanceOf(msg.sender) < totalPrice)
+        if (usdt.balanceOf(msg.sender) < totalPrice)
             revert NotEnoughToken();
 
         // transfer tokens from buyer to seller
-        rwasteWise.transferFrom(msg.sender, address(this), totalPrice);
+        usdt.transferFrom(msg.sender, address(this), totalPrice);
 
         // burn the tokens collected
-        rwasteWise.burnReceipt(address(this), totalPrice);
+        usdt.burn(address(this), totalPrice);
 
         // Create a new transaction
         Transaction memory transaction;
@@ -164,7 +186,7 @@ contract MarketPlace {
         // Store the transaction
         transactions[msg.sender].push(transaction);
 
-        WasteWise.Statistics memory _stats;
+        Statistics memory _stats;
         // Increase the transactions
         _stats.totalTransactions = statistics.totalTransactions + 1;
         statistics.totalTransactions = _stats.totalTransactions;

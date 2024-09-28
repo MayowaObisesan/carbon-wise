@@ -47,7 +47,7 @@ const Marketplace = (props: Props) => {
   });
   return (
     <div className="my-8">
-      {!isLoading && listings.length == 0 && (
+      {!isLoading && listings?.length == 0 && (
         <p className="text-lg font-semibold text-center">
           No Items Available To Purchase
         </p>
@@ -56,7 +56,7 @@ const Marketplace = (props: Props) => {
         {isLoading ? (
           <span className="loading loading-spinner loading-lg"></span>
         ) : (
-          listings.map((item, index) => {
+          listings?.map((item, index) => {
             return (
               <Link to={`event/${item?.itemId}`} key={index}>
                 <div className="card w-80 sm:w-[28rem] md:w-80 bg-base-100 shadow-xl">

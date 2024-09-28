@@ -118,6 +118,7 @@ const Register = () => {
       abi: CARBONWISEABI,
       args: [name, country, gender, number, email],
       functionName: "createUserAcct",
+      account: address
     });
   }
 
