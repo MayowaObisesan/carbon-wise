@@ -3,7 +3,7 @@ import { home, logout, settings, wallet } from "../assets";
 import { Link, useLocation } from "react-router-dom";
 import { activeBgColor } from "../utils";
 import Logo from "./Logo";
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useContractRead, useReadContract } from "wagmi";
 import { useWasteWiseContext } from "../context";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import { MdEventNote, MdAdminPanelSettings } from "react-icons/md";
@@ -22,18 +22,28 @@ import {
 
 type Props = {};
 
+
+
 const Sidebar = (props: Props) => {
   const [isActive, setIsActive] = useState("");
   const location = useLocation();
+  const [company, setCompany] = useState(null)
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
-  const { data } = useContractRead({
+  const { data, isLoading, isSuccess } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
-    functionName: "getUserTransactions",
+    functionName: "getCompany",
     account: address,
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      setCompany(data as any)
+    }
+  }, [isSuccess, isLoading])
+
+  console.log(currentUser)
   // update activeItem based on current location
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -62,6 +72,12 @@ const Sidebar = (props: Props) => {
     }
     else if (location.pathname === "/dashboard/createCarbon") {
       setIsActive("createCarbon");
+    }
+    else if (location.pathname === "/dashboard/carbonmarket") {
+      setIsActive("carbonmarket");
+    }
+    else if (location.pathname === "/dashboard/carbonpurchases") {
+      setIsActive("carbonpurchases");
     }
   }, [location]);
 
@@ -116,7 +132,7 @@ const Sidebar = (props: Props) => {
                 {/* <a className="active">Home</a> */}
               </li>
             )}
-            {!currentUser?.isAdmin && (
+            {currentUser?.role == 0 || currentUser?.role == 3 && (
               <li>
                 <Link
                   to="/dashboard/leaderboard"
@@ -129,7 +145,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            <li>
+            {currentUser?.role == 0 || currentUser?.role == 1 || currentUser?.role == 2 && (<li>
               <Link
                 to="/dashboard/wallet"
                 className="items-center"
@@ -139,7 +155,8 @@ const Sidebar = (props: Props) => {
                 <FaWallet />
                 <h2 className="text-lg">Wallet</h2>
               </Link>
-            </li>
+            </li>)}
+
             {currentUser?.role == 2 && (
               <li>
                 <Link
@@ -153,7 +170,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {currentUser?.role !== 1 && currentUser?.role !== 2 && (
+            {currentUser?.id !== BigInt(0) && (
               <li>
                 <Link
                   to="/dashboard/marketplace"
@@ -191,7 +208,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {currentUser?.role !== 1 && currentUser?.role !== 2 && (
+            {currentUser?.id !== BigInt(0) && (
               <li>
                 <Link
                   to="/dashboard/purchases"
@@ -250,6 +267,30 @@ const Sidebar = (props: Props) => {
                 >
                   <FaWallet />
                   <h2 className="text-lg">Disbursement</h2>
+                </Link>
+              </li>
+            )}
+            {company && (
+              <li>
+                <Link
+                  to="/dashboard/carbonmarket"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "carbonmarket" ? activeLinkStyle : {}}
+                >
+                  <FaCartArrowDown />
+                  <h2 className="text-lg">Carbon Market</h2>
+                </Link>
+              </li>
+            )}
+            {company && (
+              <li>
+                <Link
+                  to="/dashboard/carbonpurchases"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "carbonpurchases" ? activeLinkStyle : {}}
+                >
+                  <FaLayerGroup />
+                  <h2 className="text-lg">My Purchase</h2>
                 </Link>
               </li>
             )}

@@ -129,7 +129,7 @@ const CompanyRegister = () => {
             <div className="flex h-full px-4 lg:h-9/12">
                 <div className="flex flex-col justify-center items-center lg:w-1/2 lg:mx-28 mx-1 lg:pl-8">
                     <h1 className="text-3xl font-black leading-8 mb-8">
-                        Register An Account!
+                        Register Your Company!
                     </h1>
                     <form
                         className="flex flex-col"

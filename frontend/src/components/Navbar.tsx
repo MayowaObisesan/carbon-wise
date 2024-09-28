@@ -74,9 +74,14 @@ const Navbar = () => {
           </div>
           <WasteWise />
           {location.pathname === "/" && isConnected && !isRegistered && (
-            <Link to="/register">
-              <Button>Signup</Button>
-            </Link>
+            <div className="flex gap-x-4">
+              <Link to="/companyregister">
+                <Button>Company</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Signup</Button>
+              </Link>
+            </div>
           )}
           {/* {isConnected && <SignUpButton />} */}
         </div>
