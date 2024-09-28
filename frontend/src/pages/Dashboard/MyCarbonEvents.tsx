@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import {
     useAccount,
     useWatchContractEvent,
-    useContractRead,
     useReadContract,
 } from "wagmi";
 import {
+    CC_MARKETPLACE_ADDRESS,
+    CCMARKETPLACEABI,
     EVENT_MARKETPLACE_ADDRESS,
     EVENTMARKETPLACEABI,
 } from "../../../constants";
@@ -21,8 +22,8 @@ const MyCarbonEvents = (props: Props) => {
     const { address } = useAccount();
 
     const { isLoading, isError, isSuccess, data, error } = useReadContract({
-        address: EVENT_MARKETPLACE_ADDRESS,
-        abi: EVENTMARKETPLACEABI,
+        address: CC_MARKETPLACE_ADDRESS,
+        abi: CCMARKETPLACEABI,
         functionName: "getEventsByUser",
         args: [address],
         // onError(data: any) {
@@ -36,8 +37,8 @@ const MyCarbonEvents = (props: Props) => {
     });
 
     useWatchContractEvent({
-        address: EVENT_MARKETPLACE_ADDRESS,
-        abi: EVENTMARKETPLACEABI,
+        address: CC_MARKETPLACE_ADDRESS,
+        abi: CCMARKETPLACEABI,
         eventName: "ListingBought",
         onLogs(log) {
             console.log(log);
