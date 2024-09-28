@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-// import { WASTEWISE_TOKEN_ADDRESS } from "../../constants";
+import { USD_TOKEN_ADDRESS } from "../../constants";
 import { useBalance } from "wagmi";
 
 const useWastewiseBalance = () => {

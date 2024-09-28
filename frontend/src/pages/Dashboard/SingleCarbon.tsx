@@ -35,20 +35,8 @@ const SingleCarbon = () => {
 
   const navigate = useNavigate();
 
-  const {
-    data: hash,
-    writeContract,
-    isError: isError1,
-    isPending: isLoading1,
-    isSuccess: isSuccess1,
-  } = useWriteContract();
-  const {
-    data: hash2,
-    writeContract: writeContract2,
-    isError: isError2,
-    isPending: isLoading2,
-    isSuccess: isSuccess2,
-  } = useWriteContract();
+  const { data: hash, writeContract, isError: isError1, isPending: isLoading1, isSuccess: isSuccess1 } = useWriteContract()
+  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
 
   const increase = () => {
     setAmount(amount + 1);
@@ -187,8 +175,8 @@ const SingleCarbon = () => {
     settotal(amount * price);
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
-  useEffect(() => {}, [allowanceAmount]);
-  useEffect(() => {}, [allowanceListener]);
+  useEffect(() => { }, [allowanceAmount]);
+  useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
   return (
     <div className="mb-8">
@@ -249,11 +237,11 @@ const SingleCarbon = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                      (
-                        document.getElementById(
-                          "my_modal_2"
-                        ) as HTMLDialogElement
-                      )?.showModal()
+                    (
+                      document.getElementById(
+                        "my_modal_2"
+                      ) as HTMLDialogElement
+                    )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}

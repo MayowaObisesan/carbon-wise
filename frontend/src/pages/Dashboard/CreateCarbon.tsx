@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  useAccount,
-  useContractWrite,
-  useSimulateContract,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
+import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { useNavigate } from "react-router-dom";
-import {
-  EVENT_MARKETPLACE_ADDRESS,
-  EVENTMARKETPLACEABI,
-} from "../../../constants";
+import { EVENT_MARKETPLACE_ADDRESS, EVENTMARKETPLACEABI } from "../../../constants";
 import { pinFileToIPFS } from "../../utils";
 import { toast } from "sonner";
 import { parseEther } from "viem";
@@ -25,6 +16,8 @@ const CreateCarbon = (props: Props) => {
   const [price, setPrice] = useState<number>(0);
   const [deadline, setDeadline] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const { data: hash, writeContract, isError, isPending: isLoading1, isSuccess } = useWriteContract()
 
   const toTimeStamp = (strDate: string) => {
     const dt = Date.parse(strDate);
@@ -50,38 +43,40 @@ const CreateCarbon = (props: Props) => {
     }
   };
 
-  const { isLoading, data } = useSimulateContract({
+  writeContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "createListing",
     args: [name, description, image, parseEther(`${price}`), deadline],
     // onError() {
-    //   toast.error("!Failed to create an event.");
-    //   setLoading(false);
-    // },
-  });
-
-  const { writeContract, data: writeContractData } = useWriteContract();
-
-  const { isSuccess } = useWaitForTransactionReceipt({
-    hash: writeContractData,
-    // onSettled(data, error) {
-    //   if (data?.blockHash) {
-    //     toast.success("Event successfully created");
+    //     toast.error("!Failed to create an event.");
     //     setLoading(false);
-    //     navigate("/dashboard/marketplace");
-    //   }
     // },
   });
-  useEffect(() => {
-    toast.success("Event successfully created");
-    setLoading(false);
-    navigate("/dashboard/marketplace");
-  }, [isSuccess]);
+
+  useWaitForTransactionReceipt({
+    hash,
+    // onSettled(data, error) {
+    //     if (data?.blockHash) {
+    //         toast.success("Event successfully created");
+    //         setLoading(false);
+    //         navigate("/dashboard/marketplace");
+    //     }
+    // },
+  });
 
   useEffect(() => {
     if (image != "") {
-      writeContract(data!.request);
+      writeContract({
+        address: EVENT_MARKETPLACE_ADDRESS,
+        abi: EVENTMARKETPLACEABI,
+        functionName: "createListing",
+        args: [name, description, image, parseEther(`${price}`), deadline],
+        // onError() {
+        //     toast.error("!Failed to create an event.");
+        //     setLoading(false);
+        // },
+      });
     }
   }, [image, name, description, deadline, price]);
 
