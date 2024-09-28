@@ -1,6 +1,6 @@
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useContractRead, useReadContract } from "wagmi";
 import { useWasteWiseContext } from "../context";
-import { USDTOKENABI, USD_TOKEN_ADDRESS } from "../../constants";
+import { CARBONWISE_ADDRESS, USDTOKENABI, USD_TOKEN_ADDRESS } from "../../constants";
 
 import { formatEther } from "viem";
 import { GiToken } from "react-icons/gi";
@@ -8,10 +8,11 @@ import { GiToken } from "react-icons/gi";
 const CardOne = () => {
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
-  const { data } = useContractRead({
+  const { data } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
-    functionName: "totalSupply",
+    functionName: "balanceOf",
+    args: [CARBONWISE_ADDRESS]
   });
 
   return (
