@@ -1,12 +1,12 @@
-import { BaseError } from "viem";
-// import { useNetwork, useSwitchNetwork } from "wagmi";
+import { BaseError } from 'viem'
+// import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 export function NetworkSwitcher() {
-  // const { chain } = useNetwork();
+  // const { chain } = useNetwork()
   // const { chains, error, isLoading, pendingChainId, switchNetwork } =
-  //   useSwitchNetwork();
+  //   useSwitchNetwork()
 
-  // if (!chain) return null;
+  // if (!chain) return null
 
   return (
     <div>
@@ -26,9 +26,9 @@ export function NetworkSwitcher() {
             )
           )}
         </div>
-      )}
+      )} */}
 
-      <div>{error && (error as BaseError).shortMessage}</div> */}
+      {/* <div>{error && (error as BaseError).shortMessage}</div> */}
     </div>
   );
 }

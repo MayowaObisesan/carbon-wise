@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run wagmi && vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "wagmi": "wagmi generate"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -36,7 +35,7 @@
     "sort-by": "^0.0.2",
     "util": "^0.12.4",
     "viem": "^2.21.15",
-    "wagmi": "^1.0.6"
+    "wagmi": "^2.12.16"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",

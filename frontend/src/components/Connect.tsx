@@ -2,9 +2,10 @@ import { BaseError } from "viem";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 export function Connect() {
-  const { connector, isConnected } = useAccount();
-  const { connect, connectors, error, isPending } = useConnect();
-  const { disconnect } = useDisconnect();
+  const { connector, isConnected } = useAccount()
+  const { connect, connectors, error, isPending } =
+    useConnect()
+  const { disconnect } = useDisconnect()
 
   return (
     <div>

@@ -157,6 +157,27 @@ const SingleEvent = () => {
   useEffect(() => { }, [allowanceAmount]);
   useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("Error");
+    }
+    if (isSuccess) {
+      setListing(data);
+      setLoading(false);
+      // setPrice(Number(formatUnits(data?.price, 18)));
+      // settotal(amount * Number(formatUnits(data?.price, 18)));
+    }
+  }, [isError, isSuccess])
+
+  useEffect(() => {
+    if (isError2) {
+      console.log("Error");
+    }
+    if (isSuccess2) {
+      setAllowance(allowanceData as any);
+    }
+  }, [isError2, isSuccess2])
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start gap-x-8">
