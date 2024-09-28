@@ -280,9 +280,9 @@ const Landing = (props: Props) => {
                   </div>
                   <div className="timeline-end md:text-start mb-10">
                     <time className="font-mono italic">December 2023</time>
-                    <div className="text-lg font-black">Launch Wastewise</div>
-                    We aim to go live with wastewise on mainnet after a month of
-                    rigorous testing, analysis and professional vetting and a
+                    <div className="text-lg font-black">Launch CarbonWise</div>
+                    We aim to go live with carbon-wise on mainnet after a month
+                    of rigorous testing, analysis and professional vetting and a
                     round of alpha and beta testers.
                   </div>
                   <hr />
@@ -333,11 +333,11 @@ const Landing = (props: Props) => {
                     </svg>
                   </div>
                   <div className="timeline-end mb-10 md:text-start">
-                    <time className="font-mono italic">March - April 2024</time>
+                    <time className="font-mono italic">March - April 2025</time>
                     <div className="text-lg font-black">
                       Onboard Ambassadors and Launch Discord Server
                     </div>
-                    From the first quarter of 2024, wastewise aims to onboard
+                    From the first quarter of 2025, carbon-wise aims to onboard
                     ambassadors. This ambassadors will help with the discord
                     community and also help raise more awareness about the
                     environment. Wastewise is all about the environment.
@@ -468,11 +468,11 @@ const Landing = (props: Props) => {
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  How can I become an Wastewise ambassador?
+                  How can I become an Carbon-wise ambassador?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
                   Wastewise Ambassadorship program is in our roadmap with plans
-                  as to how we intend to build the wastewise community. We
+                  as to how we intend to build the carbon-wise community. We
                   intend to have a durable structure that we can build upon for
                   years to come as we grow as a community. Details about our
                   ambassadorship program will be communicated on this website
@@ -483,12 +483,12 @@ const Landing = (props: Props) => {
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  Is Wastewise a company?
+                  Is Carbon-wise a company?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Wastewise is a community of people, organization and groups
+                  Carbon-wise is a community of people, organization and groups
                   with the goal of incentivizing recycling of plastic related
-                  products and waste in general. Wastewise and its community
+                  products and waste in general. Carbon-wise and its community
                   aims to foster a clean earth on community at a time.
                 </p>
               </div>
@@ -496,12 +496,12 @@ const Landing = (props: Props) => {
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What is the benefit of using Wastewise?
+                  What is the benefit of using Carbon-wise?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  One of the main benefits of wastewise is that it is built on
+                  One of the main benefits of carbon-wise is that it is built on
                   web3 blockchain technology. This choice of technology allows
-                  for transparency and immutability of the data that wastewise
+                  for transparency and immutability of the data that carbon-wise
                   aims to recycle.
                 </p>
               </div>
@@ -509,12 +509,12 @@ const Landing = (props: Props) => {
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  Is Wastewise a web3 platform?
+                  Is carbon-wise a web3 platform?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Yes, Wastewise is a web3 platform. Wastewise is built on Base
-                  Blockchain. A layer2 blockchain solution that allows wastewise
-                  to scale without sacrificing security
+                  Yes, Carbon-wise is a web3 platform. Carbon-wise is built on
+                  Base Blockchain. A layer2 blockchain solution that allows
+                  carbon-wise to scale without sacrificing security
                 </p>
               </div>
               {/* <!-- End Col --> */}
