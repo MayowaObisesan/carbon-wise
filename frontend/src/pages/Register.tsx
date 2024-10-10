@@ -21,18 +21,12 @@ import Navbar from "../components/Navbar";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { address, isConnected } = useAccount();
-  const [number, setNumber] = useState<number>(0);
-  const [country, setCountry] = useState("");
-  const [gender, setGender] = useState(1);
+  const { address } = useAccount();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const notificationCount = useNotificationCount();
-  const { currentUser, setCurrentUser, wastewiseStore, setNotifCount } =
+  const { wastewiseStore, setNotifCount } =
     useWasteWiseContext();
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-
 
   const { isLoading: settling, error } = useWaitForTransactionReceipt({
     confirmations: 1,
@@ -94,29 +88,12 @@ const Register = () => {
     }
   }, [isLoading]);
 
-  const handleGenderChange = (event: any) => {
-    if (event.target.value === "female") {
-      setGender(0);
-    } else if (event.target.value === "male") {
-      setGender(1);
-    }
-  };
-  function selectCountry(val: any) {
-    setCountry(val);
-  }
-
-  function handleEmail(e: any) {
-    setEmail(e.target.value);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsEmailValid(emailRegex.test(e.target.value)); // true
-  }
-
   function handleSubmit(e: any) {
     e.preventDefault();
     writeContract({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISEABI,
-      args: [name, country, gender, number, email],
+      args: [name],
       functionName: "createUserAcct",
       account: address
     });
@@ -137,21 +114,9 @@ const Register = () => {
             id="signup-form"
             onSubmit={handleSubmit}
           >
-            {/* <label htmlFor="Name" className="text-base-content">
-              {" "}
-              Name:{" "}
-            </label>
-            <input
-              name="Name"
-              id="Name"
-              className="p-3 lg:m-2 w-screen lg:w-2/3"
-              onChange={(e) => setName(e.target.value)}
-              placeholder="John"
-              value={name}
-            /> */}
             <div className="form-control w-full my-4">
               <label className="label">
-                <span className="label-text">Nickname</span>
+                <span className="label-text">Name</span>
                 {/* <span className="label-text-alt">Top Right label</span> */}
               </label>
               <input
@@ -170,143 +135,6 @@ const Register = () => {
               </label>
             </div>
 
-            {/* Email form input */}
-            <div className="form-control w-full my-4">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="text"
-                placeholder="your@email.com"
-                className="input input-bordered w-full"
-                defaultValue={currentUser?.email}
-                onChange={handleEmail}
-              />
-              {email.length > 0 && !isEmailValid && (
-                <label className="label">
-                  <span className="label-text-alt text-error">
-                    Invalid Email Address
-                  </span>
-                </label>
-              )}
-            </div>
-
-            {/* Phone Number form input */}
-            <div className="form-control w-full my-4">
-              <label className="label">
-                <span className="label-text">Phone number</span>
-              </label>
-              <div className="join">
-                <CountryDropdown
-                  value={country}
-                  // defaultOptionLabel="---"
-                  onChange={(val) => selectCountry(val)}
-                  classes="select select-bordered join-item bg-base-200 focus:outline-0 focus:bg-base-300 w-4/12"
-                />
-                <div className="form-control w-full">
-                  <div>
-                    <input
-                      type="text"
-                      className="input input-bordered join-item w-full focus:outline-0 focus:bg-base-100"
-                      placeholder="234 913 158 1488"
-                      // defaultValue={number}
-                      onChange={(e) => setNumber(parseInt(e.target?.value))}
-                    />
-                  </div>
-                </div>
-              </div>
-              <label className="label">
-                <span className="label-text-alt text-error">
-                  {/* Invalid Phone number */}
-                </span>
-              </label>
-            </div>
-
-            {/* <label htmlFor="country" className="text-base-content">
-              Country:{" "}
-            </label>
-            <CountryDropdown
-              value={country}
-              onChange={(val) => selectCountry(val)}
-              className="text-[#121212]     p-3 lg:m-2 my-2 w-screen lg:w-2/3 text-base font-light bg-[#F3F3F3]"
-            />
-            <div className="flex justify-between w-1/3">
-              <label className="flex text-base-content">
-                <input
-                  className="bg-[#F3F3F3]  lg:m-2 my-2 mx-3  lg:w-2/3"
-                  type="radio"
-                  value="Male"
-                  checked={gender === 1}
-                  onChange={handleGenderChange}
-                />
-                Male
-              </label>
-              <label className=" flex text-base-content">
-                {" "}
-                <input
-                  className="  text-[#121212] lg:m-2 my-2  mx-3  lg:w-2/3"
-                  type="radio"
-                  value="Female"
-                  checked={gender === 0}
-                  onChange={handleGenderChange}
-                />
-                Female
-              </label>
-            </div> */}
-
-            {/* Gender Form input */}
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Select Gender</span>
-                {/* <span className="label-text-alt">Alt label</span> */}
-              </label>
-              <div className="join">
-                {["female", "male"].map((eachGender) => (
-                  <input
-                    className="join-item btn checked:btn-green-600 flex-1 capitalize"
-                    type="radio"
-                    name="options"
-                    value={eachGender}
-                    aria-label={eachGender}
-                    onChange={handleGenderChange}
-                  />
-                ))}
-              </div>
-              <label className="label">
-                <span className="label-text-alt text-error">
-                  {/* Invalid Email Address */}
-                </span>
-              </label>
-            </div>
-
-            {/* <label htmlFor="number" className="text-base-content">
-              Number:{" "}
-            </label>
-            <input
-              className="p-3 lg:m-2 my-2 w-screen lg:w-2/3"
-              placeholder="Enter phone number"
-              type="number"
-              value={number}
-              onChange={(e) => setNumber(parseInt(e.target.value))}
-            /> */}
-
-            {/* <label htmlFor="email" className="text-base-content">
-              Email:{" "}
-            </label>
-            <input
-              name="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              placeholder="react@example.com"
-              className="p-3 lg:m-2 my-2 w-screen lg:w-2/3"
-            /> */}
-            {/* <Button
-              name={isLoading ? "Loading" : "Sign up"}
-              disabled={!write || isLoading}
-              onClick={handleSubmit}
-            /> */}
-
             {/* Submit button */}
             <div className="form-control w-full px-4 py-8 mx-auto lg:w-auto">
               <Button
@@ -317,14 +145,6 @@ const Register = () => {
               >
                 {(isLoading || settling) && <span className="loading"></span>}
               </Button>
-              {/* 
-              <button
-                className="btn btn-block lg:btn-wide"
-                onClick={handleSubmit}
-                disabled={!write || isLoading}
-              >
-                {isLoading ? <span className="loading"></span> : "Signup"}
-              </button> */}
             </div>
 
             {isSuccess && (

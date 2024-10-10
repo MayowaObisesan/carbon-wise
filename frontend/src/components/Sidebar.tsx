@@ -3,7 +3,7 @@ import { home, logout, settings, wallet } from "../assets";
 import { Link, useLocation } from "react-router-dom";
 import { activeBgColor } from "../utils";
 import Logo from "./Logo";
-import { useAccount, useContractRead, useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import { useWasteWiseContext } from "../context";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import { MdEventNote, MdAdminPanelSettings } from "react-icons/md";
@@ -54,6 +54,7 @@ const Sidebar = (props: Props) => {
   }, [isSuccess, isLoading])
 
   console.log(currentUser)
+
   // update activeItem based on current location
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -108,28 +109,13 @@ const Sidebar = (props: Props) => {
 
         <article className="flex-1 h-full py-4">
           <ul className="menu menu-lg bg-transparent w-72 rounded-box space-y-8">
-            {currentUser?.isAdmin && (
+            {currentUser?.role === 1 && (<>
               <li>
                 <Link
                   to="/dashboard"
                   className=""
                   style={isActive === "dashboard" ? activeLinkStyle : {}}
                 >
-                  {/* <img src={home} alt="home-Icon" /> */}
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg> */}
                   <FaChartArea />
                   <h2
                     className="text-lg"
@@ -141,8 +127,49 @@ const Sidebar = (props: Props) => {
                 </Link>
                 {/* <a className="active">Home</a> */}
               </li>
+              <li>
+                <Link
+                  to="/dashboard/createEvent"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "createEvent" ? activeLinkStyle : {}}
+                >
+                  <FaCartPlus />
+                  <h2 className="text-lg">Create Event</h2>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/createAdmin"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "createAdmin" ? activeLinkStyle : {}}
+                >
+                  <FaUserShield />
+                  <h2 className="text-lg">Create Admin</h2>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/createCarbon"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "createCarbon" ? activeLinkStyle : {}}
+                >
+                  <FaWallet />
+                  <h2 className="text-lg">Sell Credits</h2>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/disbursement"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "disbursement" ? activeLinkStyle : {}}
+                >
+                  <FaWallet />
+                  <h2 className="text-lg">Disbursement</h2>
+                </Link>
+              </li>
+            </>
             )}
-            {currentUser?.role === 0 && (
+            {((currentUser?.role === 0) || (currentUser?.role === 1) || (currentUser?.role === 2)) && (<>
               <li>
                 <Link
                   to="/dashboard/leaderboard"
@@ -154,67 +181,42 @@ const Sidebar = (props: Props) => {
                   <h2 className="text-lg">Leaderboard</h2>
                 </Link>
               </li>
-            )}
-            {currentUser?.role === 2 && (
+            </>)}
+            {((currentUser?.role === 0) || (currentUser?.role === 1)) && (<>
               <li>
                 <Link
-                  to="/dashboard/leaderboard"
-                  className="items-center"
-                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                  to="/dashboard/marketplace"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "marketplace" ? activeLinkStyle : {}}
                 >
-                  {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaPeopleGroup />
-                  <h2 className="text-lg">Leaderboard</h2>
+                  <FaCartArrowDown />
+                  <h2 className="text-lg">Marketplace</h2>
                 </Link>
               </li>
-            )}
-            {currentUser?.role === 1 && (
+            </>)}
+            {((currentUser?.role === 0)) && (<>
               <li>
                 <Link
-                  to="/dashboard/leaderboard"
+                  to="/dashboard/wallet"
                   className="items-center"
-                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                  style={isActive === "wallet" ? activeLinkStyle : {}}
                 >
                   {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaPeopleGroup />
-                  <h2 className="text-lg">Leaderboard</h2>
+                  <FaWallet />
+                  <h2 className="text-lg">Wallet</h2>
                 </Link>
               </li>
-            )}
-            {currentUser?.role === 0 && (<li>
-              <Link
-                to="/dashboard/wallet"
-                className="items-center"
-                style={isActive === "wallet" ? activeLinkStyle : {}}
-              >
-                {/* <img src={wallet} alt="wallet-Icon" /> */}
-                <FaWallet />
-                <h2 className="text-lg">Wallet</h2>
-              </Link>
-            </li>)}
-            {currentUser?.role === 2 && (<li>
-              <Link
-                to="/dashboard/wallet"
-                className="items-center"
-                style={isActive === "wallet" ? activeLinkStyle : {}}
-              >
-                {/* <img src={wallet} alt="wallet-Icon" /> */}
-                <FaWallet />
-                <h2 className="text-lg">Wallet</h2>
-              </Link>
-            </li>)}
-            {currentUser?.role === 1 && (<li>
-              <Link
-                to="/dashboard/wallet"
-                className="items-center"
-                style={isActive === "wallet" ? activeLinkStyle : {}}
-              >
-                {/* <img src={wallet} alt="wallet-Icon" /> */}
-                <FaWallet />
-                <h2 className="text-lg">Wallet</h2>
-              </Link>
-            </li>)}
-
+              <li>
+                <Link
+                  to="/dashboard/purchases"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "purchases" ? activeLinkStyle : {}}
+                >
+                  <FaLayerGroup />
+                  <h2 className="text-lg">My Purchase</h2>
+                </Link>
+              </li>
+            </>)}
             {currentUser?.role == 2 && (
               <li>
                 <Link
@@ -228,107 +230,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {currentUser?.id !== BigInt(0) && (
-              <li>
-                <Link
-                  to="/dashboard/marketplace"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "marketplace" ? activeLinkStyle : {}}
-                >
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg> */}
-                  <FaCartArrowDown />
-                  <h2 className="text-lg">Marketplace</h2>
-                </Link>
-              </li>
-            )}
-            {currentUser?.isAdmin && (
-              <li>
-                <Link
-                  to="/dashboard/createEvent"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createEvent" ? activeLinkStyle : {}}
-                >
-                  <FaCartPlus />
-                  <h2 className="text-lg">Create Event</h2>
-                </Link>
-              </li>
-            )}
-            {currentUser?.id !== BigInt(0) && (
-              <li>
-                <Link
-                  to="/dashboard/purchases"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "purchases" ? activeLinkStyle : {}}
-                >
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg> */}
-                  <FaLayerGroup />
-                  <h2 className="text-lg">My Purchase</h2>
-                </Link>
-              </li>
-            )}
-            {currentUser?.isAdmin && (
-              <li>
-                <Link
-                  to="/dashboard/createAdmin"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createAdmin" ? activeLinkStyle : {}}
-                >
-                  <FaUserShield />
-                  <h2 className="text-lg">Create Admin</h2>
-                </Link>
-              </li>
-            )}
-            {currentUser?.isAdmin && (
-              <li>
-                <Link
-                  to="/dashboard/createCarbon"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createCarbon" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Sell Credits</h2>
-                </Link>
-              </li>
-            )}
-            {currentUser?.isAdmin && (
-              <li>
-                <Link
-                  to="/dashboard/disbursement"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "disbursement" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Disbursement</h2>
-                </Link>
-              </li>
-            )}
-            {(company as datap)?.name !== "" && (
+            {(company as datap)?.name !== "" && (<>
               <li>
                 <Link
                   to="/dashboard/carbonmarket"
@@ -339,8 +241,6 @@ const Sidebar = (props: Props) => {
                   <h2 className="text-lg">Carbon Market</h2>
                 </Link>
               </li>
-            )}
-            {(company as datap)?.name !== "" && (
               <li>
                 <Link
                   to="/dashboard/carbonpurchases"
@@ -351,6 +251,7 @@ const Sidebar = (props: Props) => {
                   <h2 className="text-lg">My Purchase</h2>
                 </Link>
               </li>
+            </>
             )}
           </ul>
         </article>

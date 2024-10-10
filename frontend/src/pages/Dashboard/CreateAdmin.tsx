@@ -13,10 +13,9 @@ import { CARBONWISE_ADDRESS } from "../../../constants";
 type Props = {};
 
 const CreateAdmin = (props: Props) => {
+  const [name, setName] = useState<string>();
   const [address, setAddress] = useState<string>();
-
   const [loading, setLoading] = useState<boolean>(false);
-
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
@@ -57,8 +56,8 @@ const CreateAdmin = (props: Props) => {
     writeContract({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISE_ABI,
-      functionName: "addAdmins",
-      args: [address],
+      functionName: "createAdmin",
+      args: [name, address],
       // onError(data: any) {
       //   console.log(data);
       // },
@@ -71,8 +70,8 @@ const CreateAdmin = (props: Props) => {
     writeContract2({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISE_ABI,
-      functionName: "addVerifiers",
-      args: [address],
+      functionName: "createVerifier",
+      args: [name, address],
       // onError(data: any) {
       //   console.log(data);
       // },
@@ -109,63 +108,6 @@ const CreateAdmin = (props: Props) => {
     }
   }, [isAdminSuccess]);
 
-  // useEffect(() => {
-  //   if (loadingA) {
-  //     toast.loading("Creating Admin...", {
-  //       // description: "My description",
-  //       duration: 5000,
-  //     });
-  //   }
-  // }, [loadingA]);
-
-  // useEffect(() => {
-  //   if (loadingV) {
-  //     toast.loading("Creating Verifier", {
-  //       // description: "My description",
-  //       duration: 5000,
-  //     });
-  //   }
-  // }, [loadingV]);
-  // useEffect(() => {
-  //   write?.();
-  //   if (loading) {
-  //     setLoading(true);
-  //   }
-  // }, [address]);
-
-  // useEffect(() => {
-  //   write?.();
-  // }, [address]);
-
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  // };
-
-  // const { write, isLoading, data } = useContractWrite({
-  //   address: WasteWise_ADDRESS,
-  //   abi: WASTEWISE_ABI,
-  //   functionName: "addAdmins",
-  //   args: [address],
-  //   onError() {
-  //     setLoading(false);
-  //   },
-  // });
-
-  // useWaitForTransaction({
-  //   hash: data?.hash,
-  //   onSettled(data, error) {
-  //     if (data?.blockHash) {
-  //       setLoading(false);
-  //       navigate("/dashboard/marketplace");
-  //     }
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   write?.();
-  // }, [address]);
-
   useEffect(() => { }, [role]);
 
   return (
@@ -178,8 +120,14 @@ const CreateAdmin = (props: Props) => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Type address here"
+              placeholder="Type name here"
               className="input input-bordered w-full "
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Type address here"
+              className="input input-bordered w-full mt-3"
               onChange={(e) => setAddress(e.target.value)}
             />
             <select

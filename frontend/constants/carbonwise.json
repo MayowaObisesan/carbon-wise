@@ -3,43 +3,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_addr",
-        "type": "address"
-      }
-    ],
-    "name": "addAdmins",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_addr",
-        "type": "address"
-      }
-    ],
-    "name": "addVerifiers",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "tokenAddress",
         "type": "address"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_admins",
-        "type": "address[]"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "AdminAccountAlreadyExist",
+    "type": "error"
   },
   {
     "inputs": [
@@ -94,6 +68,11 @@
   },
   {
     "inputs": [],
+    "name": "VerifierAccountAlreadyExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "VerifierAlreadyExist",
     "type": "error"
   },
@@ -101,51 +80,6 @@
     "inputs": [],
     "name": "ZeroAmountNotAllow",
     "type": "error"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admins",
-        "type": "address"
-      }
-    ],
-    "name": "AdminAdded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "adminAddress",
-        "type": "address"
-      }
-    ],
-    "name": "AdminSeeded",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_addr",
-        "type": "address"
-      }
-    ],
-    "name": "approveNewAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "anonymous": false,
@@ -163,21 +97,34 @@
         "type": "string"
       },
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "_country",
-        "type": "string"
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_phone",
+        "name": "timeJoined",
+        "type": "uint256"
+      }
+    ],
+    "name": "AdminAccountCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "userId",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "string",
-        "name": "_email",
+        "name": "_name",
         "type": "string"
       },
       {
@@ -197,85 +144,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_country",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_phone",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_email",
-        "type": "string"
-      }
-    ],
-    "name": "createCompanyAcct",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_country",
-        "type": "string"
-      },
-      {
-        "internalType": "enum CarbonWise.Gender",
-        "name": "_gender",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_phone",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_email",
-        "type": "string"
-      }
-    ],
-    "name": "createUserAcct",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_qtyrecycled",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_userId",
-        "type": "uint256"
-      }
-    ],
-    "name": "depositPlastic",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -286,32 +154,6 @@
       }
     ],
     "name": "Disbursed",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "disbursement",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admins",
-        "type": "address"
-      }
-    ],
-    "name": "NewAdminApproved",
     "type": "event"
   },
   {
@@ -333,12 +175,6 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "timeRecycled",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenQty",
         "type": "uint256"
       }
     ],
@@ -372,27 +208,32 @@
           },
           {
             "internalType": "uint256",
-            "name": "totalTransactions",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalMarketplaceEvents",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalExpiredMarketplaceEvents",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "totalMinted",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "totalSupply",
+            "name": "totalCompanies",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalEventListingCreated",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalEventListingPurchased",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalCCListingCreated",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalCCListingPurchased",
             "type": "uint256"
           }
         ],
@@ -421,30 +262,6 @@
         "type": "string"
       },
       {
-        "indexed": false,
-        "internalType": "string",
-        "name": "_country",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "enum CarbonWise.Gender",
-        "name": "_gender",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_phone",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "string",
-        "name": "_email",
-        "type": "string"
-      },
-      {
         "indexed": true,
         "internalType": "address",
         "name": "user",
@@ -465,107 +282,31 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "userAddr",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": true,
-        "internalType": "string",
-        "name": "email",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "userId",
+        "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "country",
+        "name": "_name",
         "type": "string"
       },
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
         "indexed": false,
-        "internalType": "enum CarbonWise.Gender",
-        "name": "gender",
-        "type": "uint8"
-      }
-    ],
-    "name": "UserEdited",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "verifier",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admins",
-        "type": "address"
-      }
-    ],
-    "name": "VerifierAdded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "verifier",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "admins",
-        "type": "address"
-      }
-    ],
-    "name": "VerifierRemoved",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
-        "name": "",
+        "name": "timeJoined",
         "type": "uint256"
       }
     ],
-    "name": "allAdmins",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "companyId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    "name": "VerifierAccountCreated",
+    "type": "event"
   },
   {
     "inputs": [
@@ -593,21 +334,6 @@
         "type": "string"
       },
       {
-        "internalType": "string",
-        "name": "country",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "phoneNo",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "email",
-        "type": "string"
-      },
-      {
         "internalType": "uint256",
         "name": "timeJoined",
         "type": "uint256"
@@ -620,28 +346,65 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "id",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "getAdminRequest",
+    "name": "IdToAddress",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "approvalCount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "requestStatus",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct CarbonWise.AdminRequest",
+        "internalType": "address",
         "name": "",
-        "type": "tuple"
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "UserMap",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "userAddr",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeJoined",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum CarbonWise.Role",
+        "name": "role",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "xpoints",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "xrate",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -649,12 +412,182 @@
   },
   {
     "inputs": [],
+    "name": "adminId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ccListingCreatedStatsFunc",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "purschasedNum",
+        "type": "uint256"
+      }
+    ],
+    "name": "ccListingPurchasedStatsFunc",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "companyId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "createAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "createCompanyAcct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "createUserAcct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "createVerifier",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_qtyrecycled",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_userId",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositPlastic",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "disbursement",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getAdmins",
     "outputs": [
       {
-        "internalType": "address[]",
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "userAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timeJoined",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum CarbonWise.Role",
+            "name": "role",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xpoints",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xrate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct CarbonWise.User[]",
         "name": "",
-        "type": "address[]"
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
@@ -682,27 +615,37 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "phoneNo",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
           }
         ],
         "internalType": "struct CarbonWise.Company[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllRecycles",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "date",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "numberOfplastics",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct CarbonWise.RecycleTransaction[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -732,34 +675,9 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "enum CarbonWise.Gender",
-            "name": "gender",
-            "type": "uint8"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenQty",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isAdmin",
-            "type": "bool"
           },
           {
             "internalType": "enum CarbonWise.Role",
@@ -807,87 +725,12 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "phoneNo",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
           }
         ],
         "internalType": "struct CarbonWise.Company",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getStatistics",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "totalUsers",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalAdmins",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalVerifiers",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalRecycled",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalTransactions",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalMarketplaceEvents",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalExpiredMarketplaceEvents",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalMinted",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalSupply",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct CarbonWise.Statistics",
         "name": "",
         "type": "tuple"
       }
@@ -917,34 +760,9 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "enum CarbonWise.Gender",
-            "name": "gender",
-            "type": "uint8"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenQty",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isAdmin",
-            "type": "bool"
           },
           {
             "internalType": "enum CarbonWise.Role",
@@ -998,34 +816,9 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "enum CarbonWise.Gender",
-            "name": "gender",
-            "type": "uint8"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenQty",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isAdmin",
-            "type": "bool"
           },
           {
             "internalType": "enum CarbonWise.Role",
@@ -1059,51 +852,16 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "timeRecycled",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "qtyRecycled",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct CarbonWise.Recycled[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getUserTransactions",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
             "name": "date",
             "type": "uint256"
           },
           {
-            "internalType": "enum CarbonWise.Type",
-            "name": "typeOfTransaction",
-            "type": "uint8"
-          },
-          {
             "internalType": "uint256",
-            "name": "numberOfTokens",
+            "name": "numberOfplastics",
             "type": "uint256"
-          },
-          {
-            "internalType": "enum CarbonWise.TxStatus",
-            "name": "status",
-            "type": "uint8"
           }
         ],
-        "internalType": "struct CarbonWise.Transaction[]",
+        "internalType": "struct CarbonWise.RecycleTransaction[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -1133,34 +891,9 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "country",
-            "type": "string"
-          },
-          {
-            "internalType": "enum CarbonWise.Gender",
-            "name": "gender",
-            "type": "uint8"
-          },
-          {
-            "internalType": "string",
-            "name": "email",
-            "type": "string"
-          },
-          {
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenQty",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isAdmin",
-            "type": "bool"
           },
           {
             "internalType": "enum CarbonWise.Role",
@@ -1187,22 +920,23 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "listingCreatedStatsFunc",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "purschasedNum",
         "type": "uint256"
       }
     ],
-    "name": "IdToAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "listingPurchasedStatsFunc",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1231,67 +965,33 @@
       },
       {
         "internalType": "uint256",
-        "name": "totalTransactions",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalMarketplaceEvents",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalExpiredMarketplaceEvents",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "totalMinted",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "totalSupply",
+        "name": "totalCompanies",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "totalEventListingCreated",
         "type": "uint256"
-      }
-    ],
-    "name": "transactionsMap",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      },
-      {
-        "internalType": "enum CarbonWise.Type",
-        "name": "typeOfTransaction",
-        "type": "uint8"
       },
       {
         "internalType": "uint256",
-        "name": "numberOfTokens",
+        "name": "totalEventListingPurchased",
         "type": "uint256"
       },
       {
-        "internalType": "enum CarbonWise.TxStatus",
-        "name": "status",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "totalCCListingCreated",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalCCListingPurchased",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1311,73 +1011,12 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "UserMap",
+    "inputs": [],
+    "name": "verifierId",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "userAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "country",
-        "type": "string"
-      },
-      {
-        "internalType": "enum CarbonWise.Gender",
-        "name": "gender",
-        "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "email",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeJoined",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenQty",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isAdmin",
-        "type": "bool"
-      },
-      {
-        "internalType": "enum CarbonWise.Role",
-        "name": "role",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "xpoints",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "xrate",
+        "name": "",
         "type": "uint256"
       }
     ],
