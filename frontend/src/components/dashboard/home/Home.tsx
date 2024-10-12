@@ -11,6 +11,12 @@ import MapOne from "../../MapOne";
 import TableOne from "../../TableOne";
 import TableUpdated from "../../TableUpdated";
 
+import CardFour3 from "../../CardFour3";
+import CardFour2 from "../../CardFour2";
+import TableTwo from "../../TableTwo";
+import TableThree from "../../TableThree";
+
+
 type Props = {};
 
 const Home = (props: Props) => {
@@ -26,6 +32,8 @@ const Home = (props: Props) => {
     <>
       <div className="grid grid-cols-1 mx-auto w-full gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 lg:w-[95%]">
         <CardFour />
+        <CardFour2 />
+        <CardFour3 />
         <CardOne />
         <CardTwo />
         <CardThree />
@@ -39,6 +47,9 @@ const Home = (props: Props) => {
         <div className="col-span-12 w-full xl:col-span-12">
           {/* <TableOne /> */}
           <TableUpdated />
+          <TableOne />
+          <TableTwo />
+          <TableThree />
         </div>
         {/* <ChatCard /> */}
       </div>

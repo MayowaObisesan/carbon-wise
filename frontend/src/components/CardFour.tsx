@@ -8,7 +8,7 @@ const CardFour = () => {
   const { data } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
-    functionName: "getAllUsers",
+    functionName: "getAdmins",
     account: address,
   });
 
@@ -43,7 +43,7 @@ const CardFour = () => {
           <h4 className="text-title-md font-bold text-black dark:text-white">
             {(data as any[])?.length || 0}
           </h4>
-          <span className="text-sm font-medium">Total Users</span>
+          <span className="text-sm font-medium">Total Admins</span>
         </div>
 
         {/* <span className="flex items-center gap-1 text-sm font-medium text-meta-5">

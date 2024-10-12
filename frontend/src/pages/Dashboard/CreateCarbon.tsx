@@ -20,7 +20,7 @@ const CreateCarbon = (props: Props) => {
   const [price, setPrice] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { writeContract, data: createEventData, isError, isPending } = useWriteContract();
+  const { writeContract, data: createEventData, isError, isPending, error } = useWriteContract();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,6 +42,7 @@ const CreateCarbon = (props: Props) => {
     if (isError) {
       toast.error("!Failed to create an event.");
       setLoading(false);
+      console.log(error)
     }
   }, [isError]);
 

@@ -15,7 +15,7 @@ const CarbonMarketplace = (props: Props) => {
     const [listings, setListings] = useState<any[]>([]);
 
     const { isLoading, isError
-        , isSuccess, data
+        , isSuccess, data, error
     } = useReadContract({
         address: CC_MARKETPLACE_ADDRESS,
         abi: CCMARKETPLACEABI,
@@ -32,7 +32,7 @@ const CarbonMarketplace = (props: Props) => {
 
     useEffect(() => {
         if (isError) {
-            console.log('Error')
+            console.log(error)
         }
         if (isSuccess) {
             setListings(data as any);
