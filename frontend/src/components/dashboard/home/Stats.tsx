@@ -9,6 +9,7 @@ import ChartTwo from "../../ChartTwo";
 import ChatCard from "../../ChatCard";
 import MapOne from "../../MapOne";
 import TableOne from "../../TableOne";
+import TableUpdated from "../../TableUpdated";
 
 type Props = {};
 
@@ -31,13 +32,16 @@ const Stats = (props: Props) => {
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 w-full lg:px-12 lg:py-8">
+        <div className="col-span-12 w-full xl:col-span-12">
+          <TableUpdated />
+        </div>
         {/* <ChartOne />
         <ChartTwo /> */}
         {/* <ChartThree /> */}
         {/* <MapOne /> */}
-        <div className="col-span-12 w-full xl:col-span-12">
+        {/* <div className="col-span-12 w-full xl:col-span-12">
           <TableOne />
-        </div>
+        </div> */}
         {/* <ChatCard /> */}
       </div>
     </section>

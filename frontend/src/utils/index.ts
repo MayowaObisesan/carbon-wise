@@ -158,3 +158,7 @@ export const pinFileToIPFS = async (files: any) => {
     console.log(error);
   }
 };
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

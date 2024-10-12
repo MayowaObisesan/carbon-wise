@@ -19,8 +19,21 @@ const CreateAdmin = (props: Props) => {
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
-  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isError,
+    isPending: isLoading,
+    isSuccess,
+  } = useWriteContract();
+  const {
+    data: hash2,
+    writeContract: writeContract2,
+    error: error2,
+    isError: isError2,
+    isPending: isLoading2,
+    isSuccess: isSuccess2,
+  } = useWriteContract();
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
     useWaitForTransactionReceipt({
@@ -108,7 +121,13 @@ const CreateAdmin = (props: Props) => {
     }
   }, [isAdminSuccess]);
 
-  useEffect(() => { }, [role]);
+  useEffect(() => {}, [role]);
+
+  useEffect(() => {
+    if (error2) {
+      console.log(error2);
+    }
+  }, [error2]);
 
   return (
     <div className="mb-8 ">

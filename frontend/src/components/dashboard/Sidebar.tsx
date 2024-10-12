@@ -32,7 +32,7 @@ const Sidebar = (props: Props) => {
   };
 
   return (
-    <div className=" mx-10 w-[200px] bg-[#F3F3F3] h-screen px-4">
+    <div className="mx-10 w-[200px] bg-[#F3F3F3] h-screen px-4">
       <h1 className="font-bold py-8 ">WasteWiseLogo</h1>
 
       <article className="mt-[50px] space-y-[25px]  ">

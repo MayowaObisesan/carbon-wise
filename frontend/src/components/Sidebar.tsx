@@ -32,12 +32,10 @@ interface datap {
   timeJoined: bigint;
 }
 
-
-
 const Sidebar = (props: Props) => {
   const [isActive, setIsActive] = useState("");
   const location = useLocation();
-  const [company, setCompany] = useState<any>()
+  const [company, setCompany] = useState<any>();
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const { data, isLoading, isSuccess } = useReadContract({
@@ -49,11 +47,11 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setCompany(data as any)
+      setCompany(data as any);
     }
-  }, [isSuccess, isLoading])
+  }, [isSuccess, isLoading]);
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   // update activeItem based on current location
   useEffect(() => {
@@ -77,17 +75,13 @@ const Sidebar = (props: Props) => {
       setIsActive("purchases");
     } else if (location.pathname === "/dashboard/createAdmin") {
       setIsActive("createAdmin");
-    }
-    else if (location.pathname === "/dashboard/disbursement") {
+    } else if (location.pathname === "/dashboard/disbursement") {
       setIsActive("disbursement");
-    }
-    else if (location.pathname === "/dashboard/createCarbon") {
+    } else if (location.pathname === "/dashboard/createCarbon") {
       setIsActive("createCarbon");
-    }
-    else if (location.pathname === "/dashboard/carbonmarket") {
+    } else if (location.pathname === "/dashboard/carbonmarket") {
       setIsActive("carbonmarket");
-    }
-    else if (location.pathname === "/dashboard/carbonpurchases") {
+    } else if (location.pathname === "/dashboard/carbonpurchases") {
       setIsActive("carbonpurchases");
     }
   }, [location]);
@@ -109,114 +103,123 @@ const Sidebar = (props: Props) => {
 
         <article className="flex-1 h-full py-4">
           <ul className="menu menu-lg bg-transparent w-72 rounded-box space-y-8">
-            {currentUser?.role === 1 && (<>
-              <li>
-                <Link
-                  to="/dashboard"
-                  className=""
-                  style={isActive === "dashboard" ? activeLinkStyle : {}}
-                >
-                  <FaChartArea />
-                  <h2
-                    className="text-lg"
+            {currentUser?.role === 1 && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard"
+                    className=""
                     style={isActive === "dashboard" ? activeLinkStyle : {}}
                   >
-                    {" "}
-                    Dashboard
-                  </h2>
-                </Link>
-                {/* <a className="active">Home</a> */}
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createEvent"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createEvent" ? activeLinkStyle : {}}
-                >
-                  <FaCartPlus />
-                  <h2 className="text-lg">Create Event</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createAdmin"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createAdmin" ? activeLinkStyle : {}}
-                >
-                  <FaUserShield />
-                  <h2 className="text-lg">Create Admin</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createCarbon"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createCarbon" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Sell Credits</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/disbursement"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "disbursement" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Disbursement</h2>
-                </Link>
-              </li>
-            </>
+                    <FaChartArea />
+                    <h2
+                      className="text-lg"
+                      style={isActive === "dashboard" ? activeLinkStyle : {}}
+                    >
+                      {" "}
+                      Dashboard
+                    </h2>
+                  </Link>
+                  {/* <a className="active">Home</a> */}
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createEvent"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createEvent" ? activeLinkStyle : {}}
+                  >
+                    <FaCartPlus />
+                    <h2 className="text-lg">Create Event</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createAdmin"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createAdmin" ? activeLinkStyle : {}}
+                  >
+                    <FaUserShield />
+                    <h2 className="text-lg">Create Admin</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createCarbon"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createCarbon" ? activeLinkStyle : {}}
+                  >
+                    <FaWallet />
+                    <h2 className="text-lg">Sell Credits</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/disbursement"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "disbursement" ? activeLinkStyle : {}}
+                  >
+                    <FaWallet />
+                    <h2 className="text-lg">Disbursement</h2>
+                  </Link>
+                </li>
+              </>
             )}
-            {((currentUser?.role === 0) || (currentUser?.role === 1) || (currentUser?.role === 2)) && (<>
-              <li>
-                <Link
-                  to="/dashboard/leaderboard"
-                  className="items-center"
-                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
-                >
-                  {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaPeopleGroup />
-                  <h2 className="text-lg">Leaderboard</h2>
-                </Link>
-              </li>
-            </>)}
-            {((currentUser?.role === 0) || (currentUser?.role === 1)) && (<>
-              <li>
-                <Link
-                  to="/dashboard/marketplace"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "marketplace" ? activeLinkStyle : {}}
-                >
-                  <FaCartArrowDown />
-                  <h2 className="text-lg">Marketplace</h2>
-                </Link>
-              </li>
-            </>)}
-            {((currentUser?.role === 0)) && (<>
-              <li>
-                <Link
-                  to="/dashboard/wallet"
-                  className="items-center"
-                  style={isActive === "wallet" ? activeLinkStyle : {}}
-                >
-                  {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaWallet />
-                  <h2 className="text-lg">Wallet</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/purchases"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "purchases" ? activeLinkStyle : {}}
-                >
-                  <FaLayerGroup />
-                  <h2 className="text-lg">My Purchase</h2>
-                </Link>
-              </li>
-            </>)}
+            {(currentUser?.role === 0 ||
+              currentUser?.role === 1 ||
+              currentUser?.role === 2) && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/leaderboard"
+                    className="items-center"
+                    style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                  >
+                    {/* <img src={wallet} alt="wallet-Icon" /> */}
+                    <FaPeopleGroup />
+                    <h2 className="text-lg">Leaderboard</h2>
+                  </Link>
+                </li>
+              </>
+            )}
+            {(currentUser?.role === 0 || currentUser?.role === 1) && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/marketplace"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "marketplace" ? activeLinkStyle : {}}
+                  >
+                    <FaCartArrowDown />
+                    <h2 className="text-lg">Marketplace</h2>
+                  </Link>
+                </li>
+              </>
+            )}
+            {currentUser?.role === 0 && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/wallet"
+                    className="items-center"
+                    style={isActive === "wallet" ? activeLinkStyle : {}}
+                  >
+                    {/* <img src={wallet} alt="wallet-Icon" /> */}
+                    <FaWallet />
+                    <h2 className="text-lg">Wallet</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/purchases"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "purchases" ? activeLinkStyle : {}}
+                  >
+                    <FaLayerGroup />
+                    <h2 className="text-lg">My Purchase</h2>
+                  </Link>
+                </li>
+              </>
+            )}
             {currentUser?.role == 2 && (
               <li>
                 <Link
@@ -230,28 +233,31 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {(company as datap)?.name !== "" && (<>
-              <li>
-                <Link
-                  to="/dashboard/carbonmarket"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "carbonmarket" ? activeLinkStyle : {}}
-                >
-                  <FaCartArrowDown />
-                  <h2 className="text-lg">Carbon Market</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/carbonpurchases"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "carbonpurchases" ? activeLinkStyle : {}}
-                >
-                  <FaLayerGroup />
-                  <h2 className="text-lg">My Purchase</h2>
-                </Link>
-              </li>
-            </>
+            {(company as datap)?.name !== "" && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/carbonmarket"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "carbonmarket" ? activeLinkStyle : {}}
+                  >
+                    <FaCartArrowDown />
+                    <h2 className="text-lg">Carbon Market</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/carbonpurchases"
+                    className="flex flex-row gap-2 items-center"
+                    style={
+                      isActive === "carbonpurchases" ? activeLinkStyle : {}
+                    }
+                  >
+                    <FaLayerGroup />
+                    <h2 className="text-lg">My Purchase</h2>
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
         </article>

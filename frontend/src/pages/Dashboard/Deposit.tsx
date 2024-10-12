@@ -1,5 +1,5 @@
 import { Toaster, toast } from "sonner";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { useRef, useState, useEffect } from "react";
 import localforage from "localforage";
 import {
@@ -13,6 +13,8 @@ import { CARBONWISEABI, CARBONWISE_ADDRESS } from "../../../constants";
 import { useWasteWiseContext } from "../../context";
 import useNotificationCount from "../../hooks/useNotificationCount";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@nextui-org/button";
+import { Card, CardBody, CardFooter, Input, Spacer } from "@nextui-org/react";
 
 const Recycle = () => {
   const { address } = useAccount();
@@ -42,7 +44,13 @@ const Recycle = () => {
     });
 
   useEffect(() => {
-  }, [isPlasticDeposited]);
+    if (error) {
+      console.log(error);
+      toast.error("Unable to complete transaction");
+    }
+  }, [error]);
+
+  useEffect(() => {}, [isPlasticDeposited]);
 
   useEffect(() => {
     if (isDepositingPlastic) {
@@ -84,8 +92,8 @@ const Recycle = () => {
 
   const sdgModal = useRef<HTMLDialogElement>(null);
   return (
-    <section className="relative w-10/12">
-      <div className="flex flex-col mx-auto bg-amber-200/40 rounded-lg px-2 py-5 w-12/12 lg:flex-row lg:px-8 lg:py-10 dark:bg-base-200">
+    <section className="relative w-11/12">
+      <div className="hidden flex flex-col mx-auto bg-amber-200/40 rounded-lg px-2 py-5 w-12/12 lg:flex-row lg:px-8 lg:py-10 dark:bg-base-200">
         <div className="bg-base-300 h-24 w-24 rounded-lg mx-3 lg:mx-6 lg:w-48 lg:h-48"></div>
         <div className="text-sm px-4 lg:text-xl lg:px-8">
           Thank you for doing your part in the{" "}
@@ -177,47 +185,114 @@ const Recycle = () => {
           </ol>
         </div>
       </div>
-      <div className="bg-base-200 text-sm px-4 py-2 my-2 lg:p-6 rounded-md lg:text-lg">
-        Kindly input the amount of plastics you will like to recycle
-      </div>
+      {/* <div className="bg-base-200 text-sm px-4 py-2 my-2 lg:p-6 rounded-md lg:text-lg">
+        Kindly input the <b>VERIFIED</b> amount of plastics to recycle
+      </div> */}
+
+      <Spacer></Spacer>
+      <Card shadow="none">
+        <CardBody>
+          <span className="px-4 py-2 lg:p-4 text-center">
+            Kindly input the <b>VERIFIED</b> amount of plastics to recycle
+          </span>
+        </CardBody>
+      </Card>
 
       <div className="flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
-        <form action="" onSubmit={handleDepositPlastic}>
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">No of Plastics</span>
+        <form action="" onSubmit={handleDepositPlastic} className="space-y-6">
+          <Card className="p-8">
+            <CardBody className="gap-y-8">
+              <Input
+                type="number"
+                label="Number of verified plastics"
+                labelPlacement="outside"
+                placeholder="e.g., 40"
+                description={
+                  numPlastic?.toString().length &&
+                  `You will get ${numPlastic} CAR tokens`
+                }
+                size="lg"
+                value={numPlastic?.toString()}
+                onChange={(e: any) => setNumPlastic(e.target.value)}
+                classNames={{
+                  label: "font-bold text-md",
+                  inputWrapper: "p-8",
+                }}
+              />
+
+              <Input
+                id="number"
+                type="number"
+                label="User ID"
+                labelPlacement="outside"
+                value={userId?.toString()}
+                onChange={(e: any) => setUserId(e.target.value)}
+                placeholder="Id to credit the token"
+                description=""
+                size="lg"
+                classNames={{
+                  label: "font-bold text-md",
+                  inputWrapper: "p-8",
+                }}
+              />
+            </CardBody>
+            <CardFooter>
+              <Button
+                type="submit"
+                color="success"
+                variant="shadow"
+                isLoading={isPending || isDepositingPlastic}
+                fullWidth
+                size="lg"
+              >
+                Recycle
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <div className="hidden form-control w-full gap-y-8">
+            <label className="label flex flex-col items-start gap-y-2">
+              <span className="label-text font-bold text-lg">
+                Number of verified Plastics
+              </span>
+
+              <input
+                defaultValue={numPlastic}
+                onChange={(e: any) => setNumPlastic(e.target.value)}
+                type="number"
+                id="number"
+                placeholder="e.g., 40"
+                className="input input-lg input-bordered w-full placeholder:text-base placeholder:text-base-content/40"
+              />
+              <label className="label">
+                <span className="label-text-alt">
+                  You will get {numPlastic} tokens
+                </span>
+              </label>
             </label>
-            <input
-              defaultValue={numPlastic}
-              onChange={(e: any) => setNumPlastic(e.target.value)}
-              type="number"
-              id="number"
-              placeholder="Number of plastics"
-              className="input input-lg input-bordered w-full placeholder:text-base"
-            />
-            <label className="label">
-              <span className="label-text-alt">You will get {numPlastic} tokens</span>
-            </label>
-            <label className="label">
-              <span className="label-text">User Id</span>
-            </label>
-            <input
-              defaultValue={userId}
-              onChange={(e: any) => setUserId(e.target.value)}
-              type="number"
-              id="number"
-              placeholder="Number of plastics"
-              className="input input-lg input-bordered w-full placeholder:text-base"
-            />
-            <label className="label">
-              <span className="label-text-alt">Enter User Id</span>
+            <label className="label flex flex-col items-start gap-y-2">
+              <span className="label-text font-bold text-lg">User Id</span>
+              <input
+                defaultValue={userId}
+                onChange={(e: any) => setUserId(e.target.value)}
+                type="number"
+                id="number"
+                placeholder="user Id"
+                className="input input-lg input-bordered w-full placeholder:text-base"
+              />
+              <label className="label">
+                <span className="label-text-alt font-bold text-amber-400">
+                  User Id can be gotten from the EIA wallet
+                </span>
+              </label>
             </label>
           </div>
-          <Button name="Recycle" size="block" customStyle="w-full">
+
+          {/* <Button name="Recycle" size="block" customStyle="w-full">
             {(isPending || isDepositingPlastic) && (
               <span className="loading"></span>
             )}
-          </Button>
+          </Button> */}
         </form>
       </div>
 

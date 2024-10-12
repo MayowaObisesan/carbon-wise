@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  useAccount,
-  useBalance,
-  useReadContract,
-} from "wagmi";
+import { useAccount, useBalance, useReadContract } from "wagmi";
 import {
   CARBONWISE_ADDRESS,
   USD_TOKEN_ADDRESS,
@@ -38,7 +34,7 @@ const TableOne = () => {
       <div className="w-full p-8 rounded-xl border border-base-300 my-2 dark:bg-base-300">
         <h4 className="mb-8 text-xl font-semibold text-base-content">
           {location.pathname === "/dashboard/leaderboard" &&
-            currentUser?.role === 2
+          currentUser?.role === 2
             ? "All Recyclers"
             : "Leaderboard"}
         </h4>

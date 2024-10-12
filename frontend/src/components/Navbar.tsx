@@ -6,9 +6,11 @@ import { useAccount, useConnect, useReadContract } from "wagmi";
 import { WasteWise } from "./WasteWise";
 import SignUpButton from "./SignUpButton";
 import Logo from "./Logo";
-import Button from "./Button";
+// import Button from "./Button";
 import { useWasteWiseContext } from "../context";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
+import { ThemeSwitcher } from "./ThemeSwitcher";
+import { Button } from "@nextui-org/button";
 interface datap {
   id: bigint;
   userAddr: string;
@@ -24,7 +26,7 @@ const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const { currentUser, isRegistered } = useWasteWiseContext();
-  const [company, setCompany] = useState<any>()
+  const [company, setCompany] = useState<any>();
   const { data, isLoading, isSuccess } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
@@ -34,20 +36,27 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setCompany(data as any)
+      setCompany(data as any);
     }
-  }, [isSuccess, isLoading])
-
+  }, [isSuccess, isLoading]);
 
   return (
     <section className="sticky top-0 z-10 px-2 py-2 lg:px-8 lg:py-4 bg-transparent backdrop-blur-3xl">
-      <div className="navbar bg-base-200 w-full mx-auto rounded-2xl dark:bg-base-300">
+      <div className="navbar bg-base-200 w-full mx-auto rounded-2xl dark:bg-base-200/10">
         <div className="navbar-start flex-1 font-bold">
           <Logo />
         </div>
         <div className={"navbar-end gap-2 space-x-4"}>
           <div className="flex-none">
-            <ul className="menu menu-horizontal px-1">
+            <Button>
+              {isConnected && (company as datap)?.name !== "" && (
+                <Link to="/dashboard">Dashboard</Link>
+              )}
+              {isConnected && isRegistered && (
+                <Link to="/dashboard">Dashboard</Link>
+              )}
+            </Button>
+            <ul className="hidden menu menu-horizontal px-1">
               {/* <li>
                 <label className="hidden lg:flex cursor-pointer gap-2">
                   <svg
@@ -97,6 +106,7 @@ const Navbar = () => {
               )}
             </ul>
           </div>
+          <ThemeSwitcher />
           <WasteWise />
           {location.pathname === "/" && isConnected && !isRegistered && (
             <div className="flex gap-x-4">
@@ -108,13 +118,15 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          {location.pathname === "/" && isConnected && (company as datap)?.name === "" && (
-            <div className="flex gap-x-4">
-              <Link to="/companyregister">
-                <Button>Company</Button>
-              </Link>
-            </div>
-          )}
+          {location.pathname === "/" &&
+            isConnected &&
+            (company as datap)?.name === "" && (
+              <div className="flex gap-x-4">
+                <Link to="/companyregister">
+                  <Button>Company</Button>
+                </Link>
+              </div>
+            )}
           {/* {isConnected && <SignUpButton />} */}
         </div>
       </div>
