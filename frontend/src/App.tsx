@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useHref,
+} from "react-router-dom";
 import { Layout } from "./pages/Dashboard/Layout";
 import Landing from "./pages/Landing";
 
@@ -22,30 +28,42 @@ import CarbonMarketplace from "./pages/Dashboard/CarbonMarket";
 import CompanyRegister from "./pages/Dashboard/CompanyRegister";
 import Disbursement from "./pages/Dashboard/Disbursement";
 import MyCarbonEvents from "./pages/Dashboard/MyCarbonEvents";
+import useDarkMode from "use-dark-mode";
+import { useWasteWiseContext } from "./context";
+import { NextUIProvider } from "@nextui-org/react";
 
 export function App() {
+  const { darkMode } = useWasteWiseContext();
+  const navigate = useNavigate();
+
   return (
-    <section className="relative w-full h-screen overflow-x-hidden overflow-y-auto">
-      <div className="block relative">
-        <Toaster
-          theme="system"
-          // className="toaster-elem"
-          position="top-right"
-          toastOptions={{
-            style: {
-              // position: "relative",
-              // background: "green",
-              top: "60px",
-              // right: "40px",
-            },
-          }}
-          // offset={72}
-          richColors={true}
-          gap={6}
-          closeButton={true}
-        />
-      </div>
-      {/* <div className="shadow bg-base-100 fixed bottom-2 right-2 z-10 rounded-box">
+    <NextUIProvider navigate={navigate} useHref={useHref}>
+      <main
+        className={`${
+          darkMode.value ? "dark" : ""
+        } text-foreground bg-background`}
+      >
+        <section className="relative w-full h-screen overflow-x-hidden overflow-y-auto">
+          <div className="block relative">
+            <Toaster
+              theme="system"
+              // className="toaster-elem"
+              position="top-right"
+              toastOptions={{
+                style: {
+                  // position: "relative",
+                  // background: "green",
+                  top: "60px",
+                  // right: "40px",
+                },
+              }}
+              // offset={72}
+              richColors={true}
+              gap={6}
+              closeButton={true}
+            />
+          </div>
+          {/* <div className="shadow bg-base-100 fixed bottom-2 right-2 z-10 rounded-box">
         <label className="swap swap-rotate w-16 h-16 lg:hidden">
           <input type="checkbox" className="theme-controller" value="dark" />
 
@@ -66,43 +84,46 @@ export function App() {
           </svg>
         </label>
       </div> */}
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<Landing />}
-            errorElement={<ErrorPage />}
-          ></Route>
-          <Route
-            path="/dashboard"
-            element={<Layout />}
-            errorElement={<ErrorPage />}
-          >
-            <Route path="" element={<Home />} />
-            <Route path="leaderboard" element={<Stats />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="wallet" element={<Wallet />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="recycle" element={<Recycle />} />
-            <Route path="disbursement" element={<Disbursement />} />
-            <Route path="marketplace" element={<Marketplace />} />
-            <Route path="carbonmarket" element={<CarbonMarketplace />} />
-            <Route path="createEvent" element={<CreateEvent />} />
-            <Route path="createCarbon" element={<CreateCarbon />} />
-            <Route path="purchases" element={<MyEvents />} />
-            <Route path="carbonpurchases" element={<MyCarbonEvents />} />
-            <Route path="createAdmin" element={<CreateAdmin />} />
-            <Route path="marketplace/event/:id" element={<SingleEvent />} />
-            <Route path="carbonmarket/credit/:id" element={<SingleCarbon />} />
-          </Route>
-          {/* <Route
+          <Routes>
+            <Route
+              path="/"
+              element={<Landing />}
+              errorElement={<ErrorPage />}
+            ></Route>
+            <Route
+              path="/dashboard"
+              element={<Layout />}
+              errorElement={<ErrorPage />}
+            >
+              <Route path="" element={<Home />} />
+              <Route path="leaderboard" element={<Stats />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="wallet" element={<Wallet />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="recycle" element={<Recycle />} />
+              <Route path="disbursement" element={<Disbursement />} />
+              <Route path="marketplace" element={<Marketplace />} />
+              <Route path="carbonmarket" element={<CarbonMarketplace />} />
+              <Route path="createEvent" element={<CreateEvent />} />
+              <Route path="createCarbon" element={<CreateCarbon />} />
+              <Route path="purchases" element={<MyEvents />} />
+              <Route path="carbonpurchases" element={<MyCarbonEvents />} />
+              <Route path="createAdmin" element={<CreateAdmin />} />
+              <Route path="marketplace/event/:id" element={<SingleEvent />} />
+              <Route
+                path="carbonmarket/credit/:id"
+                element={<SingleCarbon />}
+              />
+            </Route>
+            {/* <Route
           path="/Login"
           element={<Login />}
         ></Route> */}
-          <Route path="register" element={<Register />}></Route>
-          <Route path="companyregister" element={<CompanyRegister />} />
-        </Routes>
-      </BrowserRouter>
-    </section>
+            <Route path="register" element={<Register />}></Route>
+            <Route path="companyregister" element={<CompanyRegister />} />
+          </Routes>
+        </section>
+      </main>
+    </NextUIProvider>
   );
 }

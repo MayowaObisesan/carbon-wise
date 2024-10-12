@@ -8,11 +8,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAccount, useReadContract, } from "wagmi";
+import useDarkMode from "use-dark-mode";
+import { type DarkMode } from "use-dark-mode";
+import { useAccount, useReadContract } from "wagmi";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 type contextType = {
   wastewiseStore: any;
+  darkMode: DarkMode;
   isRegistered: boolean;
   currentUser: any;
   setCurrentUser: any;
@@ -42,6 +45,12 @@ type userDataType = {
 
 const WastewiseContext = createContext<contextType>({
   wastewiseStore: null,
+  darkMode: {
+    value: false,
+    enable: () => {},
+    disable: () => {},
+    toggle: () => {},
+  },
   isRegistered: false,
   currentUser: null,
   setCurrentUser: null,
@@ -67,7 +76,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const { address, isConnected } = useAccount();
-  console.log(address)
+  const darkMode = useDarkMode(false);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<userDataType | {}>({});
   const [notifCount, setNotifCount] = useState(0);
@@ -136,7 +145,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
-    return () => { };
+    return () => {};
   }, [data, isRegistered]);
 
   useEffect(() => {
@@ -147,6 +156,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     <WastewiseContext.Provider
       value={{
         wastewiseStore,
+        darkMode,
         isRegistered,
         currentUser,
         setCurrentUser,

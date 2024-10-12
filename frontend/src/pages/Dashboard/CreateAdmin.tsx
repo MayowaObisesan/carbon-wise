@@ -105,7 +105,13 @@ const CreateAdmin = (props: Props) => {
     }
   }, [isAdminSuccess]);
 
-  useEffect(() => { }, [role]);
+  useEffect(() => {}, [role]);
+
+  useEffect(() => {
+    if (error2) {
+      console.log(error2);
+    }
+  }, [error2]);
 
   useEffect(() => {
     if (error) {

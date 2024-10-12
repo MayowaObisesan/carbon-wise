@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import { CountryDropdown } from "react-country-region-selector";
 import {
-    useAccount,
-    useWaitForTransactionReceipt,
-    useWriteContract,
+  useAccount,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import { WasteWise } from "../../components/WasteWise";
@@ -28,54 +28,27 @@ const CompanyRegister = () => {
         useWasteWiseContext();
     const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
 
+  const { isLoading: settling, error } = useWaitForTransactionReceipt({
+    confirmations: 1,
+    hash,
+  });
 
-    const { isLoading: settling, error } = useWaitForTransactionReceipt({
-        confirmations: 1,
-        hash
-    });
-
-    useEffect(() => {
-        if (isSuccess) {
-            console.log(hash);
-            // setCurrentUser(data);
-            toast.success("Registration successful", {
-                duration: 10000,
-                onAutoClose: (t) => {
-                    wastewiseStore
-                        .setItem(t.id.toString(), {
-                            id: t.id,
-                            title: t.title,
-                            datetime: new Date(),
-                            type: t.type,
-                        })
-                        .then(function (_: any) {
-                            setNotifCount(notificationCount);
-                        });
-                },
-            });
-            // const redirectTo = "";
-            // if (currentUser.role === 1) {}
-            setTimeout(() => {
-                navigate("/dashboard/carbonmarket");
-            }, 1200);
-        }
-    }, [isSuccess]);
-
-    useEffect(() => {
-        if (isError) {
-            toast.error(<div>{error?.message}</div>, {
-                // onAutoClose: (t) => {
-                //   wastewiseStore
-                //     .setItem(t.id.toString(), {
-                //       id: t.id,
-                //       title: t.title,
-                //       datetime: new Date(),
-                //       type: t.type,
-                //     })
-                //     .then(function (_: any) {
-                //       setNotifCount(notificationCount);
-                //     });
-                // },
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(hash);
+      // setCurrentUser(data);
+      toast.success("Registration successful", {
+        duration: 10000,
+        onAutoClose: (t) => {
+          wastewiseStore
+            .setItem(t.id.toString(), {
+              id: t.id,
+              title: t.title,
+              datetime: new Date(),
+              type: t.type,
+            })
+            .then(function (_: any) {
+              setNotifCount(notificationCount);
             });
         }
     }, [isError]);
@@ -99,6 +72,8 @@ const CompanyRegister = () => {
             account: address
         });
     }
+  }, [isLoading]);
+
 
     return (
         <>
@@ -147,46 +122,46 @@ const CompanyRegister = () => {
                             </Button>
                         </div>
 
-                        {isSuccess && (
-                            <div>
-                                Successfully signed you up!
-                                <div>
-                                    <a href={`https://sepolia.etherscan.io/tx/${hash}`}>
-                                        Confirm your transaction on Etherscan
-                                    </a>
-                                </div>
-                            </div>
-                        )}
-                        {isError && <div>{error?.message} - Error occurred</div>}
-                    </form>
+            {isSuccess && (
+              <div>
+                Successfully signed you up!
+                <div>
+                  <a href={`https://sepolia.etherscan.io/tx/${hash}`}>
+                    Confirm your transaction on Etherscan
+                  </a>
                 </div>
-                <div className="bg-gradient-to-t from-[#CBE5D8] to-[#FFFFFF] dark:bg-gradient-to-t dark:from-yellow-500/10 dark:to-emerald-500/40 w-1/2 px-16 hidden lg:flex lg:flex-col lg:justify-center dark:bg-transparent">
-                    {/* <h1
+              </div>
+            )}
+            {isError && <div>{error?.message} - Error occurred</div>}
+          </form>
+        </div>
+        <div className="bg-gradient-to-t from-[#CBE5D8] to-[#FFFFFF] dark:bg-gradient-to-t dark:from-yellow-500/10 dark:to-emerald-500/40 w-1/2 px-16 hidden lg:flex lg:flex-col lg:justify-center dark:bg-transparent">
+          {/* <h1
             className="light:text-[#02582E] text-2xl font-extrabold mb-3
 "
           >
             Register an Account
           </h1> */}
-                    <div className="w-10/12 text-xl font-normal light:text-[#02582E] leading-[3]">
-                        <h1 className="text-2xl">Hello... 👋🏼</h1>
-                        <br />
-                        Welcome to Carbon-Wise.
-                        <br />
-                        We'll like to know some of your information to personalize your
-                        experience on Carbon-Wise.
-                        <br />
-                        Join the community that makes saving the planet a rewarding
-                        activity.
-                        <br />
-                        <br />
-                        <strong className="text-lg">
-                            It'll only take 37 seconds or less. <br /> We promise.
-                        </strong>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+          <div className="w-10/12 text-xl font-normal light:text-[#02582E] leading-[3]">
+            <h1 className="text-2xl">Hello... 👋🏼</h1>
+            <br />
+            Welcome to Carbon-Wise.
+            <br />
+            We'll like to know some of your information to personalize your
+            experience on Carbon-Wise.
+            <br />
+            Join the community that makes saving the planet a rewarding
+            activity.
+            <br />
+            <br />
+            <strong className="text-lg">
+              It'll only take 37 seconds or less. <br /> We promise.
+            </strong>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default CompanyRegister;

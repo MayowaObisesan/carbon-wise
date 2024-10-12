@@ -9,10 +9,13 @@ import ChartTwo from "../../ChartTwo";
 import ChatCard from "../../ChatCard";
 import MapOne from "../../MapOne";
 import TableOne from "../../TableOne";
+import TableUpdated from "../../TableUpdated";
+
 import CardFour3 from "../../CardFour3";
 import CardFour2 from "../../CardFour2";
 import TableTwo from "../../TableTwo";
 import TableThree from "../../TableThree";
+
 
 type Props = {};
 
@@ -42,6 +45,8 @@ const Home = (props: Props) => {
         {/* <ChartThree /> */}
         {/* <MapOne /> */}
         <div className="col-span-12 w-full xl:col-span-12">
+          {/* <TableOne /> */}
+          <TableUpdated />
           <TableOne />
           <TableTwo />
           <TableThree />

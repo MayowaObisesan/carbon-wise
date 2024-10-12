@@ -4,6 +4,7 @@ import NotificationCard from "./NotificationCard";
 import { useRef } from "react";
 import { useDisconnect } from "wagmi";
 import { logout } from "../assets";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const DashboardNav = ({ title }: { title: string }) => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const DashboardNav = ({ title }: { title: string }) => {
       <div className="flex-none hiden lg:block">
         <ul className="menu menu-horizontal space-x-5">
           {/* Navbar menu content here */}
+          <ThemeSwitcher />
           <div className="dropdown dropdown-end hidden lg:block">
             <label tabIndex={0} className="">
               <button
