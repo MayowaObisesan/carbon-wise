@@ -78,6 +78,12 @@ const Disbursement = () => {
         }
     }, [isSuccess]);
 
+    useEffect(() => {
+        if (isError) {
+            console.log(error)
+        }
+    }, [isError]);
+
     const sdgModal = useRef<HTMLDialogElement>(null);
     return (
         <section className="relative w-10/12">

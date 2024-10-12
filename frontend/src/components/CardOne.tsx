@@ -26,7 +26,7 @@ const CardOne = () => {
           <h4 className="text-title-md font-bold text-black dark:text-white">
             {((data as any) && formatEther(data as bigint)) || 0}
           </h4>
-          <span className="text-sm font-medium">Total Carbon-Wise Tokens</span>
+          <span className="text-sm font-medium">Total Tokens</span>
         </div>
 
         {/* <span className="flex items-center gap-1 text-sm font-medium text-[#026937]">

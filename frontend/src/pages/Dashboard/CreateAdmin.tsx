@@ -20,7 +20,7 @@ const CreateAdmin = (props: Props) => {
   const navigate = useNavigate();
 
   const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
+  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2, error } = useWriteContract()
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
     useWaitForTransactionReceipt({
@@ -72,9 +72,6 @@ const CreateAdmin = (props: Props) => {
       abi: CARBONWISE_ABI,
       functionName: "createVerifier",
       args: [name, address],
-      // onError(data: any) {
-      //   console.log(data);
-      // },
     });
     setLoading(true);
     console.log(true);
@@ -109,6 +106,12 @@ const CreateAdmin = (props: Props) => {
   }, [isAdminSuccess]);
 
   useEffect(() => { }, [role]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  }, [error])
 
   return (
     <div className="mb-8 ">

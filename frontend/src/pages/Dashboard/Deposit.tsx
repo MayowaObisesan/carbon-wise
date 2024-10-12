@@ -193,11 +193,8 @@ const Recycle = () => {
               type="number"
               id="number"
               placeholder="Number of plastics"
-              className="input input-lg input-bordered w-full placeholder:text-base"
+              className="input input-lg input-bordered w-full placeholder:text-base mb-3"
             />
-            <label className="label">
-              <span className="label-text-alt">You will get {numPlastic} tokens</span>
-            </label>
             <label className="label">
               <span className="label-text">User Id</span>
             </label>
@@ -207,11 +204,8 @@ const Recycle = () => {
               type="number"
               id="number"
               placeholder="Number of plastics"
-              className="input input-lg input-bordered w-full placeholder:text-base"
+              className="input input-lg input-bordered w-full placeholder:text-base mb-5"
             />
-            <label className="label">
-              <span className="label-text-alt">Enter User Id</span>
-            </label>
           </div>
           <Button name="Recycle" size="block" customStyle="w-full">
             {(isPending || isDepositingPlastic) && (

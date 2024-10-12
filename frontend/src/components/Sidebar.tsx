@@ -55,7 +55,7 @@ const Sidebar = (props: Props) => {
 
   console.log(currentUser)
 
-  // update activeItem based on current location
+  // update activeItem based on current locati
   useEffect(() => {
     if (location.pathname === "/dashboard") {
       setIsActive("dashboard");
@@ -99,6 +99,8 @@ const Sidebar = (props: Props) => {
     color: "#FFF",
     transition: ".5s ease",
   };
+
+  console.log(isActive)
 
   return (
     <div className="h-screen bg-base-100 p-4">
@@ -167,9 +169,19 @@ const Sidebar = (props: Props) => {
                   <h2 className="text-lg">Disbursement</h2>
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/dashboard/carbonmarket"
+                  className="flex flex-row gap-2 items-center"
+                  style={isActive === "carbonmarket" ? activeLinkStyle : {}}
+                >
+                  <FaCartArrowDown />
+                  <h2 className="text-lg">Carbon Market</h2>
+                </Link>
+              </li>
             </>
             )}
-            {((currentUser?.role === 0) || (currentUser?.role === 1) || (currentUser?.role === 2)) && (<>
+            {((currentUser?.role === 0 && currentUser?.name !== "") || (currentUser?.role === 1) || (currentUser?.role === 2)) && (<>
               <li>
                 <Link
                   to="/dashboard/leaderboard"
@@ -182,7 +194,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             </>)}
-            {((currentUser?.role === 0) || (currentUser?.role === 1)) && (<>
+            {((currentUser?.role === 0 && currentUser?.name !== "") || (currentUser?.role === 1)) && (<>
               <li>
                 <Link
                   to="/dashboard/marketplace"
@@ -194,7 +206,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             </>)}
-            {((currentUser?.role === 0)) && (<>
+            {((currentUser?.role === 0 && currentUser?.name !== "")) && (<>
               <li>
                 <Link
                   to="/dashboard/wallet"

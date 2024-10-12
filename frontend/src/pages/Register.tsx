@@ -54,9 +54,6 @@ const Register = () => {
       });
       // const redirectTo = "";
       // if (currentUser.role === 1) {}
-      setTimeout(() => {
-        navigate("/dashboard/wallet");
-      }, 1200);
     }
   }, [isSuccess]);
 
@@ -137,14 +134,22 @@ const Register = () => {
 
             {/* Submit button */}
             <div className="form-control w-full px-4 py-8 mx-auto lg:w-auto">
-              <Button
+              {isSuccess ? <Button
+                name={isLoading ? "Loading..." : "Sign up"}
+                size="md btn-block lg:btn-wide"
+                disabled={isLoading}
+                onClick={() => navigate("/dashboard/wallet")}
+              >
+                GoTo Dashboard
+              </Button> : <Button
                 name={isLoading ? "Loading..." : "Sign up"}
                 size="md btn-block lg:btn-wide"
                 disabled={isLoading}
                 onClick={handleSubmit}
               >
                 {(isLoading || settling) && <span className="loading"></span>}
-              </Button>
+              </Button>}
+
             </div>
 
             {isSuccess && (
