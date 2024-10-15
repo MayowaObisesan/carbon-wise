@@ -21,9 +21,13 @@ ol {
 }
 
 @layer base {
+  * {
+    @apply font-firaSans;
+  }
+
   body {
     /* @apply font-satoshi font-normal text-base text-body relative z-1; */
-    @apply font-satoshi font-normal text-base relative z-1;
+    @apply font-openSans font-normal text-base relative;
   }
 }
 

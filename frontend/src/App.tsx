@@ -42,6 +42,7 @@ export function App() {
         className={`${
           darkMode.value ? "dark" : ""
         } text-foreground bg-background`}
+        data-theme={darkMode.value ? "dark" : "light"}
       >
         <section className="relative w-full h-screen overflow-x-hidden overflow-y-auto">
           <div className="block relative">

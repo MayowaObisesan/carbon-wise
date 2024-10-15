@@ -25,6 +25,18 @@ type contextType = {
   setNotifCount: number | any;
   notifications: any;
   setNotifications: any;
+  adminsData: any;
+  isAdminsDataFetching: boolean;
+  isAdminsDataStale: boolean;
+  isAdminsDataSuccessful: boolean;
+  allUsersData: any;
+  isAllUsersDataFetching: boolean;
+  isAllUsersDataStale: boolean;
+  isAllUsersDataSuccessful: boolean;
+  verifiersData: any;
+  isVerifiersDataFetching: boolean;
+  isVerifiersDataStale: boolean;
+  isVerifiersDataSuccessful: boolean;
 };
 
 type userDataType = {
@@ -60,6 +72,18 @@ const WastewiseContext = createContext<contextType>({
   setNotifCount: 0,
   notifications: null,
   setNotifications: null,
+  adminsData: null,
+  isAdminsDataFetching: false,
+  isAdminsDataStale: false,
+  isAdminsDataSuccessful: false,
+  allUsersData: null,
+  isAllUsersDataFetching: false,
+  isAllUsersDataStale: false,
+  isAllUsersDataSuccessful: false,
+  verifiersData: null,
+  isVerifiersDataFetching: false,
+  isVerifiersDataStale: false,
+  isVerifiersDataSuccessful: false,
 });
 
 const WastewiseProvider = ({ children }: { children: ReactNode }) => {
@@ -142,6 +166,42 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     // },
   });
 
+  const {
+    data: adminsData,
+    isStale: isAdminsDataStale,
+    isStale: isAdminsDataFetching,
+    isSuccess: isAdminsDataSuccessful,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getAdmins",
+    account: address,
+  });
+
+  const {
+    data: allUsersData,
+    isStale: isAllUsersDataStale,
+    isStale: isAllUsersDataFetching,
+    isSuccess: isAllUsersDataSuccessful,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getAllUsers",
+    account: address,
+  });
+
+  const {
+    data: verifiersData,
+    isSuccess: isVerifiersDataSuccessful,
+    isStale: isVerifiersDataStale,
+    isFetching: isVerifiersDataFetching,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getVerifiers",
+    account: address,
+  });
+
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
@@ -166,6 +226,18 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
         setNotifCount,
         notifications,
         setNotifications,
+        adminsData,
+        isAdminsDataFetching,
+        isAdminsDataStale,
+        isAdminsDataSuccessful,
+        allUsersData,
+        isAllUsersDataFetching,
+        isAllUsersDataStale,
+        isAllUsersDataSuccessful,
+        verifiersData,
+        isVerifiersDataFetching,
+        isVerifiersDataStale,
+        isVerifiersDataSuccessful,
       }}
     >
       {children}

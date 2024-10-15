@@ -1,6 +1,10 @@
 import { useAccount, useContractRead, useReadContract } from "wagmi";
 import { useWasteWiseContext } from "../context";
-import { CARBONWISE_ADDRESS, USDTOKENABI, USD_TOKEN_ADDRESS } from "../../constants";
+import {
+  CARBONWISE_ADDRESS,
+  USDTOKENABI,
+  USD_TOKEN_ADDRESS,
+} from "../../constants";
 
 import { formatEther } from "viem";
 import { GiToken } from "react-icons/gi";
@@ -12,21 +16,21 @@ const CardOne = () => {
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "balanceOf",
-    args: [CARBONWISE_ADDRESS]
+    args: [CARBONWISE_ADDRESS],
   });
 
   return (
-    <div className="border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-base-300 dark:shadow-md dark:bg-base-300 rounded-xl">
-      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-[#026937]">
+    <div className="relative border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-base-300 dark:shadow-md dark:bg-default-50 rounded-xl">
+      <div className="absolute right-4 flex h-11.5 w-11.5 items-center justify-center rounded-full bg-default-200">
         <GiToken className="text-white" />
       </div>
 
       <div className="mt-4 flex items-end justify-between">
-        <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
+        <div className="space-y-4">
+          <span className="text-sm font-medium">Total Tokens</span>
+          <h4 className="font-firaSans font-bold text-8xl text-black dark:text-white">
             {((data as any) && formatEther(data as bigint)) || 0}
           </h4>
-          <span className="text-sm font-medium">Total Tokens</span>
         </div>
 
         {/* <span className="flex items-center gap-1 text-sm font-medium text-[#026937]">

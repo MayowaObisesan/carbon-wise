@@ -19,10 +19,17 @@ import {
   USDTOKENABI,
 } from "../../../constants";
 import { toast } from "sonner";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+} from "@nextui-org/react";
 
 interface datap {
-  price: number,
-  description: string
+  price: number;
+  description: string;
 }
 
 const SingleCarbon = () => {
@@ -42,8 +49,20 @@ const SingleCarbon = () => {
 
   const navigate = useNavigate();
 
-  const { data: hash, writeContract, isError: isError1, isPending: isLoading1, isSuccess: isSuccess1 } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isError: isError1,
+    isPending: isLoading1,
+    isSuccess: isSuccess1,
+  } = useWriteContract();
+  const {
+    data: hash2,
+    writeContract: writeContract2,
+    isError: isError2,
+    isPending: isLoading2,
+    isSuccess: isSuccess2,
+  } = useWriteContract();
 
   const { isLoading, data, isSuccess } = useReadContract({
     address: CC_MARKETPLACE_ADDRESS,
@@ -55,9 +74,11 @@ const SingleCarbon = () => {
     // },
   });
 
-
-
-  const { data: allowanceData, isLoading: loading1, isSuccess: isSuccess3 } = useReadContract({
+  const {
+    data: allowanceData,
+    isLoading: loading1,
+    isSuccess: isSuccess3,
+  } = useReadContract({
     address: USD_TOKEN_ADDRESS,
     abi: USDTOKENABI,
     functionName: "allowance",
@@ -79,7 +100,7 @@ const SingleCarbon = () => {
     if (isSuccess3) {
       setAllowance(allowanceData as any);
     }
-  }, [isSuccess, isSuccess3])
+  }, [isSuccess, isSuccess3]);
 
   useWatchContractEvent({
     address: USD_TOKEN_ADDRESS,
@@ -99,29 +120,31 @@ const SingleCarbon = () => {
     }
   };
 
-  const { isLoading: settling1, isSuccess: success } = useWaitForTransactionReceipt({
-    hash: hash2,
-    // onSettled(data, error) {
-    //     if (data?.blockHash) {
-    //         toast.success("Approval successful");
-    //         console.log("he don approve");
-    //         setLoadingA(false);
-    //         // navigate()
-    //         // write?.();
-    //     }
-    // },
-  });
-  const { isLoading: settling2, isSuccess: success2 } = useWaitForTransactionReceipt({
-    hash,
-    // onSettled(data, error) {
-    //     if (data?.blockHash) {
-    //         console.log("he don pay");
-    //         toast.success("Item successfully purchased");
-    //         setLoading(false);
-    //         navigate("/dashboard/myEvents");
-    //     }
-    // },
-  });
+  const { isLoading: settling1, isSuccess: success } =
+    useWaitForTransactionReceipt({
+      hash: hash2,
+      // onSettled(data, error) {
+      //     if (data?.blockHash) {
+      //         toast.success("Approval successful");
+      //         console.log("he don approve");
+      //         setLoadingA(false);
+      //         // navigate()
+      //         // write?.();
+      //     }
+      // },
+    });
+  const { isLoading: settling2, isSuccess: success2 } =
+    useWaitForTransactionReceipt({
+      hash,
+      // onSettled(data, error) {
+      //     if (data?.blockHash) {
+      //         console.log("he don pay");
+      //         toast.success("Item successfully purchased");
+      //         setLoading(false);
+      //         navigate("/dashboard/myEvents");
+      //     }
+      // },
+    });
 
   useEffect(() => {
     if (settling1) {
@@ -205,24 +228,67 @@ const SingleCarbon = () => {
   useEffect(() => {
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
-  useEffect(() => { }, [allowanceAmount]);
-  useEffect(() => { }, [allowanceListener]);
+  useEffect(() => {}, [allowanceAmount]);
+  useEffect(() => {}, [allowanceListener]);
   console.log(allowance);
 
-
   return (
-    <div className="mb-8">
+    <div className="mb-8 w-full p-12">
       <div className="flex justify-between items-start gap-x-8">
-        <div className="card mb-5 w-[95%] max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
+        <Card fullWidth className="bg-transparent p-8">
+          <CardHeader className="font-firaSans font-bold text-2xl bg-base-200 rounded-box p-4">
+            Purchase Credit
+          </CardHeader>
+          <CardBody className="py-8">
+            <div className="text-xl">
+              You are about to purchase <b>{Number(listing?.price)}</b> Credits
+            </div>
+            <div className="card-actions justify-between items-center mt-5">
+              <h3 className="text-lg dark:text-warning">
+                You will be charged{" "}
+                <b>{listing ? Number(listing?.price) : ""}</b> <span>USDT</span>
+              </h3>
+            </div>
+          </CardBody>
+          <CardFooter>
+            <Button
+              color="success"
+              variant="shadow"
+              onClick={
+                allowance < parseEther(`${total}`)
+                  ? () =>
+                      (
+                        document.getElementById(
+                          "my_modal_2"
+                        ) as HTMLDialogElement
+                      )?.showModal()
+                  : handlePay
+              }
+              disabled={handleDisable()}
+            >
+              {loading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : handleDisable() ? (
+                "Expired"
+              ) : (
+                "Pay Now"
+              )}
+            </Button>
+          </CardFooter>
+        </Card>
+        <div className="hidden card mb-5 w-[95%] max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto pt-4">
           <div className="card-body">
             <h2 className="card-title">
               {listing?.name}
-              <div className="badge badge-secondary">NEW</div>
+              {/* <div className="badge badge-secondary">NEW</div> */}
             </h2>
-            <p>{listing?.description}</p>
+            {/* <p>{listing?.description}</p> */}
+            <div className="font-firaSans text-3xl">
+              You are about to purchase {Number(listing?.price)} Credits
+            </div>
             <div className="card-actions justify-between items-center mt-5">
               <h3 className="font-bold text-lg">
-                {listing ? Number(listing?.price) : ""}{" "}
+                You will be charged {listing ? Number(listing?.price) : ""}{" "}
                 <span>USDT</span>
               </h3>
             </div>
@@ -231,11 +297,11 @@ const SingleCarbon = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                    (
-                      document.getElementById(
-                        "my_modal_2"
-                      ) as HTMLDialogElement
-                    )?.showModal()
+                      (
+                        document.getElementById(
+                          "my_modal_2"
+                        ) as HTMLDialogElement
+                      )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}

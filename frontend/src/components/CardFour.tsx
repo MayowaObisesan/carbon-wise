@@ -13,8 +13,8 @@ const CardFour = () => {
   });
 
   return (
-    <div className="rounded-xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-base-300 dark:bg-base-300">
-      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+    <div className="relative rounded-xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:shadow-none dark:border-base-300 dark:bg-default-50">
+      <div className="absolute right-4 flex h-11.5 w-11.5 items-center justify-center rounded-full bg-default-200">
         <svg
           className="fill-primary dark:fill-white"
           width="22"
@@ -39,11 +39,11 @@ const CardFour = () => {
       </div>
 
       <div className="mt-4 flex items-end justify-between">
-        <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
+        <div className="space-y-4">
+          <span className="text-sm font-medium">Total Admins</span>
+          <h4 className="font-firaSans font-bold text-8xl text-black dark:text-white">
             {(data as any[])?.length || 0}
           </h4>
-          <span className="text-sm font-medium">Total Admins</span>
         </div>
 
         {/* <span className="flex items-center gap-1 text-sm font-medium text-meta-5">

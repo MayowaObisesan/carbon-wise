@@ -35,43 +35,29 @@ const roleMap = {
 };
 
 const columns = [
-  { id: 1, name: "ID", uid: "userId", sortable: true },
-  { id: 2, name: "NAME", uid: "name", sortable: true },
-  { id: 3, name: "ADDRESS", uid: "address", sortable: true },
-  { id: 4, name: "ROLE", uid: "role", sortable: true },
-  { id: 5, name: "XP EARNED", uid: "xpEarned" },
-  { id: 6, name: "PLASTIC RECYCLED", uid: "plasticRecycled" },
-  { id: 7, name: "DATE/TIME", uid: "datetime" },
-  // {id: 8, name: "STATUS", uid: "status", sortable: true},
-  // {id: 9, name: "ACTIONS", uid: "actions"},
+  { name: "ID", uid: "userId", sortable: true },
+  { name: "NAME", uid: "name", sortable: true },
+  { name: "ADDRESS", uid: "address", sortable: true },
+  { name: "ROLE", uid: "role", sortable: true },
+  { name: "XP EARNED", uid: "xpEarned" },
+  { name: "PLASTIC RECYCLED", uid: "plasticRecycled" },
+  { name: "DATE/TIME", uid: "datetime" },
+  // {name: "STATUS", uid: "status", sortable: true},
+  // {name: "ACTIONS", uid: "actions"},
 ];
 
-type T_TableProps = {
-  rows: number;
-  tableTitle: string;
-  tableData: any;
-  tableDataSuccess: boolean;
-};
-
-export default function TableUpdated({
-  rows,
-  tableTitle,
-  tableData,
-  tableDataSuccess,
-}: T_TableProps) {
+export default function TableOneUpdated() {
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const [leaderboard, setLeaderboard] = useState<boolean>(false);
   const [filterValue, setFilterValue] = React.useState("");
-  const data = tableData;
-  const isSuccess = tableDataSuccess;
 
-  // const { data, isSuccess } = useReadContract({
-  //   address: CARBONWISE_ADDRESS,
-  //   abi: CARBONWISEABI,
-  //   functionName: "getAdmins",
-  //   account: address,
-  // });
+  const { data, isSuccess } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getAllUsers",
+    account: address,
+  });
 
   console.log(data);
 
@@ -79,7 +65,7 @@ export default function TableUpdated({
     setLeaderboard(true);
   }, [isSuccess]);
   const [page, setPage] = React.useState(1);
-  const rowsPerPage = rows || 5;
+  const rowsPerPage = 5;
 
   const pages = Math.ceil((data as any[])?.length / rowsPerPage);
 
@@ -138,12 +124,7 @@ export default function TableUpdated({
         return <div>{Number(user.xpoints) || 0} XP</div>;
       case "role":
         return (
-          <Chip
-            className="capitalize"
-            color={"success"}
-            size="sm"
-            variant="flat"
-          >
+          <Chip className="capitalize" color="success" size="sm" variant="flat">
             {/* {cellValue} */}
             {roleMap[user.role]}
           </Chip>
@@ -184,7 +165,10 @@ export default function TableUpdated({
     <div>
       <div className="flex flex-row items-center my-4 py-4 gap-x-4">
         <div className="flex-auto text-xl font-semibold text-default-foreground">
-          {tableTitle || "Admins"}
+          {location.pathname === "/dashboard/leaderboard" &&
+          currentUser?.role === 2
+            ? "All Recyclers"
+            : "Leaderboard"}
         </div>
         <Input
           isClearable
@@ -307,12 +291,7 @@ export default function TableUpdated({
           }
           bottomContentPlacement="outside"
           classNames={{
-            base: "",
             wrapper: "min-h-[222px]",
-            // table: "",
-            // th: "bg-base-200",
-            // tbody: "bg-base-300 rounded-box",
-            // tr: "bg-base-300 hover:bg-primary rounded-box",
           }}
         >
           <TableHeader>
