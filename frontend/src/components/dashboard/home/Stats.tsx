@@ -10,7 +10,7 @@ import ChatCard from "../../ChatCard";
 import MapOne from "../../MapOne";
 import TableOne from "../../TableOne";
 
-import TableUpdated from "../../TableUpdated";
+import TableUpdated from "../../TableOneUpdated";
 import CardFour2 from "../../CardFour2";
 
 type Props = {};

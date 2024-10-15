@@ -4,11 +4,24 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import CARBONWISE_ABI from "../../../constants/carbonwise.json";
 import { toast } from "sonner";
 import { CARBONWISE_ADDRESS } from "../../../constants";
+import { LucideArrowRight } from "lucide-react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  Divider,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
+import { zeroAddress } from "viem";
 
 type Props = {};
 
@@ -19,8 +32,22 @@ const CreateAdmin = (props: Props) => {
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
-  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2, error } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isError,
+    isPending: isLoading,
+    isSuccess,
+    error,
+  } = useWriteContract();
+  const {
+    data: hash2,
+    writeContract: writeContract2,
+    isError: isError2,
+    isPending: isLoading2,
+    isSuccess: isSuccess2,
+    error: error2,
+  } = useWriteContract();
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
     useWaitForTransactionReceipt({
@@ -115,13 +142,82 @@ const CreateAdmin = (props: Props) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error)
+      console.log(error);
     }
-  }, [error])
+  }, [error]);
 
   return (
-    <div className="mb-8 ">
-      <div className="card w-[95%] mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
+    <div className="mb-8  w-full lg:w-5/12">
+      <form onSubmit={handleSubmit}>
+        <Card isBlurred shadow="none" className="p-4 lg:p-8">
+          <CardBody className="gap-y-8">
+            <Select
+              isRequired
+              label="Select User"
+              // placeholder="Select a user"
+              className=""
+              size="lg"
+              classNames={{
+                label: "px-4",
+                innerWrapper: "px-4",
+              }}
+              selectedKeys={[role!]}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              {[
+                { key: "addAdmin", label: "Add Admin" },
+                { key: "addVerifier", label: "Add Verifier" },
+              ].map((_) => (
+                <SelectItem key={_.key}>{_.label}</SelectItem>
+              ))}
+            </Select>
+            <Divider />
+            <Input
+              isClearable
+              isRequired
+              size="lg"
+              label="Admin / Verifier name"
+              labelPlacement="outside"
+              placeholder="e.g., blessed07"
+              value={name}
+              onValueChange={setName}
+              classNames={{
+                label: "px-1 py-2 leading-normal",
+                inputWrapper: "px-6 py-8",
+              }}
+            />
+            <Input
+              isClearable
+              isRequired
+              size="lg"
+              label="Admin / Verifier address"
+              labelPlacement="outside"
+              placeholder={`e.g., ${zeroAddress}`}
+              value={address}
+              onValueChange={setAddress}
+              classNames={{
+                label: "px-1 py-2 leading-normal",
+                inputWrapper: "px-6 py-8",
+              }}
+            />
+          </CardBody>
+          <CardFooter>
+            <Button
+              type="submit"
+              color="success"
+              size="lg"
+              endContent={<LucideArrowRight size={16} />}
+              className="font-firaSans font-bold"
+              isLoading={isLoading}
+              isDisabled={!(name && address)}
+            >
+              Create
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
+
+      <div className="hidden card w-[95%] mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
         <h3 className="uppercase text-xl text-center font-bold">
           Add Admin/Verifier
         </h3>

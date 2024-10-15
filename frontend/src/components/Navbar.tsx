@@ -42,20 +42,23 @@ const Navbar = () => {
 
   return (
     <section className="sticky top-0 z-10 px-2 py-2 lg:px-8 lg:py-4 bg-transparent backdrop-blur-3xl">
-      <div className="navbar bg-base-200 w-full mx-auto rounded-2xl dark:bg-base-200/10">
+      <div className="navbar bg-base-200 w-full mx-auto rounded-2xl dark:bg-base-300">
         <div className="navbar-start flex-1 font-bold">
           <Logo />
         </div>
         <div className={"navbar-end gap-2 space-x-4"}>
           <div className="flex-none">
-            <Button>
-              {isConnected && (company as datap)?.name !== "" && (
+            {isConnected && (company as datap)?.name !== "" && (
+              <Button>
                 <Link to="/dashboard">Dashboard</Link>
-              )}
-              {isConnected && isRegistered && (
+              </Button>
+            )}
+
+            {isConnected && isRegistered && (
+              <Button>
                 <Link to="/dashboard">Dashboard</Link>
-              )}
-            </Button>
+              </Button>
+            )}
             <ul className="hidden menu menu-horizontal px-1">
               {/* <li>
                 <label className="hidden lg:flex cursor-pointer gap-2">
@@ -108,11 +111,9 @@ const Navbar = () => {
           </div>
           <ThemeSwitcher />
           <WasteWise />
+          {isRegistered ? "registered" : "Not registered"}
           {location.pathname === "/" && isConnected && !isRegistered && (
             <div className="flex gap-x-4">
-              <Link to="/companyregister">
-                <Button>Company</Button>
-              </Link>
               <Link to="/register">
                 <Button>Signup</Button>
               </Link>

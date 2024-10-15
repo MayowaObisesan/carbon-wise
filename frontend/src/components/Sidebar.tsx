@@ -19,6 +19,8 @@ import {
   FaUserShield,
   FaWallet,
 } from "react-icons/fa6";
+import { Divider, Listbox, ListboxItem } from "@nextui-org/react";
+import { LucideCandlestickChart } from "lucide-react";
 
 type Props = {};
 
@@ -92,13 +94,14 @@ const Sidebar = (props: Props) => {
     textDecoration: "none",
     color: "#FFF",
     transition: ".5s ease",
+    borderRadius: "12px",
   };
 
-  console.log(isActive)
+  console.log(isActive);
 
   return (
-    <div className="h-screen bg-base-100 p-4">
-      <div className="flex flex-col h-full w-full bg-base-300 rounded-2xl px-2">
+    <div className="h-screen bg-background p-4">
+      <div className="flex flex-col h-full w-full bg-default-50/50 lg:bg-default-50 backdrop-blur-md rounded-2xl">
         <h1 className="block text-2xl font-bold h-32 px-3 py-12 rounded-lg mr-auto">
           <Logo />
         </h1>
@@ -114,111 +117,121 @@ const Sidebar = (props: Props) => {
                     style={isActive === "dashboard" ? activeLinkStyle : {}}
                   >
                     {" "}
+                    <LucideCandlestickChart />
                     Dashboard
-                  </h2>
-                </Link>
-                {/* <a className="active">Home</a> */}
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createEvent"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createEvent" ? activeLinkStyle : {}}
-                >
-                  <FaCartPlus />
-                  <h2 className="text-lg">Create Event</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createAdmin"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createAdmin" ? activeLinkStyle : {}}
-                >
-                  <FaUserShield />
-                  <h2 className="text-lg">Create Admin</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/createCarbon"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "createCarbon" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Sell Credits</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/disbursement"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "disbursement" ? activeLinkStyle : {}}
-                >
-                  <FaWallet />
-                  <h2 className="text-lg">Disbursement</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/carbonmarket"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "carbonmarket" ? activeLinkStyle : {}}
-                >
-                  <FaCartArrowDown />
-                  <h2 className="text-lg">Carbon Market</h2>
-                </Link>
-              </li>
-            </>
+                    {/* </h2> */}
+                  </Link>
+                  {/* <a className="active">Home</a> */}
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createEvent"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createEvent" ? activeLinkStyle : {}}
+                  >
+                    <FaCartPlus />
+                    <h2 className="text-lg">Create Event</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createAdmin"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createAdmin" ? activeLinkStyle : {}}
+                  >
+                    <FaUserShield />
+                    <h2 className="text-lg">Create Admin</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/createCarbon"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "createCarbon" ? activeLinkStyle : {}}
+                  >
+                    <FaWallet />
+                    <h2 className="text-lg">Sell Credits</h2>
+                  </Link>
+                </li>
+                {/* <li>
+                  <Link
+                    to="/dashboard/disbursement"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "disbursement" ? activeLinkStyle : {}}
+                  >
+                    <FaWallet />
+                    <h2 className="text-lg">Disbursement</h2>
+                  </Link>
+                </li> */}
+                <li>
+                  <Link
+                    to="/dashboard/carbonmarket"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "carbonmarket" ? activeLinkStyle : {}}
+                  >
+                    <FaCartArrowDown />
+                    <h2 className="text-lg">Carbon Market</h2>
+                  </Link>
+                </li>
+              </>
             )}
-            {((currentUser?.role === 0 && currentUser?.name !== "") || (currentUser?.role === 1) || (currentUser?.role === 2)) && (<>
-              <li>
-                <Link
-                  to="/dashboard/leaderboard"
-                  className="items-center"
-                  style={isActive === "leaderboard" ? activeLinkStyle : {}}
-                >
-                  {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaPeopleGroup />
-                  <h2 className="text-lg">Leaderboard</h2>
-                </Link>
-              </li>
-            </>)}
-            {((currentUser?.role === 0 && currentUser?.name !== "") || (currentUser?.role === 1)) && (<>
-              <li>
-                <Link
-                  to="/dashboard/marketplace"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "marketplace" ? activeLinkStyle : {}}
-                >
-                  <FaCartArrowDown />
-                  <h2 className="text-lg">Marketplace</h2>
-                </Link>
-              </li>
-            </>)}
-            {((currentUser?.role === 0 && currentUser?.name !== "")) && (<>
-              <li>
-                <Link
-                  to="/dashboard/wallet"
-                  className="items-center"
-                  style={isActive === "wallet" ? activeLinkStyle : {}}
-                >
-                  {/* <img src={wallet} alt="wallet-Icon" /> */}
-                  <FaWallet />
-                  <h2 className="text-lg">Wallet</h2>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/purchases"
-                  className="flex flex-row gap-2 items-center"
-                  style={isActive === "purchases" ? activeLinkStyle : {}}
-                >
-                  <FaLayerGroup />
-                  <h2 className="text-lg">My Purchase</h2>
-                </Link>
-              </li>
-            </>)}
+            {((currentUser?.role === 0 && currentUser?.name !== "") ||
+              currentUser?.role === 1 ||
+              currentUser?.role === 2) && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/leaderboard"
+                    className="items-center"
+                    style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                  >
+                    {/* <img src={wallet} alt="wallet-Icon" /> */}
+                    <FaPeopleGroup />
+                    <h2 className="text-lg">Leaderboard</h2>
+                  </Link>
+                </li>
+              </>
+            )}
+            {((currentUser?.role === 0 && currentUser?.name !== "") ||
+              currentUser?.role === 1) && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/marketplace"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "marketplace" ? activeLinkStyle : {}}
+                  >
+                    <FaCartArrowDown />
+                    <h2 className="text-lg">Marketplace</h2>
+                  </Link>
+                </li>
+              </>
+            )}
+            {currentUser?.role === 0 && currentUser?.name !== "" && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/wallet"
+                    className="items-center"
+                    style={isActive === "wallet" ? activeLinkStyle : {}}
+                  >
+                    {/* <img src={wallet} alt="wallet-Icon" /> */}
+                    <FaWallet />
+                    <h2 className="text-lg">Wallet</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/purchases"
+                    className="flex flex-row gap-2 items-center"
+                    style={isActive === "purchases" ? activeLinkStyle : {}}
+                  >
+                    <FaLayerGroup />
+                    <h2 className="text-lg">My Purchase</h2>
+                  </Link>
+                </li>
+              </>
+            )}
             {currentUser?.role == 2 && (
               <li>
                 <Link
@@ -269,9 +282,10 @@ const Sidebar = (props: Props) => {
           v1.0.0&copy; {new Date().getFullYear()}
         </h2>
       </button> */}
-        <div className="relative w-full px-8 my-8 flex flex-row gap-2 text-base items-center rounded-lg transition-all delay-400">
+        <div className="relative w-full px-8 my-8 flex flex-row gap-2 text-sm items-center rounded-lg transition-all delay-400">
           <div className="grid flex-grow place-items-center">v1.0.0</div>
-          <div className="divider divider-horizontal"></div>
+          {/* <div className="divider divider-horizontal"></div> */}
+          <Divider orientation="vertical"></Divider>
           <div className="grid flex-grow place-items-center">
             &copy; {new Date().getFullYear()}
           </div>

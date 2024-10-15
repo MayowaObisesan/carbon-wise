@@ -1,5 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const { nextui } = require("@nextui-org/react");
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -12,6 +13,9 @@ module.exports = {
   theme: {
     fontFamily: {
       satoshi: ["Satoshi", "sans-serif"],
+      firaSans: ["Fira Sans", "sans-serif"],
+      openSans: ["Open Sans", "sans-serif"],
+      notoSans: ["Noto Sans", "sans-serif"],
     },
     screens: {
       "2xsm": "375px",
@@ -267,5 +271,5 @@ module.exports = {
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
   darkMode: "class",
-  plugins: [nextui(), require("daisyui")],
+  plugins: [daisyui, nextui()],
 };
