@@ -90,7 +90,10 @@ The smart contracts are released under the UNLICENSED and MIT licenses, allowing
 
 ## Deployed Contract Addresses on Lisk Sepolia
 
-- USDToken - 0xa2AC8D024CF130f5a54380122ae0d76d865339b4
-- CarbonWise - 0x1933Eda841a710E454583ea441e5fc43b19C306c
-- EventMarketPlace - 0x19Ebea8A04476F2d4f8734bd31eC26403d057702
-- CcMarketPlace - 0x6Eb37b2f0B5C9cA138E706815734cccf854c0e34
+USDToken - 0xd13D1fEbB1c1B4cD2d331494eD6C709Ea454d576
+
+CarbonWise - 0xDaE55bE15252510f66c629198A2dE181Ca2A0537
+
+EventMarketPlace - 0x19Ebea8A04476F2d4f8734bd31eC26403d057702
+
+CcMarketPlace - 0x6Eb37b2f0B5C9cA138E706815734cccf854c0e34
