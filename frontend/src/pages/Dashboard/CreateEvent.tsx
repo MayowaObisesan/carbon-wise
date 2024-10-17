@@ -67,12 +67,18 @@ const CreateEvent = (props: Props) => {
   const imageHashRef = useRef("");
 
   let formatter = useDateFormatter({ dateStyle: "full" });
+  console.log(deadline.toString());
+  console.log(formatter.format(deadline.toDate()));
 
   const toTimeStamp = (strDate: string) => {
     const dt = Date.parse(strDate);
     const dts = dt / 1000;
+    console.log(dts);
     // setDeadline(dts);
+    return dts;
   };
+  // console.log(Math.round(toTimeStamp(deadline.toAbsoluteString())));
+  console.log(toTimeStamp(deadline.toDate().toUTCString()));
 
   const {
     writeContract,
@@ -159,7 +165,13 @@ const CreateEvent = (props: Props) => {
       address: EVENT_MARKETPLACE_ADDRESS,
       abi: EVENTMARKETPLACEABI,
       functionName: "createListing",
-      args: [name, description, image, parseEther(`${price}`), deadline],
+      args: [
+        name,
+        description,
+        image,
+        parseEther(`${price}`),
+        toTimeStamp(deadline.toDate().toUTCString()),
+      ],
       account: address,
     });
   };
@@ -237,7 +249,7 @@ const CreateEvent = (props: Props) => {
                       />
                     </div> */}
                   </div>
-                  {dpPreview && (
+                  {dpPreview && !imageUploadSuccessful && (
                     <Button
                       isIconOnly
                       color="danger"
@@ -375,7 +387,7 @@ const CreateEvent = (props: Props) => {
                       isDisabled={image === ""}
                       label="Event Deadline"
                       labelPlacement="outside"
-                      hideTimeZone
+                      hideTimeZone={true}
                       showMonthAndYearPickers
                       defaultValue={now(getLocalTimeZone())}
                       minValue={today(getLocalTimeZone())}
