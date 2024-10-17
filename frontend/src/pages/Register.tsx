@@ -215,7 +215,8 @@ const Register = () => {
               </CardHeader>
               <CardBody>
                 <NLink
-                  href={`https://base-sepolia.blockscout.com/tx/${hash}`}
+                  // href={`https://base-sepolia.blockscout.com/tx/${hash}`}
+                  href={`https://sepolia-blockscout.lisk.com/tx/${hash}`}
                   isExternal
                 >
                   Confirm your transaction on-Chain
