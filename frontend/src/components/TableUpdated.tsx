@@ -46,6 +46,17 @@ const columns = [
   // {id: 9, name: "ACTIONS", uid: "actions"},
 ];
 
+type User = {
+  [x: string]: any;
+  id: any;
+  avatar: any;
+  userAddr: string;
+  name: string;
+  xpoints: any;
+  role: number;
+  timeJoined: any;
+};
+
 type T_TableProps = {
   rows: number;
   tableTitle: string;
@@ -90,7 +101,7 @@ export default function TableUpdated({
     return (data as any[])?.slice(start, end);
   }, [page, data]);
 
-  const onSearchChange = React.useCallback((value) => {
+  const onSearchChange = React.useCallback((value: string) => {
     if (value) {
       setFilterValue(value);
       setPage(1);
@@ -104,81 +115,88 @@ export default function TableUpdated({
     setPage(1);
   }, []);
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback(
+    (user: User, columnKey: string | number) => {
+      const cellValue = user[columnKey];
 
-    switch (columnKey) {
-      case "userId":
-        return (
-          <div className="text-bold text-md text-center">{Number(user.id)}</div>
-        );
-      //   case "name":
-      //     return user.name;
-      case "name":
-        return (
-          <User
-            avatarProps={{ radius: "full", src: user.avatar }}
-            description={shortenAddress(user.userAddr)}
-            name={user.name}
-            className="font-bold"
-          >
-            {user.name}
-          </User>
-        );
-      case "address":
-        return (
-          <div className="flex flex-col">
-            <p className="font-medium text-small capitalize">{user.userAddr}</p>
-            {/* <p className="text-bold text-tiny capitalize text-default-400">
+      switch (columnKey) {
+        case "userId":
+          return (
+            <div className="text-bold text-md text-center">
+              {Number(user.id)}
+            </div>
+          );
+        //   case "name":
+        //     return user.name;
+        case "name":
+          return (
+            <User
+              avatarProps={{ radius: "full", src: user.avatar }}
+              description={shortenAddress(user.userAddr)}
+              name={user.name}
+              className="font-bold"
+            >
+              {user.name}
+            </User>
+          );
+        case "address":
+          return (
+            <div className="flex flex-col">
+              <p className="font-medium text-small capitalize">
+                {user.userAddr}
+              </p>
+              {/* <p className="text-bold text-tiny capitalize text-default-400">
               {user.userAddr}
             </p> */}
-          </div>
-        );
-      case "xpEarned":
-        return <div>{Number(user.xpoints) || 0} XP</div>;
-      case "role":
-        return (
-          <Chip
-            className="capitalize"
-            color={"success"}
-            size="sm"
-            variant="flat"
-          >
-            {/* {cellValue} */}
-            {roleMap[user.role]}
-          </Chip>
-        );
-      case "plasticRecycled":
-        return <Button size="sm">Details</Button>;
-      case "datetime":
-        return (
-          <div>
-            {Number(user.timeJoined) !== 0
-              ? formatDateShort(Number(user.timeJoined))
-              : "-"}
-          </div>
-        );
-      //   case "actions":
-      //     return (
-      //       <div className="relative flex justify-end items-center gap-2">
-      //         <Dropdown>
-      //           <DropdownTrigger>
-      //             <Button isIconOnly size="sm" variant="light">
-      //               <VerticalDotsIcon className="text-default-300" />
-      //             </Button>
-      //           </DropdownTrigger>
-      //           <DropdownMenu>
-      //             <DropdownItem>View</DropdownItem>
-      //             <DropdownItem>Edit</DropdownItem>
-      //             <DropdownItem>Delete</DropdownItem>
-      //           </DropdownMenu>
-      //         </Dropdown>
-      //       </div>
-      //     );
-      default:
-        return cellValue;
-    }
-  }, []);
+            </div>
+          );
+        case "xpEarned":
+          return <div>{Number(user.xpoints) || 0} XP</div>;
+        case "role":
+          return (
+            <Chip
+              className="capitalize"
+              color={"success"}
+              size="sm"
+              variant="flat"
+            >
+              {/* {cellValue} */}
+              {roleMap[user.role as keyof typeof roleMap]}
+            </Chip>
+          );
+        case "plasticRecycled":
+          return <Button size="sm">Details</Button>;
+        case "datetime":
+          return (
+            <div>
+              {Number(user.timeJoined) !== 0
+                ? formatDateShort(Number(user.timeJoined))
+                : "-"}
+            </div>
+          );
+        //   case "actions":
+        //     return (
+        //       <div className="relative flex justify-end items-center gap-2">
+        //         <Dropdown>
+        //           <DropdownTrigger>
+        //             <Button isIconOnly size="sm" variant="light">
+        //               <VerticalDotsIcon className="text-default-300" />
+        //             </Button>
+        //           </DropdownTrigger>
+        //           <DropdownMenu>
+        //             <DropdownItem>View</DropdownItem>
+        //             <DropdownItem>Edit</DropdownItem>
+        //             <DropdownItem>Delete</DropdownItem>
+        //           </DropdownMenu>
+        //         </Dropdown>
+        //       </div>
+        //     );
+        default:
+          return cellValue;
+      }
+    },
+    []
+  );
 
   return (
     <div>

@@ -19,7 +19,6 @@ import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import useNotificationCount from "../hooks/useNotificationCount";
 import Navbar from "../components/Navbar";
 import { Button } from "@nextui-org/button";
-import { ChevronLeftIcon } from "../assets/icons";
 import {
   Card,
   CardBody,
@@ -27,6 +26,7 @@ import {
   Input,
   Link as NLink,
 } from "@nextui-org/react";
+import { ChevronLeftIcon } from "lucide-react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const Register = () => {
               as={Link}
               to="/"
               variant="flat"
-              startContent={<ChevronLeftIcon />}
+              startContent={<ChevronLeftIcon size={16} />}
             >
               Home
             </Button>

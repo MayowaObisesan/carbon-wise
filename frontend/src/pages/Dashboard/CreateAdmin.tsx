@@ -263,14 +263,14 @@ const CreateAdmin = (props: Props) => {
                 Add Verifier
               </option>
             </select>
-            <Button name="submit" size="block" customStyle="w-full">
-              {/* {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
+            {/* <Button name="submit" size="block" customStyle="w-full">
+              {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
                 <span className="loading"></span>
-              )} */}
+              )}
               {(isAddingVerifier || isAddingAdmin) && (
                 <span className="loading"></span>
               )}
-            </Button>
+            </Button> */}
             {/* <button
               className="btn btn-primary block m-auto w-full"
               type="submit"

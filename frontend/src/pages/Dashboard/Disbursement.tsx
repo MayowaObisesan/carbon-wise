@@ -88,7 +88,7 @@ const Disbursement = () => {
   const sdgModal = useRef<HTMLDialogElement>(null);
   return (
     <section className="relative">
-      <div classNam="flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
+      <div className="hidden flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
         <form action="" onSubmit={handleDepositPlastic}>
           {/* <Button name="Disburse" size="block" customStyle="w-full">
                         {(isPending || isLoading) && (
