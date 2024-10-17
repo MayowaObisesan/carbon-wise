@@ -311,40 +311,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "CompanyMap",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "userAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeJoined",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -618,9 +584,24 @@
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum CarbonWise.Role",
+            "name": "role",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xpoints",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xrate",
+            "type": "uint256"
           }
         ],
-        "internalType": "struct CarbonWise.Company[]",
+        "internalType": "struct CarbonWise.User[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -728,9 +709,24 @@
             "internalType": "uint256",
             "name": "timeJoined",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum CarbonWise.Role",
+            "name": "role",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xpoints",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "xrate",
+            "type": "uint256"
           }
         ],
-        "internalType": "struct CarbonWise.Company",
+        "internalType": "struct CarbonWise.User",
         "name": "",
         "type": "tuple"
       }

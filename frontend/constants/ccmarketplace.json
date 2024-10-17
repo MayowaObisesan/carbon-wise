@@ -164,6 +164,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "carbonwise",
+    "outputs": [
+      {
+        "internalType": "contract CarbonWise",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "carbonwisetoken",
+    "outputs": [
+      {
+        "internalType": "contract USDToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
