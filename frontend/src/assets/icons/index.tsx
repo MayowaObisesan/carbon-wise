@@ -48,7 +48,7 @@ export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => (
   </svg>
 );
 
-export const PlusIcon = ({ size = 24, width, height, ...props }) => (
+export const PlusIcon = ({ size = 24, width = 24, height = 24, ...props }) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -72,7 +72,12 @@ export const PlusIcon = ({ size = 24, width, height, ...props }) => (
   </svg>
 );
 
-export const VerticalDotsIcon = ({ size = 24, width, height, ...props }) => (
+export const VerticalDotsIcon = ({
+  size = 24,
+  width = 24,
+  height = 24,
+  ...props
+}) => (
   <svg
     aria-hidden="true"
     fill="none"

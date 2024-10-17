@@ -27,6 +27,7 @@ import {
   Link as NLink,
 } from "@nextui-org/react";
 import { ChevronDownIcon } from "../../assets/icons";
+import { ChevronLeftIcon } from "lucide-react";
 
 const CompanyRegister = () => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ const CompanyRegister = () => {
               as={Link}
               to="/"
               variant="flat"
-              startContent={<ChevronDownIcon />}
+              startContent={<ChevronLeftIcon size={16} />}
             >
               Home
             </Button>
