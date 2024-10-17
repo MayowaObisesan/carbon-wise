@@ -8,11 +8,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAccount, useReadContract, } from "wagmi";
+import useDarkMode from "use-dark-mode";
+import { type DarkMode } from "use-dark-mode";
+import { useAccount, useReadContract } from "wagmi";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
 type contextType = {
   wastewiseStore: any;
+  darkMode: DarkMode;
   isRegistered: boolean;
   currentUser: any;
   setCurrentUser: any;
@@ -22,6 +25,18 @@ type contextType = {
   setNotifCount: number | any;
   notifications: any;
   setNotifications: any;
+  adminsData: any;
+  isAdminsDataFetching: boolean;
+  isAdminsDataStale: boolean;
+  isAdminsDataSuccessful: boolean;
+  allUsersData: any;
+  isAllUsersDataFetching: boolean;
+  isAllUsersDataStale: boolean;
+  isAllUsersDataSuccessful: boolean;
+  verifiersData: any;
+  isVerifiersDataFetching: boolean;
+  isVerifiersDataStale: boolean;
+  isVerifiersDataSuccessful: boolean;
 };
 
 type userDataType = {
@@ -42,6 +57,12 @@ type userDataType = {
 
 const WastewiseContext = createContext<contextType>({
   wastewiseStore: null,
+  darkMode: {
+    value: false,
+    enable: () => {},
+    disable: () => {},
+    toggle: () => {},
+  },
   isRegistered: false,
   currentUser: null,
   setCurrentUser: null,
@@ -51,6 +72,18 @@ const WastewiseContext = createContext<contextType>({
   setNotifCount: 0,
   notifications: null,
   setNotifications: null,
+  adminsData: null,
+  isAdminsDataFetching: false,
+  isAdminsDataStale: false,
+  isAdminsDataSuccessful: false,
+  allUsersData: null,
+  isAllUsersDataFetching: false,
+  isAllUsersDataStale: false,
+  isAllUsersDataSuccessful: false,
+  verifiersData: null,
+  isVerifiersDataFetching: false,
+  isVerifiersDataStale: false,
+  isVerifiersDataSuccessful: false,
 });
 
 const WastewiseProvider = ({ children }: { children: ReactNode }) => {
@@ -67,7 +100,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const { address, isConnected } = useAccount();
-  console.log(address)
+  const darkMode = useDarkMode(false);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<userDataType | {}>({});
   const [notifCount, setNotifCount] = useState(0);
@@ -133,10 +166,46 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     // },
   });
 
+  const {
+    data: adminsData,
+    isStale: isAdminsDataStale,
+    isStale: isAdminsDataFetching,
+    isSuccess: isAdminsDataSuccessful,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getAdmins",
+    account: address,
+  });
+
+  const {
+    data: allUsersData,
+    isStale: isAllUsersDataStale,
+    isStale: isAllUsersDataFetching,
+    isSuccess: isAllUsersDataSuccessful,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getAllUsers",
+    account: address,
+  });
+
+  const {
+    data: verifiersData,
+    isSuccess: isVerifiersDataSuccessful,
+    isStale: isVerifiersDataStale,
+    isFetching: isVerifiersDataFetching,
+  } = useReadContract({
+    address: CARBONWISE_ADDRESS,
+    abi: CARBONWISEABI,
+    functionName: "getVerifiers",
+    account: address,
+  });
+
   useEffect(() => {
     setIsRegistered(data ? Number((data as any)?.userAddr) !== 0 : false);
     setCurrentUser(data as any);
-    return () => { };
+    return () => {};
   }, [data, isRegistered]);
 
   useEffect(() => {
@@ -147,6 +216,7 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
     <WastewiseContext.Provider
       value={{
         wastewiseStore,
+        darkMode,
         isRegistered,
         currentUser,
         setCurrentUser,
@@ -156,6 +226,18 @@ const WastewiseProvider = ({ children }: { children: ReactNode }) => {
         setNotifCount,
         notifications,
         setNotifications,
+        adminsData,
+        isAdminsDataFetching,
+        isAdminsDataStale,
+        isAdminsDataSuccessful,
+        allUsersData,
+        isAllUsersDataFetching,
+        isAllUsersDataStale,
+        isAllUsersDataSuccessful,
+        verifiersData,
+        isVerifiersDataFetching,
+        isVerifiersDataStale,
+        isVerifiersDataSuccessful,
       }}
     >
       {children}

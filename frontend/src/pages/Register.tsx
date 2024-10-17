@@ -8,7 +8,7 @@ import {
 } from "wagmi";
 
 import { WasteWise } from "../components/WasteWise";
-import Button from "../components/Button";
+// import Button from "../components/Button";
 // import { WASTEWISE_ABI, WASTEWISE_ADDRESS } from "../utils";
 import { useWasteWiseContext } from "../context";
 import { toast } from "sonner";
@@ -18,25 +18,33 @@ import Logo from "../components/Logo";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import useNotificationCount from "../hooks/useNotificationCount";
 import Navbar from "../components/Navbar";
+import { Button } from "@nextui-org/button";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+  Link as NLink,
+} from "@nextui-org/react";
+import { ChevronLeftIcon } from "lucide-react";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { address, isConnected } = useAccount();
-  const [number, setNumber] = useState<number>(0);
-  const [country, setCountry] = useState("");
-  const [gender, setGender] = useState(1);
+  const { address } = useAccount();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const notificationCount = useNotificationCount();
-  const { currentUser, setCurrentUser, wastewiseStore, setNotifCount } =
-    useWasteWiseContext();
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
-  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-
+  const { wastewiseStore, setNotifCount } = useWasteWiseContext();
+  const {
+    data: hash,
+    writeContract,
+    isError,
+    isPending: isLoading,
+    isSuccess,
+  } = useWriteContract();
 
   const { isLoading: settling, error } = useWaitForTransactionReceipt({
     confirmations: 1,
-    hash
+    hash,
   });
 
   useEffect(() => {
@@ -60,9 +68,6 @@ const Register = () => {
       });
       // const redirectTo = "";
       // if (currentUser.role === 1) {}
-      setTimeout(() => {
-        navigate("/dashboard/wallet");
-      }, 1200);
     }
   }, [isSuccess]);
 
@@ -94,64 +99,45 @@ const Register = () => {
     }
   }, [isLoading]);
 
-  const handleGenderChange = (event: any) => {
-    if (event.target.value === "female") {
-      setGender(0);
-    } else if (event.target.value === "male") {
-      setGender(1);
-    }
-  };
-  function selectCountry(val: any) {
-    setCountry(val);
-  }
-
-  function handleEmail(e: any) {
-    setEmail(e.target.value);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsEmailValid(emailRegex.test(e.target.value)); // true
-  }
-
   function handleSubmit(e: any) {
     e.preventDefault();
     writeContract({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISEABI,
-      args: [name, country, gender, number, email],
+      args: [name],
       functionName: "createUserAcct",
-      account: address
+      account: address,
     });
   }
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div className="flex h-full px-4 lg:h-9/12">
-        <div className="flex flex-col justify-center items-center lg:w-1/2 lg:mx-28 mx-1 lg:pl-8">
-          <h1 className="text-3xl font-black leading-8 mb-8">
+        <div className="relative flex flex-col justify-center items-center w-full lg:w-1/2 lg:mx-28 mx-1 lg:pl-8">
+          <div className="absolute top-8 left-2 lg:-left-12">
+            <Button
+              as={Link}
+              to="/"
+              variant="flat"
+              startContent={<ChevronLeftIcon size={16} />}
+            >
+              Home
+            </Button>
+          </div>
+          <h1 className="text-3xl font-black text-center leading-8 mb-8 font-firaSans">
             Register An Account!
           </h1>
           <form
-            className="flex flex-col"
+            className="relative flex flex-col w-full lg:w-8/12"
             action=""
             id="signup-form"
             onSubmit={handleSubmit}
           >
-            {/* <label htmlFor="Name" className="text-base-content">
-              {" "}
-              Name:{" "}
-            </label>
-            <input
-              name="Name"
-              id="Name"
-              className="p-3 lg:m-2 w-screen lg:w-2/3"
-              onChange={(e) => setName(e.target.value)}
-              placeholder="John"
-              value={name}
-            /> */}
-            <div className="form-control w-full my-4">
+            <div className="hidden form-control w-full my-4">
               <label className="label">
-                <span className="label-text">Nickname</span>
+                <span className="label-text">Name</span>
                 {/* <span className="label-text-alt">Top Right label</span> */}
               </label>
               <input
@@ -170,176 +156,81 @@ const Register = () => {
               </label>
             </div>
 
-            {/* Email form input */}
-            <div className="form-control w-full my-4">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="text"
-                placeholder="your@email.com"
-                className="input input-bordered w-full"
-                defaultValue={currentUser?.email}
-                onChange={handleEmail}
+            <div className="flex flex-col items-center gap-y-10 my-16">
+              <Input
+                isClearable
+                isRequired
+                size="lg"
+                label="Your name or pseudonym"
+                labelPlacement="outside"
+                placeholder="e.g., blessed07"
+                value={name}
+                onValueChange={setName}
+                classNames={{
+                  label: "px-1 py-2 leading-normal",
+                  inputWrapper: "px-6 py-8 w-10/12 lg:w-9/12 mx-auto",
+                }}
               />
-              {email.length > 0 && !isEmailValid && (
-                <label className="label">
-                  <span className="label-text-alt text-error">
-                    Invalid Email Address
-                  </span>
-                </label>
-              )}
+              <Button
+                color="success"
+                variant="shadow"
+                size="lg"
+                onClick={handleSubmit}
+                isLoading={isLoading || settling}
+                isDisabled={!name}
+                className="w-6/12"
+              >
+                Register
+              </Button>
             </div>
-
-            {/* Phone Number form input */}
-            <div className="form-control w-full my-4">
-              <label className="label">
-                <span className="label-text">Phone number</span>
-              </label>
-              <div className="join">
-                <CountryDropdown
-                  value={country}
-                  // defaultOptionLabel="---"
-                  onChange={(val) => selectCountry(val)}
-                  classes="select select-bordered join-item bg-base-200 focus:outline-0 focus:bg-base-300 w-4/12"
-                />
-                <div className="form-control w-full">
-                  <div>
-                    <input
-                      type="text"
-                      className="input input-bordered join-item w-full focus:outline-0 focus:bg-base-100"
-                      placeholder="234 913 158 1488"
-                      // defaultValue={number}
-                      onChange={(e) => setNumber(parseInt(e.target?.value))}
-                    />
-                  </div>
-                </div>
-              </div>
-              <label className="label">
-                <span className="label-text-alt text-error">
-                  {/* Invalid Phone number */}
-                </span>
-              </label>
-            </div>
-
-            {/* <label htmlFor="country" className="text-base-content">
-              Country:{" "}
-            </label>
-            <CountryDropdown
-              value={country}
-              onChange={(val) => selectCountry(val)}
-              className="text-[#121212]     p-3 lg:m-2 my-2 w-screen lg:w-2/3 text-base font-light bg-[#F3F3F3]"
-            />
-            <div className="flex justify-between w-1/3">
-              <label className="flex text-base-content">
-                <input
-                  className="bg-[#F3F3F3]  lg:m-2 my-2 mx-3  lg:w-2/3"
-                  type="radio"
-                  value="Male"
-                  checked={gender === 1}
-                  onChange={handleGenderChange}
-                />
-                Male
-              </label>
-              <label className=" flex text-base-content">
-                {" "}
-                <input
-                  className="  text-[#121212] lg:m-2 my-2  mx-3  lg:w-2/3"
-                  type="radio"
-                  value="Female"
-                  checked={gender === 0}
-                  onChange={handleGenderChange}
-                />
-                Female
-              </label>
-            </div> */}
-
-            {/* Gender Form input */}
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Select Gender</span>
-                {/* <span className="label-text-alt">Alt label</span> */}
-              </label>
-              <div className="join">
-                {["female", "male"].map((eachGender) => (
-                  <input
-                    className="join-item btn checked:btn-green-600 flex-1 capitalize"
-                    type="radio"
-                    name="options"
-                    value={eachGender}
-                    aria-label={eachGender}
-                    onChange={handleGenderChange}
-                  />
-                ))}
-              </div>
-              <label className="label">
-                <span className="label-text-alt text-error">
-                  {/* Invalid Email Address */}
-                </span>
-              </label>
-            </div>
-
-            {/* <label htmlFor="number" className="text-base-content">
-              Number:{" "}
-            </label>
-            <input
-              className="p-3 lg:m-2 my-2 w-screen lg:w-2/3"
-              placeholder="Enter phone number"
-              type="number"
-              value={number}
-              onChange={(e) => setNumber(parseInt(e.target.value))}
-            /> */}
-
-            {/* <label htmlFor="email" className="text-base-content">
-              Email:{" "}
-            </label>
-            <input
-              name="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              placeholder="react@example.com"
-              className="p-3 lg:m-2 my-2 w-screen lg:w-2/3"
-            /> */}
-            {/* <Button
-              name={isLoading ? "Loading" : "Sign up"}
-              disabled={!write || isLoading}
-              onClick={handleSubmit}
-            /> */}
 
             {/* Submit button */}
-            <div className="form-control w-full px-4 py-8 mx-auto lg:w-auto">
-              <Button
-                name={isLoading ? "Loading..." : "Sign up"}
-                size="md btn-block lg:btn-wide"
-                disabled={isLoading}
-                onClick={handleSubmit}
-              >
-                {(isLoading || settling) && <span className="loading"></span>}
-              </Button>
-              {/* 
-              <button
-                className="btn btn-block lg:btn-wide"
-                onClick={handleSubmit}
-                disabled={!write || isLoading}
-              >
-                {isLoading ? <span className="loading"></span> : "Signup"}
-              </button> */}
-            </div>
-
-            {isSuccess && (
-              <div>
-                Successfully signed you up!
-                <div>
-                  <a href={`https://sepolia.etherscan.io/tx/${hash}`}>
-                    Confirm your transaction on Etherscan
-                  </a>
-                </div>
-              </div>
-            )}
-            {isError && <div>{error?.message} - Error occurred</div>}
+            {/* <div className="form-control w-full px-4 py-8 mx-auto lg:w-auto">
+              {isSuccess ? (
+                <Button
+                  name={isLoading ? "Loading..." : "Sign up"}
+                  size="md btn-block lg:btn-wide"
+                  disabled={isLoading}
+                  onClick={() => navigate("/dashboard/wallet")}
+                >
+                  GoTo Dashboard
+                </Button>
+              ) : (
+                <Button
+                  name={isLoading ? "Loading..." : "Sign up"}
+                  size="md btn-block lg:btn-wide"
+                  disabled={isLoading}
+                  onClick={handleSubmit}
+                >
+                  {(isLoading || settling) && <span className="loading"></span>}
+                </Button>
+              )}
+            </div> */}
           </form>
+
+          {isSuccess && (
+            <Card className="absolute bottom-4 lg:top-12 left-0 right-0 w-full h-max lg:w-96 mx-auto px-4 py-4">
+              <CardHeader className="font-firaSans font-semibold text-lg bg-success-50 text-success rounded-lg">
+                Transaction Successful
+              </CardHeader>
+              <CardBody>
+                <NLink
+                  href={`https://base-sepolia.blockscout.com/tx/${hash}`}
+                  isExternal
+                >
+                  Confirm your transaction on-Chain
+                </NLink>
+              </CardBody>
+            </Card>
+          )}
+          {/* {isError && <div>{error?.message} - Error occurred</div>} */}
+          <div className="absolute bottom-4 left-0 right-0 w-full text-center font-firaSans text-sm">
+            <span className="">
+              copyright &copy; {new Date().getFullYear()}
+            </span>
+          </div>
         </div>
+
         <div className="bg-gradient-to-t from-[#CBE5D8] to-[#FFFFFF] dark:bg-gradient-to-t dark:from-yellow-500/10 dark:to-emerald-500/40 w-1/2 px-16 hidden lg:flex lg:flex-col lg:justify-center dark:bg-transparent">
           {/* <h1
             className="light:text-[#02582E] text-2xl font-extrabold mb-3
@@ -348,7 +239,21 @@ const Register = () => {
             Register an Account
           </h1> */}
           <div className="w-10/12 text-xl font-normal light:text-[#02582E] leading-[3]">
-            <h1 className="text-2xl">Hello... 👋🏼</h1>
+            <h1 className="font-firaSans font-bold text-3xl my-8">
+              We welcome you to the Green-side... 🤝
+            </h1>
+            <li className="list-disc">
+              You have decided to reduce your Carbon-footprint.
+            </li>
+            <li className="list-disc">
+              We want to assure you that we are with you as you take this bold
+              step.
+            </li>
+            <li className="list-disc">
+              We would like to know your name or pseudonym to personalize your
+              experience.
+            </li>
+            {/* <h1 className="text-2xl">Hello... 👋🏼</h1>
             <br />
             Welcome to Carbon-Wise.
             <br />
@@ -361,7 +266,7 @@ const Register = () => {
             <br />
             <strong className="text-lg">
               It'll only take 37 seconds or less. <br /> We promise.
-            </strong>
+            </strong> */}
           </div>
         </div>
       </div>

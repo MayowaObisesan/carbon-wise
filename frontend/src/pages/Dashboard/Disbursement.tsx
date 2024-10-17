@@ -1,98 +1,114 @@
 import { Toaster, toast } from "sonner";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { useRef, useState, useEffect } from "react";
 import localforage from "localforage";
 import {
-    useAccount,
-    useSimulateContract,
-    useWaitForTransactionReceipt,
-    useWriteContract,
+  useAccount,
+  useSimulateContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import { CARBONWISEABI, CARBONWISE_ADDRESS } from "../../../constants";
 import { useWasteWiseContext } from "../../context";
 import useNotificationCount from "../../hooks/useNotificationCount";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@nextui-org/button";
+import { LucideCandlestickChart } from "lucide-react";
 
 const Disbursement = () => {
-    const { address } = useAccount();
-    const [numPlastic, setNumPlastic] = useState<number>();
-    const [userId, setUserId] = useState<number>();
-    const notificationCount = useNotificationCount();
-    const { currentUser, wastewiseStore, setNotifCount } = useWasteWiseContext();
-    const navigate = useNavigate();
+  const { address } = useAccount();
+  const [numPlastic, setNumPlastic] = useState<number>();
+  const [userId, setUserId] = useState<number>();
+  const notificationCount = useNotificationCount();
+  const { currentUser, wastewiseStore, setNotifCount } = useWasteWiseContext();
+  const navigate = useNavigate();
 
-    const {
-        data: hash,
-        isError,
-        error,
-        writeContract,
-        isPending,
-    } = useWriteContract();
+  const {
+    data: hash,
+    isError,
+    error,
+    writeContract,
+    isPending,
+  } = useWriteContract();
 
-    const { isLoading, isSuccess } =
-        useWaitForTransactionReceipt({
-            hash
-            // onSettled(data: { blockHash: any }, error: any) {
-            //   if (data?.blockHash) {
-            //     setNumPlastic(0);
-            //     setUserId(0);
-            //   }
-            // },
-        });
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+    hash,
+    // onSettled(data: { blockHash: any }, error: any) {
+    //   if (data?.blockHash) {
+    //     setNumPlastic(0);
+    //     setUserId(0);
+    //   }
+    // },
+  });
 
-    useEffect(() => {
-        if (isLoading) {
-            toast.loading("Disbursing", {
-                // description: "My description",
-                duration: 10000,
-            });
-        }
-    }, [isLoading]);
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Disbursing", {
+        // description: "My description",
+        duration: 10000,
+      });
+    }
+  }, [isLoading]);
 
-    const handleDepositPlastic = async (e: any) => {
-        e.preventDefault();
-        // console.log(true);
-        writeContract({
-            address: CARBONWISE_ADDRESS,
-            abi: CARBONWISEABI,
-            functionName: "disbursement",
-        });
-    };
+  const handleDepositPlastic = async (e: any) => {
+    e.preventDefault();
+    // console.log(true);
+    writeContract({
+      address: CARBONWISE_ADDRESS,
+      abi: CARBONWISEABI,
+      functionName: "disbursement",
+    });
+  };
 
-    useEffect(() => {
-        if (isPending) {
-            toast.loading("Approving Disbursement", {
-                // description: "My description",
-                duration: 5000,
-            });
-        }
-    }, [isPending]);
+  useEffect(() => {
+    if (isPending) {
+      toast.loading("Approving Disbursement", {
+        // description: "My description",
+        duration: 5000,
+      });
+    }
+  }, [isPending]);
 
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success("Successfully Disbursed payments", {
-                // description: "My description",
-                duration: 5000,
-            });
-        }
-    }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Successfully Disbursed payments", {
+        // description: "My description",
+        duration: 5000,
+      });
+    }
+  }, [isSuccess]);
 
-    const sdgModal = useRef<HTMLDialogElement>(null);
-    return (
-        <section className="relative w-10/12">
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+  }, [isError]);
 
-            <div className="flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
-                <form action="" onSubmit={handleDepositPlastic}>
-                    <Button name="Disburse" size="block" customStyle="w-full">
+  const sdgModal = useRef<HTMLDialogElement>(null);
+  return (
+    <section className="relative">
+      <div className="hidden flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
+        <form action="" onSubmit={handleDepositPlastic}>
+          {/* <Button name="Disburse" size="block" customStyle="w-full">
                         {(isPending || isLoading) && (
                             <span className="loading"></span>
                         )}
-                    </Button>
-                </form>
-            </div>
+                    </Button> */}
+          <Button
+            type="submit"
+            size="lg"
+            color="success"
+            variant="shadow"
+            isLoading={isPending || isLoading}
+            startContent={<LucideCandlestickChart />}
+          >
+            Disburse
+          </Button>
+        </form>
+      </div>
 
-            {/* <div>
+      {/* <div>
         <button
           onClick={() =>
             toast.error("My first toast", {
@@ -131,8 +147,8 @@ const Disbursement = () => {
           Give me a toast
         </button>
       </div> */}
-        </section>
-    );
+    </section>
+  );
 };
 
 export default Disbursement;

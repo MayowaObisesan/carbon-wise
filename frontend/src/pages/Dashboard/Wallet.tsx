@@ -136,13 +136,6 @@ const Wallet = () => {
     0
   );
 
-  // useEffect(() => {
-  //   recycledData?.data.map((transaction) => {
-  //   setChartData([...chartData, transaction.numberOfTokens]);
-  //   // sum += transaction.numberOfTokens;
-  //   }
-  // }, []);
-
   const ChartOptions: ApexOptions = {
     legend: {
       show: false,
@@ -357,6 +350,7 @@ const Wallet = () => {
       setTransactions(data as any);
     }
   }, [isSuccess]);
+
 
   return (
     <section className="relative flex flex-col w-full p-4 space-y-12 lg:py-8">

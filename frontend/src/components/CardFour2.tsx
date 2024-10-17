@@ -2,13 +2,13 @@ import { useAccount, useReadContract } from "wagmi";
 import { useWasteWiseContext } from "../context";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 
-const CardFour = () => {
+const CardFour2 = () => {
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const { data } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
-    functionName: "getAdmins",
+    functionName: "getAllUsers",
     account: address,
   });
 
@@ -40,7 +40,7 @@ const CardFour = () => {
 
       <div className="mt-4 flex items-end justify-between">
         <div className="space-y-4">
-          <span className="text-sm font-medium">Total Admins</span>
+          <span className="text-sm font-medium">Total Recyclers</span>
           <h4 className="font-firaSans font-bold text-8xl text-black dark:text-white">
             {(data as any[])?.length || 0}
           </h4>
@@ -67,4 +67,4 @@ const CardFour = () => {
   );
 };
 
-export default CardFour;
+export default CardFour2;

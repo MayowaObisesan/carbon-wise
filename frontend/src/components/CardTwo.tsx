@@ -1,31 +1,30 @@
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import {
   EVENT_MARKETPLACE_ADDRESS,
   EVENTMARKETPLACEABI,
 } from "../../constants";
-import { useWasteWiseContext } from "../context";
 import { MdEventNote } from "react-icons/md";
 
 const CardTwo = () => {
   // Items in the marketplace
-  const { data } = useContractRead({
+  const { data } = useReadContract({
     address: EVENT_MARKETPLACE_ADDRESS,
     abi: EVENTMARKETPLACEABI,
     functionName: "listingId",
   });
 
   return (
-    <div className="rounded-xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-base-300 dark:bg-base-300">
-      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+    <div className="relative rounded-xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:shadow-none dark:border-base-300 dark:bg-default-50">
+      <div className="absolute right-4 flex h-11.5 w-11.5 items-center justify-center rounded-full bg-default-200">
         <MdEventNote className="text-white" />
       </div>
 
       <div className="mt-4 flex items-end justify-between">
-        <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
+        <div className="space-y-4">
+          <span className="text-sm font-medium">Total Marketplace Events</span>
+          <h4 className="font-firaSans font-bold text-8xl text-black dark:text-white">
             {Number(data) || 0}
           </h4>
-          <span className="text-sm font-medium">Total Marketplace Events</span>
         </div>
 
         {/* <span className="flex items-center gap-1 text-sm font-medium text-meta-3">

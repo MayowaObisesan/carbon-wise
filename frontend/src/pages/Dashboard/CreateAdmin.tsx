@@ -4,24 +4,50 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import CARBONWISE_ABI from "../../../constants/carbonwise.json";
 import { toast } from "sonner";
 import { CARBONWISE_ADDRESS } from "../../../constants";
+import { LucideArrowRight } from "lucide-react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  Divider,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
+import { zeroAddress } from "viem";
 
 type Props = {};
 
 const CreateAdmin = (props: Props) => {
+  const [name, setName] = useState<string>();
   const [address, setAddress] = useState<string>();
-
   const [loading, setLoading] = useState<boolean>(false);
-
   const [role, setRole] = useState<string>();
   const navigate = useNavigate();
 
-  const { data: hash, writeContract, isError, isPending: isLoading, isSuccess } = useWriteContract()
-  const { data: hash2, writeContract: writeContract2, isError: isError2, isPending: isLoading2, isSuccess: isSuccess2 } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isError,
+    isPending: isLoading,
+    isSuccess,
+    error,
+  } = useWriteContract();
+  const {
+    data: hash2,
+    writeContract: writeContract2,
+    isError: isError2,
+    isPending: isLoading2,
+    isSuccess: isSuccess2,
+    error: error2,
+  } = useWriteContract();
 
   const { isLoading: isAddingVerifier, isSuccess: isVerifierSuccess } =
     useWaitForTransactionReceipt({
@@ -57,8 +83,8 @@ const CreateAdmin = (props: Props) => {
     writeContract({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISE_ABI,
-      functionName: "addAdmins",
-      args: [address],
+      functionName: "createAdmin",
+      args: [name, address],
       // onError(data: any) {
       //   console.log(data);
       // },
@@ -71,11 +97,8 @@ const CreateAdmin = (props: Props) => {
     writeContract2({
       address: CARBONWISE_ADDRESS,
       abi: CARBONWISE_ABI,
-      functionName: "addVerifiers",
-      args: [address],
-      // onError(data: any) {
-      //   console.log(data);
-      // },
+      functionName: "createVerifier",
+      args: [name, address],
     });
     setLoading(true);
     console.log(true);
@@ -109,68 +132,92 @@ const CreateAdmin = (props: Props) => {
     }
   }, [isAdminSuccess]);
 
-  // useEffect(() => {
-  //   if (loadingA) {
-  //     toast.loading("Creating Admin...", {
-  //       // description: "My description",
-  //       duration: 5000,
-  //     });
-  //   }
-  // }, [loadingA]);
+  useEffect(() => {}, [role]);
 
-  // useEffect(() => {
-  //   if (loadingV) {
-  //     toast.loading("Creating Verifier", {
-  //       // description: "My description",
-  //       duration: 5000,
-  //     });
-  //   }
-  // }, [loadingV]);
-  // useEffect(() => {
-  //   write?.();
-  //   if (loading) {
-  //     setLoading(true);
-  //   }
-  // }, [address]);
+  useEffect(() => {
+    if (error2) {
+      console.log(error2);
+    }
+  }, [error2]);
 
-  // useEffect(() => {
-  //   write?.();
-  // }, [address]);
-
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  // };
-
-  // const { write, isLoading, data } = useContractWrite({
-  //   address: WasteWise_ADDRESS,
-  //   abi: WASTEWISE_ABI,
-  //   functionName: "addAdmins",
-  //   args: [address],
-  //   onError() {
-  //     setLoading(false);
-  //   },
-  // });
-
-  // useWaitForTransaction({
-  //   hash: data?.hash,
-  //   onSettled(data, error) {
-  //     if (data?.blockHash) {
-  //       setLoading(false);
-  //       navigate("/dashboard/marketplace");
-  //     }
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   write?.();
-  // }, [address]);
-
-  useEffect(() => { }, [role]);
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   return (
-    <div className="mb-8 ">
-      <div className="card w-[95%] mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
+    <div className="mb-8  w-full lg:w-5/12">
+      <form onSubmit={handleSubmit}>
+        <Card isBlurred shadow="none" className="p-4 lg:p-8">
+          <CardBody className="gap-y-8">
+            <Select
+              isRequired
+              label="Select User"
+              // placeholder="Select a user"
+              className=""
+              size="lg"
+              classNames={{
+                label: "px-4",
+                innerWrapper: "px-4",
+              }}
+              selectedKeys={[role!]}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              {[
+                { key: "addAdmin", label: "Add Admin" },
+                { key: "addVerifier", label: "Add Verifier" },
+              ].map((_) => (
+                <SelectItem key={_.key}>{_.label}</SelectItem>
+              ))}
+            </Select>
+            <Divider />
+            <Input
+              isClearable
+              isRequired
+              size="lg"
+              label="Admin / Verifier name"
+              labelPlacement="outside"
+              placeholder="e.g., blessed07"
+              value={name}
+              onValueChange={setName}
+              classNames={{
+                label: "px-1 py-2 leading-normal",
+                inputWrapper: "px-6 py-8",
+              }}
+            />
+            <Input
+              isClearable
+              isRequired
+              size="lg"
+              label="Admin / Verifier address"
+              labelPlacement="outside"
+              placeholder={`e.g., ${zeroAddress}`}
+              value={address}
+              onValueChange={setAddress}
+              classNames={{
+                label: "px-1 py-2 leading-normal",
+                inputWrapper: "px-6 py-8",
+              }}
+            />
+          </CardBody>
+          <CardFooter>
+            <Button
+              type="submit"
+              color="success"
+              size="lg"
+              endContent={<LucideArrowRight size={16} />}
+              className="font-firaSans font-bold"
+              isLoading={isLoading}
+              isDisabled={!(name && address)}
+            >
+              Create
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
+
+      <div className="hidden card w-[95%] mx-auto bg-base-100 shadow-xl lg:shadow-2xl pt-4">
         <h3 className="uppercase text-xl text-center font-bold">
           Add Admin/Verifier
         </h3>
@@ -178,8 +225,14 @@ const CreateAdmin = (props: Props) => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Type address here"
+              placeholder="Type name here"
               className="input input-bordered w-full "
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Type address here"
+              className="input input-bordered w-full mt-3"
               onChange={(e) => setAddress(e.target.value)}
             />
             <select
@@ -210,14 +263,14 @@ const CreateAdmin = (props: Props) => {
                 Add Verifier
               </option>
             </select>
-            <Button name="submit" size="block" customStyle="w-full">
-              {/* {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
+            {/* <Button name="submit" size="block" customStyle="w-full">
+              {(loadingA || loadingV || isAddingVerifier || isAddingAdmin) && (
                 <span className="loading"></span>
-              )} */}
+              )}
               {(isAddingVerifier || isAddingAdmin) && (
                 <span className="loading"></span>
               )}
-            </Button>
+            </Button> */}
             {/* <button
               className="btn btn-primary block m-auto w-full"
               type="submit"

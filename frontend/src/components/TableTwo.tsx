@@ -13,7 +13,7 @@ import BrandFive from "../assets/images/brand/brand-05.svg";
 import { useWasteWiseContext } from "../context";
 import { shortenAddress } from "../utils";
 
-const TableOne = () => {
+const TableTwo = () => {
   const { address } = useAccount();
   const { currentUser } = useWasteWiseContext();
   const [leaderboard, setLeaderboard] = useState<boolean>(false);
@@ -21,9 +21,11 @@ const TableOne = () => {
   const { data, isSuccess } = useReadContract({
     address: CARBONWISE_ADDRESS,
     abi: CARBONWISEABI,
-    functionName: "getAllUsers",
+    functionName: "getAdmins",
     account: address,
   });
+
+  console.log(data);
 
   useEffect(() => {
     setLeaderboard(true);
@@ -32,12 +34,7 @@ const TableOne = () => {
   return (
     <section className="w-full py-6">
       <div className="w-full p-8 rounded-xl border border-base-300 my-2 dark:bg-base-300">
-        <h4 className="mb-8 text-xl font-semibold text-base-content">
-          {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
-            ? "All Recyclers"
-            : "Leaderboard"}
-        </h4>
+        <h4 className="mb-8 text-xl font-semibold text-base-content">Admins</h4>
         <div className=""></div>
         <div className="overflow-x-auto">
           <table className="table">
@@ -48,8 +45,6 @@ const TableOne = () => {
                 {/* <th>avatar</th> */}
                 <th>Name</th>
                 <th>address</th>
-                <th>XP Earned</th>
-                <th>Plastic Recycled</th>
               </tr>
             </thead>
             <tbody>
@@ -68,12 +63,6 @@ const TableOne = () => {
                     </div>
                   </td>
                   <td>{shortenAddress(eachUser.userAddr)}</td>
-                  <td className="">
-                    {(!!leaderboard && Number(eachUser.xpoints)) || 0} XP
-                  </td>
-                  <th>
-                    <button className="btn btn-ghost btn-xs">details</button>
-                  </th>
                 </tr>
               ))}
             </tbody>
@@ -84,4 +73,4 @@ const TableOne = () => {
   );
 };
 
-export default TableOne;
+export default TableTwo;

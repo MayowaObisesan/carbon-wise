@@ -5,7 +5,7 @@ import {
   useEnsAvatar,
   useEnsName,
 } from "wagmi";
-import Button from "./Button";
+// import Button from "./Button";
 import { ToastElem, shortenAddress } from "../utils";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
@@ -14,6 +14,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../assets";
 import React from "react";
 import { useWasteWiseContext } from "../context";
+import { Button } from "@nextui-org/button";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 
 export function WasteWise() {
   const navigate = useNavigate();
@@ -22,16 +31,17 @@ export function WasteWise() {
   //   const { data: ensAvatar } = useEnsAvatar({ address });
   const { isRegistered } = useWasteWiseContext();
   //   const { data: ensName } = useEnsName({ address });
-  const { connect, connectors, error, isPending } =
-    useConnect({
-      mutation: {
-        onSuccess() {
-          setTimeout(() => {
-            sdgModal.current?.showModal();
-          }, 800);
-        }
+  const { connect, connectors, error, isPending } = useConnect({
+    mutation: {
+      onSuccess() {
+        setTimeout(() => {
+          // sdgModal.current?.showModal();
+          onOpen();
+        }, 800);
       },
-    });
+    },
+  });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { disconnect } = useDisconnect();
   const [showConnectError, setShowConnectError] = useState<boolean>(false);
@@ -126,8 +136,45 @@ export function WasteWise() {
         </div>
 
         {!isRegistered && (
+          <Modal
+            isDismissable={false}
+            size={"2xl"}
+            isOpen={isOpen}
+            onClose={onClose}
+            classNames={{
+              backdrop:
+                "bg-gradient-to-t from-default-900 to-default-900/10 backdrop-opacity-40",
+            }}
+          >
+            <ModalContent className="px-4 py-8">
+              {(onClose) => (
+                <>
+                  <ModalHeader className="font-firaSans font-bold text-2xl flex flex-col gap-1">
+                    Welcome to CarbonWise
+                  </ModalHeader>
+                  <ModalBody>
+                    <div className="text-pretty">
+                      We would like you to set a name or pseudonym so that we
+                      can personalize your EIA card.
+                    </div>
+                    {/* <div>
+                      Kindly click the signup button to fill in those details.
+                    </div> */}
+                  </ModalBody>
+                  <ModalFooter className="self-start mt-2">
+                    <Button as={Link} to="/register" color="default">
+                      Set your name
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+        )}
+
+        {!isRegistered && (
           <dialog id="my_modal_4" className="modal" ref={sdgModal}>
-            <div className="modal-box w-11/12 max-w-5xl">
+            <div className="modal-box w-11/12 max-w-2xl">
               <form method="dialog" className="modal-backdrop">
                 <div className="modal-action">
                   {/* if there is a button, it will close the modal */}
@@ -136,10 +183,13 @@ export function WasteWise() {
                   </button>
                 </div>
               </form>
-              <h3 className="font-bold text-2xl px-1 pb-2 lg:px-4">Welcome</h3>
+              <h3 className="font-firaSans font-bold text-2xl px-1 pb-2 lg:px-4">
+                Welcome to CarbonWise
+              </h3>
               <div className="px-1 py-1 lg:px-4 lg:py-4 leading-8 text-balance">
-                Thank you for connecting to carbon-wise. We will like to get
-                some info about you so that we can personalize your EIA card.
+                Thank you for connecting to carbon-wise. We would like you to
+                set a name or pseudonym so that we can personalize your EIA
+                card.
                 <div>
                   Kindly click the signup button to fill in those details.
                 </div>
@@ -177,7 +227,7 @@ export function WasteWise() {
         >
           Connect Wallet
         </label> */}
-        <Button
+        {/* <Button
           // name="Connect Wallet"
           size="md"
           customStyle="text-xs lg:text-base"
@@ -187,6 +237,21 @@ export function WasteWise() {
           onClick={() => handleConnect(connectors[0])}
         >
           {isPending ? <span className="loading"></span> : "Connect Wallet"}
+        </Button> */}
+        <Button
+          color="success"
+          variant="shadow"
+          size="lg"
+          onClick={() => handleConnect(connectors[0])}
+          type={"button"}
+          disabled={!connectors[0].id}
+          isLoading={isPending}
+        >
+          {isPending ? (
+            <span className="">Connecting...</span>
+          ) : (
+            "Connect Wallet"
+          )}
         </Button>
         {/* <ul
           tabIndex={0}

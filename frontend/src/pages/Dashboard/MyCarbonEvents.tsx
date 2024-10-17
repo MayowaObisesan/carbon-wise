@@ -24,7 +24,7 @@ const MyCarbonEvents = (props: Props) => {
     const { isLoading, isError, isSuccess, data, error } = useReadContract({
         address: CC_MARKETPLACE_ADDRESS,
         abi: CCMARKETPLACEABI,
-        functionName: "getEventsByUser",
+        functionName: "getCompanyByUser",
         args: [address],
         // onError(data: any) {
         //   console.log(data);
@@ -49,7 +49,10 @@ const MyCarbonEvents = (props: Props) => {
         if (isLoading) {
             setLoading(true);
         }
-    }, []);
+        else {
+            setLoading(false);
+        }
+    }, [isLoading]);
 
     useEffect(() => {
         if (isError) {
@@ -93,9 +96,9 @@ const MyCarbonEvents = (props: Props) => {
                                     <th>{formatDate(Number(item?.date))}</th>
                                     <td>{Number(item?.itemId)}</td>
                                     <td>{item?.itemName}</td>
-                                    <td>{Number(formatEther(item?.itemPrice))}</td>
+                                    <td>{Number(item?.itemPrice)}</td>
                                     <td>{Number(item?.qty)}</td>
-                                    <td>{Number(formatEther(item?.amountOfTokensTransfered))}</td>
+                                    <td>{Number(item?.amountOfTokensTransfered)}</td>
                                 </tr>
                             ))}
                         </tbody>

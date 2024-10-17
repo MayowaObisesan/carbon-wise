@@ -250,57 +250,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_description",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_image",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_listingId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_newPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_deadline",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateListing",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getAllActiveItemInfo",
     "outputs": [
@@ -418,11 +367,6 @@
             "type": "uint256"
           },
           {
-            "internalType": "enum EventMarketPlace.Type",
-            "name": "typeOfTransaction",
-            "type": "uint8"
-          },
-          {
             "internalType": "uint256",
             "name": "amountOfTokensTransfered",
             "type": "uint256"
@@ -448,7 +392,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct EventMarketPlace.Transaction[]",
+        "internalType": "struct EventMarketPlace.PurchaseTransaction[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -524,11 +468,6 @@
             "type": "uint256"
           },
           {
-            "internalType": "enum EventMarketPlace.Type",
-            "name": "typeOfTransaction",
-            "type": "uint8"
-          },
-          {
             "internalType": "uint256",
             "name": "amountOfTokensTransfered",
             "type": "uint256"
@@ -554,7 +493,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct EventMarketPlace.Transaction[]",
+        "internalType": "struct EventMarketPlace.PurchaseTransaction[]",
         "name": "",
         "type": "tuple[]"
       }

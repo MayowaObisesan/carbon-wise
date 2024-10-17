@@ -155,6 +155,11 @@ export const pinFileToIPFS = async (files: any) => {
     toast.success("Event Image upload complete");
     return `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
   } catch (error) {
+    toast.error("Unable to upload image");
     console.log(error);
   }
 };
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

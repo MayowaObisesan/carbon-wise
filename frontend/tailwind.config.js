@@ -1,10 +1,21 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const { nextui } = require("@nextui-org/react");
+import daisyui from "daisyui";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     fontFamily: {
       satoshi: ["Satoshi", "sans-serif"],
+      firaSans: ["Fira Sans", "sans-serif"],
+      openSans: ["Open Sans", "sans-serif"],
+      notoSans: ["Noto Sans", "sans-serif"],
     },
     screens: {
       "2xsm": "375px",
@@ -49,7 +60,7 @@ module.exports = {
         success: "#219653",
         danger: "#D34053",
         warning: "#FFA70B",
-        ...defaultTheme.colors
+        ...defaultTheme.colors,
       },
       fontSize: {
         "title-xxl": ["44px", "55px"],
@@ -259,5 +270,6 @@ module.exports = {
     logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
-  plugins: [require("daisyui")],
+  darkMode: "class",
+  plugins: [daisyui, nextui()],
 };
