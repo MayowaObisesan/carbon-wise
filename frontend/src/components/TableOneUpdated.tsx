@@ -188,7 +188,7 @@ export default function TableOneUpdated() {
       <div className="flex flex-row items-center my-4 py-4 gap-x-4">
         <div className="flex-auto text-xl font-semibold text-default-foreground">
           {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
+          currentUser?.role === 1
             ? "All Recyclers"
             : "Leaderboard"}
         </div>
