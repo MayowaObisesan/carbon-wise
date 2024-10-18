@@ -187,10 +187,7 @@ export default function TableOneUpdated() {
     <div>
       <div className="flex flex-row items-center my-4 py-4 gap-x-4">
         <div className="flex-auto text-xl font-semibold text-default-foreground">
-          {location.pathname === "/dashboard/leaderboard" &&
-          currentUser?.role === 2
-            ? "All Recyclers"
-            : "Leaderboard"}
+          Recyclers
         </div>
         <Input
           isClearable
@@ -259,7 +256,7 @@ export default function TableOneUpdated() {
                   closeOnSelect={false}
                   // selectedKeys={visibleColumns}
                   selectionMode="multiple"
-                  // onSelectionChange={setVisibleColumns}
+                // onSelectionChange={setVisibleColumns}
                 >
                   {columns.map((column) => (
                     <DropdownItem key={column.uid} className="capitalize">

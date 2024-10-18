@@ -114,13 +114,15 @@ const SingleEvent = () => {
     if (settling1) {
       toast.loading("Approving Contract", {
         // description: "My description",
-        duration: 10000,
+        duration: 5000,
       });
     }
     if (success) {
       toast.success("Approval successful");
       console.log("he don approve");
       setLoadingA(false);
+      setAllowance(allowanceData as any);
+      location.reload();
     }
   }, [settling1, success]);
   const { isLoading: settling2, isSuccess: success2 } = useWaitForTransactionReceipt({
@@ -217,6 +219,8 @@ const SingleEvent = () => {
       setAllowance(allowanceData as any);
     }
   }, [isError2, isSuccess2])
+
+  useEffect(() => { }, [allowance, loadingA]);
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start gap-x-8">

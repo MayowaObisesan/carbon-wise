@@ -76,7 +76,6 @@ const CreateCarbon = (props: Props) => {
     if (isSuccess) {
       toast.success("Carbon credit successfully created");
       setLoading(false);
-      navigate("/dashboard/carbonmarket");
     }
     if (isLoading) {
       toast.info("Creating Carbon credits");
