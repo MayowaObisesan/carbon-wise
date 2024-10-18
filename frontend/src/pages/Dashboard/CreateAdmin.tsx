@@ -77,7 +77,7 @@ const CreateAdmin = (props: Props) => {
     if (isVerifierSuccess) {
       navigate("/dashboard");
     }
-  }, [isAdminSuccess, isVerifierSuccess]);
+  }, [isSuccess, isSuccess2]);
 
   const handleAddAdmin = async () => {
     writeContract({
@@ -115,24 +115,24 @@ const CreateAdmin = (props: Props) => {
   };
 
   useEffect(() => {
-    if (isVerifierSuccess) {
+    if (isSuccess) {
       toast.success("Successfully Created Verifier", {
         // description: "My description",
         duration: 5000,
       });
     }
-  }, [isVerifierSuccess]);
+  }, [isSuccess]);
 
   useEffect(() => {
-    if (isAdminSuccess) {
+    if (isSuccess2) {
       toast.success("Successfully Created Admin", {
         // description: "My description",
         duration: 5000,
       });
     }
-  }, [isAdminSuccess]);
+  }, [isSuccess2]);
 
-  useEffect(() => {}, [role]);
+  useEffect(() => { }, [role]);
 
   useEffect(() => {
     if (error2) {

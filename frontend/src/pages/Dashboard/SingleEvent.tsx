@@ -162,13 +162,15 @@ const SingleEvent = () => {
     if (settling1) {
       toast.loading("Approving Contract", {
         // description: "My description",
-        duration: 10000,
+        duration: 5000,
       });
     }
     if (success) {
       toast.success("Approval successful");
       console.log("he don approve");
       setLoadingA(false);
+      setAllowance(allowanceData as any);
+      location.reload();
     }
   }, [settling1, success]);
   const { isLoading: settling2, isSuccess: success2 } =
@@ -265,7 +267,9 @@ const SingleEvent = () => {
     if (isSuccess2) {
       setAllowance(allowanceData as any);
     }
-  }, [isError2, isSuccess2]);
+  }, [isError2, isSuccess2])
+
+  useEffect(() => { }, [allowance, loadingA]);
   return (
     <div className="relative mb-8 w-full">
       <Breadcrumbs
