@@ -38,16 +38,21 @@ const Landing = (props: Props) => {
           <div className="w-full px-2 pt-12 lg:px-12 lg:py-40">
             <div className="min-w-6/12">
               <h1 className="relative w-full text-center text-4xl font-bold lg:pr-4 lg:w-8/12 lg:text-6xl lg:text-left">
-                <div className="w-11/12 mx-auto">Why waste when you can</div>
-                <span className="bg-gradient-to-r from-[#2C8258] to-[#FFDE52] inline-block text-transparent text-[5rem] leading-[1.4] lg:text-9xl bg-clip-text lg:py-4">
+                <div className="w-11/12 mx-auto">Together,</div>
+                <div className="w-11/12 mx-auto text-7xl leading-[1.4]">
+                  We can
+                </div>
+                <span className="bg-gradient-to-r from-[#2C8258] to-[#FFDE52] inline-block text-transparent text-[5rem] leading-[1.2] lg:text-9xl bg-clip-text lg:py-2">
                   Recycle
                 </span>
               </h1>
-              <div className="w-full py-6 text-2xl text-center lg:w-8/12 lg:text-2xl lg:text-left lg:py-12">
-                <p>We can save the planet one plastic at a time.</p>
+              <div className="space-y-4 w-full py-6 text-2xl text-center lg:w-8/12 lg:text-2xl lg:text-left lg:py-12">
+                <p>
+                  Let’s work hand-in-hand to create a greener future. Together,
+                  we can help our planet—one recycled plastic at a time!
+                </p>
                 <p className="text-2xl lg:text-2xl">
-                  Let's work together to promote recycling, and create a greener
-                  future.
+                  Join us in transforming plastic waste into valuable resources!
                 </p>
               </div>
             </div>
@@ -63,7 +68,10 @@ const Landing = (props: Props) => {
         </div>
       </div>
       <section className="mt-20 lg:m-0">
-        <div className="text-center">Be wise, Dispose your waste properly</div>
+        <div className="text-center">
+          Be wise, Find our Recycling Partners, Dispose your waste properly and
+          Get Paid for your contribution!
+        </div>
         <div className="text-center text-4xl font-bold px-2 py-5">
           Do your part to save the planet from plastics pollution
           <br />
@@ -200,21 +208,21 @@ const Landing = (props: Props) => {
                   />
                 </svg>
                 <span className="relative z-[1] italic text-gray-800 dark:text-neutral-content">
-                Carbon-Wise mission is to incentivize people for disposing their
-                  waste with a focus on plastics in accordance with the
-                  Sustainable development goals (SDG 3, 6, 11, 14 and 15).
-                  Carbon-Wise aims to help foster a generation that will be known
-                  for reducing the effect of plastic. With an aim to target
-                  campuses and institutions, with the incentives to recycle,
-                  keep the environment clean and reduce climate action.
-                  Carbon-Wise aims makes saving the planet a rewarding activity.
+                  Our mission is to incentivize people for disposing their waste
+                  with a focus on plastics in accordance with the Sustainable
+                  development goals (SDG 3, 6, 11, 14 and 15). Carbon-Wise aims
+                  to help foster a generation that will be known for reducing
+                  the effect of plastic. With an aim to target campuses and
+                  institutions, with the incentives to recycle, keep the
+                  environment clean and reduce climate action. Carbon-Wise aims
+                  makes saving the planet a rewarding activity.
                 </span>
               </p>
             </div>
 
             <footer className="mt-6">
               <div className="font-semibold text-gray-800 dark:text-neutral-content">
-              Carbon-Wise Team
+                Carbon-Wise Team
               </div>
               {/* <div className="text-sm text-gray-500">
                 Product Manager | Airbnb
@@ -254,7 +262,9 @@ const Landing = (props: Props) => {
                   </div>
                   <div className="timeline-start md:text-end mb-10">
                     <time className="font-mono italic">September 2024</time>
-                    <div className="text-lg font-black">Carbon-Wise is born</div>
+                    <div className="text-lg font-black">
+                      Carbon-Wise is born
+                    </div>
                     We launched carbon-wise with a mission to help fight against
                     plastic pollution on the earth. With our target on the youth
                     who we believe will be crucial to the next plastic-free
@@ -455,78 +465,215 @@ const Landing = (props: Props) => {
             <div className="grid sm:grid-cols-2 gap-6 md:gap-12">
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What is Carbon-Wise?
+                  Q: What is Carbon Wise?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                Carbon-Wise is a platform for individuals called recyclers who
-                  will be rewarded for being responsible for a Plastic-free
-                  earth. Our slogan is "Rewarding Responsibility", we aim to
-                  make recycling waste a rewarding experience. On the other hand, we generate carbon credits from our recycling efforts which are tokenized as Real World Assets and those tokens are sold to help individuals, businesses and governments off-set their carbon footprints.
+                  A: Carbon-Wise is an innovative, blockchain-powered platform
+                  that addresses the global plastic waste crisis while
+                  contributing to climate action. Our system transforms plastic
+                  waste into valuable, verifiable carbon credits through the
+                  following process: Incentivizeed recycling, tokenization of
+                  real world assets (recycled plastics), creating a carbon
+                  credit marketplace, and a rewards system.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  How can I become an Carbon-Wise ambassador?
+                  Q: How does the Carbon Wise process work?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                Carbon-Wise Ambassadorship program is in our roadmap with plans
-                  as to how we intend to build the carbon-wise community. We
-                  intend to have a durable structure that we can build upon for
-                  years to come as we grow as a community. Details about our
-                  ambassadorship program will be communicated on this website
-                  once we are about to launch the ambassadorship program.
+                  A: Carbon Wise operates through a simple, user-friendly
+                  process: 1. Users deposit recyclable plastics at designated
+                  collection points. 2. They receive Deposit Tokens as a reward
+                  for their recycling efforts. 3. The collected plastics are
+                  sent to recycling facilities for processing. 4. Based on the
+                  amount recycled, verifiable carbon credits are generated. 5.
+                  These carbon credits are tokenized on the blockchain. 6. The
+                  tokenized credits can be traded on the Carbon Wise
+                  marketplace. This process incentivizes recycling, reduces
+                  plastic waste, and creates a transparent market for carbon
+                  credits, contributing to global sustainability efforts.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  Is Carbon-wise a company?
+                  Q: What are carbon credits and why are they important?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Yes, Carbon-wise is a company that orgainizes communities of people, organization and groups
-                  with the goal of incentivizing recycling of plastic related
-                  products and waste in general. Carbon-wise and its community
-                  aims to foster a clean earth on community at a time.
+                  A: Carbon credits: - Represent the reduction of one metric ton
+                  of carbon dioxide or equivalent greenhouse gases - Are crucial
+                  for offsetting emissions and promoting sustainable practices -
+                  Help combat climate change by providing financial incentives
+                  for reducing carbon footprints In Carbon Wise: - Credits are
+                  generated through plastic recycling - Each credit represents
+                  emissions avoided by recycling instead of producing new
+                  plastic - Credits are tokenized on blockchain for transparency
+                  and easy trading Carbon credits are important because they put
+                  a price on carbon emissions, encouraging individuals and
+                  organizations to reduce their environmental impact while
+                  supporting sustainable initiatives like plastic recycling.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What is the benefit of using Carbon-wise?
+                  Q: How can I participate in Carbon Wise?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  One of the main benefits of carbon-wise is that it is built on
-                  web3 blockchain technology. This choice of technology allows
-                  for transparency and immutability of the data that carbon-wise
-                  aims to recycle.
+                  To participate, simply register on our platform, find a
+                  collection point near you, and start depositing plastic waste.
+                  You’ll earn Experience Points which you can later exchange for
+                  cash or at the general marketplace for your contributions and
+                  help reduce plastic pollution.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  Is carbon-wise a web3 platform?
+                  Q: Is there a cost to participate?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Yes, Carbon-wise is a web3 platform. Carbon-wise is built on
-                  Base Blockchain. A layer2 blockchain solution that allows
-                  carbon-wise to scale without sacrificing security
+                  A: No, there is no cost to participate in Carbon Wise.
                 </p>
               </div>
               {/* <!-- End Col --> */}
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  What are Carbon-Wise long-term goals?
+                  Q: What blockchain technology does Carbon Wise use?
                 </h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  To put an end to the pollution caused by plastics and
-                  plastic-related products in Nigeria, Africa and the rest of
-                  the world.
+                  A: Carbon Wise is aspiring to be multi-chain and available on
+                  as many protocols as possible.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: How are carbon credits verified on Carbon Wise?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Carbon credits on Carbon Wise are verified through a
+                  rigorous process that involves third-party audits and
+                  blockchain technology.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: How does Carbon Wise contribute to environmental
+                  sustainability?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Carbon Wise helps reduce plastic pollution, conserve
+                  resources, and mitigate climate change by incentivizing
+                  plastic recycling and generating carbon credits.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: How many carbon credits can be generated from recycling
+                  plastic?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: The number of carbon credits generated depends on the type
+                  and quantity of plastic recycled. However, we can provide
+                  estimates based on industry standards.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: How does Carbon Wise compare to other plastic recycling
+                  initiatives?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Carbon Wise differentiates itself by offering a unique
+                  combination of plastic recycling, carbon credit generation,
+                  and blockchain technology. This provides a more comprehensive
+                  and sustainable solution to the plastic waste crisis.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: Who can participate in Carbon Wise?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Everyone! Whether you’re an individual looking to recycle
+                  and earn rewards or a business seeking to reduce your carbon
+                  footprint by purchasing carbon credits, Carbon Wise has
+                  something for everyone. We also work with private waste
+                  management companies and governments to drive sustainable
+                  practices.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: What can businesses and corporations gain from Carbon Wise?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Businesses and corporations can purchase tokenized carbon
+                  credits to offset their carbon footprint. By doing so, they
+                  contribute to environmental sustainability while meeting
+                  regulatory requirements and enhancing their corporate social
+                  responsibility efforts.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: What future features can we expect from Carbon Wise?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: We are working on several exciting features, including
+                  real-time notifications for recyclers, dashboards for users,
+                  advanced analytics for tracking plastic waste, and more! Stay
+                  tuned for updates as we continue to innovate and expand the
+                  platform.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: How does Carbon-Wise align with the Sustainable Development
+                  Goals (SDGs)?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: Our mission aligns with several SDGs by promoting good
+                  health and well-being (SDG 3), clean water and sanitation (SDG
+                  6), sustainable cities and communities (SDG 11), responsible
+                  consumption (SDG 12), climate action (SDG 13), life below
+                  water (SDG 14) and life on land (SDG 15). We aim to foster
+                  sustainable practices that benefit both people and the planet.
+                </p>
+              </div>
+              {/* <!-- End Col --> */}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Q: Who can I contact for more information?
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                  A: For more information or inquiries, please reach out to us
+                  via our contact page or send us a DM on our social media
+                  handles. We’re here to help!
                 </p>
               </div>
               {/* <!-- End Col --> */}
@@ -554,7 +701,7 @@ const Landing = (props: Props) => {
             {/* <!-- End Col --> */}
 
             <div className="mt-3">
-             {/* <p className="text-gray-500">
+              {/* <p className="text-gray-500">
                 We're part of the{" "}
                 <a
                   className="font-semibold text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400"
