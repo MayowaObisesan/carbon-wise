@@ -23,7 +23,7 @@ const DashboardNav = ({ title }: { title: string }) => {
   };
 
   return (
-    <div className="sticky top-0 z-[1] w-full navbar bg-transparent backdrop-blur-md text-base-content px-4 py-8 lg:sticky lg:px-8 lg:py-8 dark:backdrop-blur-lg">
+    <div className="sticky top-0 z-[100] w-full navbar bg-transparent backdrop-blur-2xl text-base-content px-4 py-8 lg:sticky lg:px-8 lg:py-8 dark:backdrop-blur-xl">
       <div className="flex-none lg:hidden">
         <label
           htmlFor="my-drawer-3"
