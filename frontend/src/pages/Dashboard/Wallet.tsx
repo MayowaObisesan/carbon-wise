@@ -482,12 +482,10 @@ const Wallet = () => {
 
               <div className="stat">
                 <div className="stat-title text-xs lg:text-sm">
-                  Plastic Recycled
+                  XP Points
                 </div>
                 <div className="stat-value font-medium text-neutral/90 text-sm lg:text-2xl dark:text-base-content">
-                  {recycledData?.data && !!(recycledData?.data as any).length
-                    ? Number((recycledData?.data as any)?.length)
-                    : "-"}
+                  {currentUser ? Number(currentUser?.xpoints) : currentUser?.xpoints}
                 </div>
                 <div className="stat-desc">
                   Latest:{" "}

@@ -259,7 +259,7 @@ export default function TableOneUpdated() {
                   closeOnSelect={false}
                   // selectedKeys={visibleColumns}
                   selectionMode="multiple"
-                  // onSelectionChange={setVisibleColumns}
+                // onSelectionChange={setVisibleColumns}
                 >
                   {columns.map((column) => (
                     <DropdownItem key={column.uid} className="capitalize">
