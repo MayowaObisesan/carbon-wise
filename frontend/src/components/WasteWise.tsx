@@ -36,7 +36,7 @@ import {
   useDisclosure,
   User,
 } from "@nextui-org/react";
-import { LucidePower } from "lucide-react";
+import { LucideBuilding2, LucidePower, LucideUserPlus2 } from "lucide-react";
 import ProfileDropdown from "./ProfileDropdown";
 
 export function WasteWise() {
@@ -150,7 +150,7 @@ export function WasteWise() {
           </ul>
         </div>
 
-        {isRegistered ? (
+        {!isPending ? (
           <ProfileDropdown
             isRegistered={isRegistered}
             currentUser={currentUser}
@@ -198,80 +198,6 @@ export function WasteWise() {
                       Set your name
                     </Button>
                   </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-        )}
-
-        {!isRegistered && (
-          // <Button onPress={onOpen}>Verify POH</Button>
-          <Modal
-            backdrop="opaque"
-            isOpen={isOpen}
-            // onOpenChange={onOpenChange}
-            classNames={{
-              backdrop:
-                "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
-            }}
-          >
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1 py-8">
-                    Verify your Proof of Humanity
-                  </ModalHeader>
-                  <ModalBody className="flex flex-col gap-y-8">
-                    <div className="flex flex-row items-center gap-x-8">
-                      <Card className="group py-4 hover:bg-green-600/60 transition cursor-pointer">
-                        <div className="">
-                          <CardBody className="items-center overflow-visible py-2">
-                            {/* <DiscordIcon
-                              size={96}
-                              className="text-indigo-500 group-hover:text-default-900 transition"
-                            /> */}
-                          </CardBody>
-                          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
-                            {/* <p className="text-tiny uppercase font-bold">Daily Mix</p>
-                        <small className="text-default-500">12 Tracks</small> */}
-                            <h4 className="font-bold text-large text-center">
-                              Verify using Discord
-                            </h4>
-                          </CardHeader>
-                        </div>
-                      </Card>
-
-                      <Card className="group py-4 hover:bg-green-600/60 transition cursor-pointer">
-                        <div className="">
-                          <CardBody className="items-center overflow-visible py-2">
-                            {/* <LucideLinkedin
-                              size={96}
-                              className="text-blue-500 group-hover:text-default-900 transition"
-                            /> */}
-                          </CardBody>
-                          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
-                            {/* <p className="text-tiny uppercase font-bold">Daily Mix</p>
-                        <small className="text-default-500">12 Tracks</small> */}
-                            <h4 className="font-bold text-large text-center">
-                              Verify using LinkedIn
-                            </h4>
-                          </CardHeader>
-                        </div>
-                      </Card>
-                    </div>
-                    <p className="italic text-center text-sm text-default-500 py-4">
-                      Select either of the above for you <b>ZK</b> Proof of
-                      Humanity Check
-                    </p>
-                  </ModalBody>
-                  {/* <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button color="primary" onPress={onClose}>
-                      Action
-                    </Button>
-                  </ModalFooter> */}
                 </>
               )}
             </ModalContent>
