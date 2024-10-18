@@ -48,17 +48,18 @@ const Navbar = () => {
         </div>
         <div className={"navbar-end gap-2 space-x-4"}>
           <div className="flex-none">
-            {isConnected && (company as datap)?.name !== "" && (
+            {/* {isConnected && (company as datap)?.name !== "" && (
               <Button>
+                <Link to="/dashboard">Dashboard</Link>
+              </Button>
+            )} */}
+
+            {isConnected && isRegistered && (
+              <Button className="hidden lg:block">
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
             )}
 
-            {isConnected && isRegistered && (
-              <Button>
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
-            )}
             <ul className="hidden menu menu-horizontal px-1">
               {/* <li>
                 <label className="hidden lg:flex cursor-pointer gap-2">
@@ -111,7 +112,6 @@ const Navbar = () => {
           </div>
           <ThemeSwitcher />
           <WasteWise />
-          {isRegistered ? "registered" : "Not registered"}
           {location.pathname === "/" && isConnected && !isRegistered && (
             <div className="flex gap-x-4">
               <Link to="/register">
