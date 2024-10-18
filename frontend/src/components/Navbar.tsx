@@ -48,12 +48,6 @@ const Navbar = () => {
         </div>
         <div className={"navbar-end gap-2 space-x-4"}>
           <div className="flex-none">
-            {isConnected && (company as datap)?.name !== "" && (
-              <Button>
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
-            )}
-
             {isConnected && isRegistered && (
               <Button>
                 <Link to="/dashboard">Dashboard</Link>

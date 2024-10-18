@@ -40,7 +40,7 @@ const CardFour3 = () => {
 
       <div className="mt-4 flex items-end justify-between">
         <div className="space-y-4">
-          <span className="text-sm font-medium">Total Recyclers</span>
+          <span className="text-sm font-medium">Total Verifiers</span>
           <h4 className="font-firaSans font-bold text-8xl text-black dark:text-white">
             {(data as any[])?.length || 0}
           </h4>
