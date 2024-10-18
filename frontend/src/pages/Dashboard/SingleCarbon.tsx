@@ -112,8 +112,7 @@ const SingleCarbon = () => {
   });
 
   const handleDisable = () => {
-    let dateNow = Math.floor(Date.now() / 1000);
-    if (listing?.deadline < dateNow) {
+    if (listing?.available === false) {
       return true;
     } else {
       return false;
@@ -157,6 +156,8 @@ const SingleCarbon = () => {
       toast.success("Approval successful");
       console.log("he don approve");
       setLoadingA(false);
+      setAllowance(allowanceData as any);
+      location.reload();
     }
   }, [settling1, success]);
 
@@ -171,7 +172,7 @@ const SingleCarbon = () => {
       console.log("he don pay");
       toast.success("Item successfully purchased");
       setLoading(false);
-      navigate("/dashboard/purchases");
+      navigate("/dashboard/carbonpurchases");
     }
   }, [settling2, success2]);
 
@@ -228,8 +229,8 @@ const SingleCarbon = () => {
   useEffect(() => {
     window.localStorage.setItem("itemAmount", `${amount}`);
   }, [amount]);
-  useEffect(() => {}, [allowanceAmount]);
-  useEffect(() => {}, [allowanceListener]);
+  useEffect(() => { }, [allowance, loadingA]);
+  useEffect(() => { }, [allowanceListener]);
   console.log(allowance);
 
   return (
@@ -257,11 +258,11 @@ const SingleCarbon = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                      (
-                        document.getElementById(
-                          "my_modal_2"
-                        ) as HTMLDialogElement
-                      )?.showModal()
+                    (
+                      document.getElementById(
+                        "my_modal_2"
+                      ) as HTMLDialogElement
+                    )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}
@@ -269,7 +270,7 @@ const SingleCarbon = () => {
               {loading ? (
                 <span className="loading loading-spinner loading-sm"></span>
               ) : handleDisable() ? (
-                "Expired"
+                "Sold"
               ) : (
                 "Pay Now"
               )}
@@ -297,11 +298,11 @@ const SingleCarbon = () => {
               onClick={
                 allowance < parseEther(`${total}`)
                   ? () =>
-                      (
-                        document.getElementById(
-                          "my_modal_2"
-                        ) as HTMLDialogElement
-                      )?.showModal()
+                    (
+                      document.getElementById(
+                        "my_modal_2"
+                      ) as HTMLDialogElement
+                    )?.showModal()
                   : handlePay
               }
               disabled={handleDisable()}

@@ -132,6 +132,21 @@ export const formatDate = (time: number) => {
   return formattedDate;
 };
 
+export function formatISOWithTimezone(date: Date) {
+  let tzOffset = -date.getTimezoneOffset();  // Get the timezone offset in minutes
+  let sign = tzOffset >= 0 ? '+' : '-';      // Determine if the offset is positive or negative
+  let pad = (num: number) => (num < 10 ? '0' : '') + Math.abs(num);  // Helper function to pad numbers to two digits
+
+  // Convert the date to the ISO 8601 format with the timezone offset
+  return date.getFullYear() +
+    '-' + pad(date.getMonth() + 1) +
+    '-' + pad(date.getDate()) +
+    'T' + pad(date.getHours()) +
+    ':' + pad(date.getMinutes()) +
+    ':' + pad(date.getSeconds()) +
+    sign + pad(Math.floor(tzOffset / 60)) + ':' + pad(tzOffset % 60);
+}
+
 export const pinFileToIPFS = async (files: any) => {
   try {
     let data = new FormData();

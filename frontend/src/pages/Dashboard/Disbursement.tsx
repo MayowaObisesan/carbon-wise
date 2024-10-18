@@ -14,7 +14,11 @@ import { useWasteWiseContext } from "../../context";
 import useNotificationCount from "../../hooks/useNotificationCount";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@nextui-org/button";
-import { LucideCandlestickChart } from "lucide-react";
+import {
+  LucideCandlestickChart,
+  LucideCoins,
+  LucideCurrency,
+} from "lucide-react";
 
 const Disbursement = () => {
   const { address } = useAccount();
@@ -88,7 +92,7 @@ const Disbursement = () => {
   const sdgModal = useRef<HTMLDialogElement>(null);
   return (
     <section className="relative">
-      <div className="hidden flex flex-col w-full mx-auto my-8 space-y-8 lg:my-12 lg:w-7/12">
+      <div className="flex flex-col w-full mx-auto my-4 space-y-8 lg:my-6 lg:w-7/12">
         <form action="" onSubmit={handleDepositPlastic}>
           {/* <Button name="Disburse" size="block" customStyle="w-full">
                         {(isPending || isLoading) && (
@@ -101,9 +105,9 @@ const Disbursement = () => {
             color="success"
             variant="shadow"
             isLoading={isPending || isLoading}
-            startContent={<LucideCandlestickChart />}
+            startContent={<LucideCoins />}
           >
-            Disburse
+            Disburse to Recyclers
           </Button>
         </form>
       </div>

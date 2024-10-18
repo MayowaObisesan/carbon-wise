@@ -42,7 +42,7 @@ const Register = () => {
     isSuccess,
   } = useWriteContract();
 
-  const { isLoading: settling, error } = useWaitForTransactionReceipt({
+  const { isLoading: settling, error, isSuccess: isSuccess2 } = useWaitForTransactionReceipt({
     confirmations: 1,
     hash,
   });
@@ -63,6 +63,7 @@ const Register = () => {
             })
             .then(function (_: any) {
               setNotifCount(notificationCount);
+              navigate("/dashboard/wallet");
             });
         },
       });

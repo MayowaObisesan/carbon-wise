@@ -35,11 +35,11 @@ const Home = (props: Props) => {
 
   return (
     <section className="w-full px-4">
-      <div className="flex flex-row items-center w-full gap-x-4 px-8 py-12">
-        <div className="flex-auto"></div>
+      <div className="flex flex-row items-center w-full gap-x-4 px-2 py-4">
         <div className="">
           <Disbursement />
         </div>
+        <div className="flex-auto"></div>
       </div>
 
       <section className="w-full space-y-24">

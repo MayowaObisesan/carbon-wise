@@ -8,6 +8,11 @@
       },
       {
         "internalType": "address",
+        "name": "creditAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "carbonWiseAddr",
         "type": "address"
       }
@@ -178,6 +183,19 @@
   },
   {
     "inputs": [],
+    "name": "carbonwiseCredit",
+    "outputs": [
+      {
+        "internalType": "contract Credit",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "carbonwisetoken",
     "outputs": [
       {
@@ -209,6 +227,46 @@
   },
   {
     "inputs": [],
+    "name": "getAllActiveItemInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "lister",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "itemId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "available",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct CcMarketPlace.ItemInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getAllItemInfo",
     "outputs": [
       {
@@ -232,6 +290,11 @@
             "internalType": "uint256",
             "name": "itemId",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "available",
+            "type": "bool"
           }
         ],
         "internalType": "struct CcMarketPlace.ItemInfo[]",
@@ -369,6 +432,11 @@
             "internalType": "uint256",
             "name": "itemId",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "available",
+            "type": "bool"
           }
         ],
         "internalType": "struct CcMarketPlace.ItemInfo",
@@ -408,6 +476,11 @@
         "internalType": "uint256",
         "name": "itemId",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "available",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
