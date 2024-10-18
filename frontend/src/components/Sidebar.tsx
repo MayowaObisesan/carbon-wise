@@ -28,9 +28,7 @@ interface datap {
   id: bigint;
   userAddr: string;
   name: string;
-  country: string;
-  phoneNo: bigint;
-  email: string;
+  role: number;
   timeJoined: bigint;
 }
 
@@ -174,35 +172,35 @@ const Sidebar = (props: Props) => {
             {((currentUser?.role === 0 && currentUser?.name !== "") ||
               currentUser?.role === 1 ||
               currentUser?.role === 2) && (
-              <>
-                <li>
-                  <Link
-                    to="/dashboard/leaderboard"
-                    className="items-center"
-                    style={isActive === "leaderboard" ? activeLinkStyle : {}}
-                  >
-                    {/* <img src={wallet} alt="wallet-Icon" /> */}
-                    <FaPeopleGroup />
-                    <h2 className="text-lg">Leaderboard</h2>
-                  </Link>
-                </li>
-              </>
-            )}
+                <>
+                  <li>
+                    <Link
+                      to="/dashboard/leaderboard"
+                      className="items-center"
+                      style={isActive === "leaderboard" ? activeLinkStyle : {}}
+                    >
+                      {/* <img src={wallet} alt="wallet-Icon" /> */}
+                      <FaPeopleGroup />
+                      <h2 className="text-lg">Leaderboard</h2>
+                    </Link>
+                  </li>
+                </>
+              )}
             {((currentUser?.role === 0 && currentUser?.name !== "") ||
               currentUser?.role === 1) && (
-              <>
-                <li>
-                  <Link
-                    to="/dashboard/marketplace"
-                    className="flex flex-row gap-2 items-center"
-                    style={isActive === "marketplace" ? activeLinkStyle : {}}
-                  >
-                    <FaCartArrowDown />
-                    <h2 className="text-lg">Marketplace</h2>
-                  </Link>
-                </li>
-              </>
-            )}
+                <>
+                  <li>
+                    <Link
+                      to="/dashboard/marketplace"
+                      className="flex flex-row gap-2 items-center"
+                      style={isActive === "marketplace" ? activeLinkStyle : {}}
+                    >
+                      <FaCartArrowDown />
+                      <h2 className="text-lg">Marketplace</h2>
+                    </Link>
+                  </li>
+                </>
+              )}
             {currentUser?.role === 0 && currentUser?.name !== "" && (
               <>
                 <li>
@@ -241,7 +239,7 @@ const Sidebar = (props: Props) => {
                 </Link>
               </li>
             )}
-            {(company as datap)?.name !== "" && (
+            {(company as datap)?.role === 3 && (
               <>
                 <li>
                   <Link
@@ -269,15 +267,6 @@ const Sidebar = (props: Props) => {
             )}
           </ul>
         </article>
-
-        {/* <button
-        type={"button"}
-        className="relative h-32 px-8 flex flex-row gap-2 text-lg items-center rounded-lg hover:bg-base-300 transition-all delay-400"
-      >
-        <h2 className="text-[#6D6D6D]">
-          v1.0.0&copy; {new Date().getFullYear()}
-        </h2>
-      </button> */}
         <div className="relative w-full px-8 my-8 flex flex-row gap-2 text-sm items-center rounded-lg transition-all delay-400">
           <div className="grid flex-grow place-items-center">v1.0.0</div>
           {/* <div className="divider divider-horizontal"></div> */}

@@ -16,7 +16,7 @@ const CarbonMarketplace = (props: Props) => {
   const { isLoading, isError, isSuccess, data, error } = useReadContract({
     address: CC_MARKETPLACE_ADDRESS,
     abi: CCMARKETPLACEABI,
-    functionName: "getAllItemInfo",
+    functionName: "getAllActiveItemInfo",
   });
   useWatchContractEvent({
     address: CC_MARKETPLACE_ADDRESS,
