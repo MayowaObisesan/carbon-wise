@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Chip,
   Dropdown,
@@ -36,17 +37,26 @@ export default function ProfileDropdown({
   return (
     <Dropdown placement="bottom-end" className="w-60">
       <DropdownTrigger>
-        <User
-          as="button"
-          avatarProps={{
-            isBordered: true,
-            src: "https://api.dicebear.com/7.x/adventurer/svg?seed=Daisy",
-            color: isRegistered ? "success" : "default",
-          }}
-          className="transition-transform"
-          name={currentUser?.name}
-          description={shortenAddress(currentUser?.userAddr)}
-        />
+        {isRegistered ? (
+          <User
+            as="button"
+            avatarProps={{
+              isBordered: true,
+              src: "https://api.dicebear.com/7.x/adventurer/svg?seed=Daisy",
+              color: isRegistered ? "success" : "default",
+            }}
+            className="transition-transform"
+            name={currentUser?.name}
+            description={shortenAddress(currentUser?.userAddr)}
+          />
+        ) : (
+          <Avatar
+            isBordered
+            as="button"
+            className="transition-transform"
+            src=""
+          />
+        )}
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownSection aria-label="Profile" showDivider>

@@ -121,7 +121,7 @@ export function App() {
           element={<Login />}
         ></Route> */}
             <Route path="register" element={<Register />}></Route>
-            <Route path="companyregister" element={<CompanyRegister />} />
+            <Route path="company-register" element={<CompanyRegister />} />
           </Routes>
         </section>
       </main>

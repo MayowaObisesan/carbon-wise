@@ -11,6 +11,7 @@ import { useWasteWiseContext } from "../context";
 import { CARBONWISE_ADDRESS, CARBONWISEABI } from "../../constants";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { Button } from "@nextui-org/button";
+import NewUserConnectModal from "./NewConnectModal";
 interface datap {
   id: bigint;
   userAddr: string;
@@ -112,14 +113,13 @@ const Navbar = () => {
           </div>
           <ThemeSwitcher />
           <WasteWise />
+
           {location.pathname === "/" && isConnected && !isRegistered && (
             <div className="flex gap-x-4">
-              <Link to="/register">
-                <Button>Signup</Button>
-              </Link>
+              <NewUserConnectModal />
             </div>
           )}
-          {location.pathname === "/" &&
+          {/* {location.pathname === "/" &&
             isConnected &&
             (company as datap)?.name === "" && (
               <div className="flex gap-x-4">
@@ -127,7 +127,7 @@ const Navbar = () => {
                   <Button>Company</Button>
                 </Link>
               </div>
-            )}
+            )} */}
           {/* {isConnected && <SignUpButton />} */}
         </div>
       </div>
