@@ -51,8 +51,6 @@ const Sidebar = (props: Props) => {
     }
   }, [isSuccess, isLoading]);
 
-  console.log("/////", company);
-
   // update activeItem based on current locati
   useEffect(() => {
     if (location.pathname === "/dashboard") {
@@ -94,8 +92,6 @@ const Sidebar = (props: Props) => {
     transition: ".5s ease",
     borderRadius: "12px",
   };
-
-  console.log(isActive);
 
   return (
     <div className="h-screen bg-background p-4">

@@ -6,7 +6,7 @@ import {
   useEnsName,
 } from "wagmi";
 // import Button from "./Button";
-import { ToastElem, shortenAddress } from "../utils";
+import { ToastElem, capitalize, roleMap, shortenAddress } from "../utils";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
 import { BaseError } from "viem";
@@ -16,20 +16,35 @@ import React from "react";
 import { useWasteWiseContext } from "../context";
 import { Button } from "@nextui-org/button";
 import {
+  Avatar,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSection,
+  DropdownTrigger,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Skeleton,
   useDisclosure,
+  User,
 } from "@nextui-org/react";
+import { LucidePower } from "lucide-react";
+import ProfileDropdown from "./ProfileDropdown";
 
 export function WasteWise() {
   const navigate = useNavigate();
   const location = useLocation();
   const { address, connector: activeConnector, isConnected } = useAccount();
   //   const { data: ensAvatar } = useEnsAvatar({ address });
-  const { isRegistered } = useWasteWiseContext();
+  const { isRegistered, currentUser } = useWasteWiseContext();
   //   const { data: ensName } = useEnsName({ address });
   const { connect, connectors, error, isPending } = useConnect({
     mutation: {
@@ -82,7 +97,7 @@ export function WasteWise() {
   if (isConnected) {
     return (
       <>
-        <div className="dropdown dropdown-end">
+        <div className="hidden dropdown dropdown-end">
           <label
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar bg-green-200 hover:bg-green-100"
@@ -135,6 +150,23 @@ export function WasteWise() {
           </ul>
         </div>
 
+        {isRegistered ? (
+          <ProfileDropdown
+            isRegistered={isRegistered}
+            currentUser={currentUser}
+          />
+        ) : (
+          <div className="max-w-40 w-full flex items-center gap-3">
+            <div>
+              <Skeleton className="flex rounded-full w-12 h-12" />
+            </div>
+            <div className="w-full flex flex-col gap-2">
+              <Skeleton className="h-3 w-3/5 rounded-lg" />
+              <Skeleton className="h-3 w-4/5 rounded-lg" />
+            </div>
+          </div>
+        )}
+
         {!isRegistered && (
           <Modal
             isDismissable={false}
@@ -166,6 +198,80 @@ export function WasteWise() {
                       Set your name
                     </Button>
                   </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+        )}
+
+        {!isRegistered && (
+          // <Button onPress={onOpen}>Verify POH</Button>
+          <Modal
+            backdrop="opaque"
+            isOpen={isOpen}
+            // onOpenChange={onOpenChange}
+            classNames={{
+              backdrop:
+                "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+            }}
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1 py-8">
+                    Verify your Proof of Humanity
+                  </ModalHeader>
+                  <ModalBody className="flex flex-col gap-y-8">
+                    <div className="flex flex-row items-center gap-x-8">
+                      <Card className="group py-4 hover:bg-green-600/60 transition cursor-pointer">
+                        <div className="">
+                          <CardBody className="items-center overflow-visible py-2">
+                            {/* <DiscordIcon
+                              size={96}
+                              className="text-indigo-500 group-hover:text-default-900 transition"
+                            /> */}
+                          </CardBody>
+                          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
+                            {/* <p className="text-tiny uppercase font-bold">Daily Mix</p>
+                        <small className="text-default-500">12 Tracks</small> */}
+                            <h4 className="font-bold text-large text-center">
+                              Verify using Discord
+                            </h4>
+                          </CardHeader>
+                        </div>
+                      </Card>
+
+                      <Card className="group py-4 hover:bg-green-600/60 transition cursor-pointer">
+                        <div className="">
+                          <CardBody className="items-center overflow-visible py-2">
+                            {/* <LucideLinkedin
+                              size={96}
+                              className="text-blue-500 group-hover:text-default-900 transition"
+                            /> */}
+                          </CardBody>
+                          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
+                            {/* <p className="text-tiny uppercase font-bold">Daily Mix</p>
+                        <small className="text-default-500">12 Tracks</small> */}
+                            <h4 className="font-bold text-large text-center">
+                              Verify using LinkedIn
+                            </h4>
+                          </CardHeader>
+                        </div>
+                      </Card>
+                    </div>
+                    <p className="italic text-center text-sm text-default-500 py-4">
+                      Select either of the above for you <b>ZK</b> Proof of
+                      Humanity Check
+                    </p>
+                  </ModalBody>
+                  {/* <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button color="primary" onPress={onClose}>
+                      Action
+                    </Button>
+                  </ModalFooter> */}
                 </>
               )}
             </ModalContent>

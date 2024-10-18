@@ -178,3 +178,9 @@ export const pinFileToIPFS = async (files: any) => {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export const roleMap = {
+  0: "recycler",
+  1: "admin",
+  2: "verifier",
+};

@@ -5,12 +5,15 @@ import { useRef } from "react";
 import { useDisconnect } from "wagmi";
 import { logout } from "../assets";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { Skeleton } from "@nextui-org/react";
+import ProfileDropdown from "./ProfileDropdown";
 
 const DashboardNav = ({ title }: { title: string }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { disconnect, isSuccess } = useDisconnect();
-  const { notifCount, notifications } = useWasteWiseContext();
+  const { currentUser, isRegistered, notifCount, notifications } =
+    useWasteWiseContext();
   const mobileNotificationsModal = useRef<HTMLDialogElement>(null);
 
   const handleDisconnect = () => {
@@ -173,7 +176,7 @@ const DashboardNav = ({ title }: { title: string }) => {
           </div>
           {/* Profile Image and Dropdown */}
           {title !== "profile" && (
-            <div className="dropdown dropdown-end">
+            <div className="hidden dropdown dropdown-end">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle avatar bg-green-200 hover:bg-green-100"
@@ -220,6 +223,27 @@ const DashboardNav = ({ title }: { title: string }) => {
                 </li>
               </ul>
             </div>
+          )}
+
+          {title !== "profile" && (
+            <>
+              {isRegistered ? (
+                <ProfileDropdown
+                  isRegistered={isRegistered}
+                  currentUser={currentUser}
+                />
+              ) : (
+                <div className="max-w-40 w-full flex items-center gap-3">
+                  <div>
+                    <Skeleton className="flex rounded-full w-12 h-12" />
+                  </div>
+                  <div className="w-full flex flex-col gap-2">
+                    <Skeleton className="h-3 w-3/5 rounded-lg" />
+                    <Skeleton className="h-3 w-4/5 rounded-lg" />
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </ul>
       </div>
