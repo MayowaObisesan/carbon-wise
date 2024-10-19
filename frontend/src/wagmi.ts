@@ -1,12 +1,29 @@
-import { metaMask } from "wagmi/connectors";
+import { http, cookieStorage, createConfig, createStorage } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
+import { coinbaseWallet } from "wagmi/connectors";
 
-import { http, createConfig } from "wagmi";
-import { liskSepolia } from "wagmi/chains";
+export function getConfig() {
+  return createConfig({
+    chains: [baseSepolia],
+    connectors: [
+      coinbaseWallet({
+        appName: "OnchainKit",
+        preference: "smartWalletOnly",
+        version: "4",
+      }),
+    ],
+    storage: createStorage({
+      storage: cookieStorage,
+    }),
+    ssr: true,
+    transports: {
+      [baseSepolia.id]: http(),
+    },
+  });
+}
 
-export const config = createConfig({
-  chains: [liskSepolia],
-  connectors: [metaMask()],
-  transports: {
-    [liskSepolia.id]: http(),
-  },
-});
+declare module "wagmi" {
+  interface Register {
+    config: ReturnType<typeof getConfig>;
+  }
+}

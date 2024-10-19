@@ -38,6 +38,7 @@ import {
 } from "@nextui-org/react";
 import { LucideBuilding2, LucidePower, LucideUserPlus2 } from "lucide-react";
 import ProfileDropdown from "./ProfileDropdown";
+import { Wallet, ConnectWallet } from '@coinbase/onchainkit/wallet';
 
 export function WasteWise() {
   const navigate = useNavigate();
@@ -249,7 +250,6 @@ export function WasteWise() {
       // </div>
     );
   }
-
   return (
     <div>
       <div className="dropdown rounded-2xl w-full">
@@ -270,7 +270,7 @@ export function WasteWise() {
         >
           {isPending ? <span className="loading"></span> : "Connect Wallet"}
         </Button> */}
-        <Button
+        {/* <Button
           color="success"
           variant="shadow"
           size="lg"
@@ -284,7 +284,10 @@ export function WasteWise() {
           ) : (
             "Connect Wallet"
           )}
-        </Button>
+        </Button> */}
+        <Wallet>
+          <ConnectWallet />
+        </Wallet>
         {/* <ul
           tabIndex={0}
           className="dropdown-content z-[1] menu flex flex-col mt-3"
